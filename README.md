@@ -1,10 +1,10 @@
 # Keen IO Auto-Collector Dashboard 📉📊📈
 
-A pre-made dashboard for Keen IO projects using the [Auto-Collector](https://keen.io/docs/streams/web-auto-collection/?source=glitch).
+An instant analytics dashboard for Keen IO projects using the [Auto-Collector](https://keen.io/docs/streams/web-auto-collection/?source=glitch).
 
 This dashboard is built using the existing event data models, so you don't have to!
 
-You can remix the project to make it your own in Glitch with your own Keen IO data here:
+You can clone the project to make it your own in Glitch with your own Keen IO data here:
 
 [![Remix on Glitch](https://cdn.glitch.com/2703baf2-b643-4da7-ab91-7ee2a2d00b5b%2Fremix-button.svg)](https://glitch.com/edit/#!/remix/auto-collector-dashboard)
 
@@ -14,7 +14,7 @@ To get started, you need:
 - A [Keen IO account](https://keen.io/signup?source=glitch)
 - A Keen IO project with data streaming to it from the [Auto-Collector](https://keen.io/docs/streams/web-auto-collection/?source=glitch)
 
-If you don’t already have Auto-Collector installed, drop in [this snippet](https://keen.io/docs/streams/web-auto-collection/) with your `PROJECT_ID` and `WRITE_KEY` into your website’s <head> code and start seeing web events flow in within seconds.
+If you don’t already have Auto-Collector installed, drop in [this snippet](https://keen.io/docs/streams/web-auto-collection/) with your `PROJECT_ID` and `WRITE_KEY` into your website’s `<head>` code and start seeing web events flow in within seconds.
 
 Once you have these two things, you can clone (or "remix") the code in [Glitch](https://glitch.com/edit/#!/remix/auto-collector-dashboard) or locally by git cloning this repo.
 
@@ -36,7 +36,7 @@ Your dashboard should now render in your browser! 🎉📊✨
 
 The cool thing about the Auto-Collector is that it is just a start.
 
-When using the Auto-Collector Dashboard, you don’t have to think about what your data model is. It’s a great starting point to hit the ground running quickly. You can always customize and enrich your data and your data views later alongside the event data models from the Auto-Collector.
+Since you don’t have to think about what your data model is, it’s a great starting point to hit the ground running quickly. You can always customize and enrich your data and your data views later alongside the event data models from the Auto-Collector.
 
 If you want to track custom events beyond pageviews, clicks, and form submissions, you can easily access our core Javascript tracking library (which this SDK uses under the hood). See more [here](https://keen.io/docs/streams/web-auto-collection/?source=glitch).
 
