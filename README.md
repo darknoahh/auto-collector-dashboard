@@ -1,8 +1,8 @@
 # Keen IO Auto-Collector Dashboard 📉📊📈
 
-An instant analytics dashboard for Keen IO projects using the [Auto-Collector](https://keen.io/docs/streams/web-auto-collection/?source=glitch).
+An instant analytics dashboard for Keen IO projects using the web [Auto-Collector](https://keen.io/docs/streams/web-auto-collection/?s=gh_ac_dash).
 
-This dashboard is built using the existing event data models, so you don't have to!
+This dashboard comes pre-populated with charts based on the standard event data model used by the web [Auto-Collector](https://keen.io/docs/streams/web-auto-collection/?s=gh_ac_dash).
 
 You can clone the project to make it your own in Glitch with your own Keen IO data here:
 
@@ -12,7 +12,7 @@ You can clone the project to make it your own in Glitch with your own Keen IO da
 
 To get started, you need:
 - A [Keen IO account](https://keen.io/signup?source=glitch)
-- A Keen IO project with data streaming to it from the [Auto-Collector](https://keen.io/docs/streams/web-auto-collection/?source=glitch)
+- A Keen IO project with data streaming to it from the [Auto-Collector](https://keen.io/docs/streams/web-auto-collection/?s=gh_ac_dash)
 
 If you don’t already have Auto-Collector installed, drop in [this snippet](https://keen.io/docs/streams/web-auto-collection/) with your `PROJECT_ID` and `WRITE_KEY` into your website’s `<head>` code and start seeing web events flow in within seconds.
 
@@ -38,7 +38,7 @@ The cool thing about the Auto-Collector is that it is just a start.
 
 Since you don’t have to think about what your data model is, it’s a great starting point to hit the ground running quickly. You can always customize and enrich your data and your data views later alongside the event data models from the Auto-Collector.
 
-If you want to track custom events beyond pageviews, clicks, and form submissions, you can easily access our core Javascript tracking library (which this SDK uses under the hood). See more [here](https://keen.io/docs/streams/web-auto-collection/?source=glitch).
+If you want to track custom events beyond pageviews, clicks, and form submissions, you can easily access our core Javascript tracking library (which this SDK uses under the hood). See more [here](https://keen.io/docs/streams/web-auto-collection/?s=gh_ac_dash).
 
 For example: You could have a graph of `signup` or `login` events that are custom to your application. Other example actions you could track with Keen IO are: purchases, powerups, upgrades, errors, swipes, favorites, impressions, etc.
 
