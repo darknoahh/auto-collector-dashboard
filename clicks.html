@@ -8,19 +8,15 @@
     <link rel="stylesheet" href="./assets/keen-dashboards.css" />
     <link rel="stylesheet" href="./assets/demo-styles.css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://d26b395fwzu5fz.cloudfront.net/keen-dataviz-1.1.3.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/keen-dataviz@3/dist/keen-dataviz.min.css" rel="stylesheet" />
     <!-- THEMES -->
     <link rel="stylesheet" href="./themes/dashboard.css" />
     <!-- JS -->
-    <script src="https://d26b395fwzu5fz.cloudfront.net/keen-tracking-1.1.3.min.js"></script>
-    <script src="https://d26b395fwzu5fz.cloudfront.net/keen-dataviz-1.1.3.min.js"></script>
-    <script src="https://d26b395fwzu5fz.cloudfront.net/keen-analysis-1.2.2.js"></script>
+    <script crossorigin src="https://cdn.jsdelivr.net/npm/keen-analysis@3"></script>
+    <script crossorigin src="https://cdn.jsdelivr.net/npm/keen-dataviz@3"></script>
+    <script crossorigin src="https://cdn.jsdelivr.net/npm/keen-dataviz@3.0/dist/keen-dataviz.min.js"></script>
     <!-- Keen IO Setttings -->
     <script src="./settings.js"></script>
-    <script type="text/javascript">
-      function createKeenWebAutoCollector(){window.keenWebAutoCollector=window.KeenWebAutoCollector.create({projectId:'58f5422295cfc9addc2473d3',writeKey:'F5120F951F5B55E1DBAE60A583B23A5B94FFCA6822435187C05DB63CECE6803689FE10E8A3D90B889C8950D23E18CCA60A0FF346BF76A20D0DE59975927B2181AD6500D53BB2AA8E31E1CB0CFF31EB4B457CA4DC2E39051C4400FF19273CE009',onloadCallbacks:window.keenWebAutoCollector.onloadCallbacks}),window.keenWebAutoCollector.loaded()}function initKeenWebAutoCollector(){window.keenWebAutoCollector.domReady()?window.createKeenWebAutoCollector():document.addEventListener("readystatechange",function(){window.keenWebAutoCollector.domReady()&&window.createKeenWebAutoCollector()})}window.keenWebAutoCollector={onloadCallbacks:[],onload:function(a){this.onloadCallbacks.push(a)},domReady:function(){return["ready","complete"].indexOf(document.readyState)>-1}};
-    </script>
-    <script async type="text/javascript" src="https://d26b395fwzu5fz.cloudfront.net/keen-web-autocollector-1.0.8.min.js" onload="initKeenWebAutoCollector()"></script>    
   </head>
   <body class="demo-theme-dashboard" onload="settings()">
 
@@ -43,43 +39,43 @@
 
       <div class="keen-ui-row">
         <div class="keen-ui-col-8">
-          <div class="clicks-interval"></div>
+          <div class="clicks-interval chart"></div>
         </div>
         <div class="keen-ui-col-4">
-          <div class="total-clicks"></div>
+          <div class="total-clicks chart"></div>
         </div>
       </div>
 
       <div class="keen-ui-row">
         <div class="keen-ui-col-8">
-          <div class="clicks-by-referrer"></div>
+          <div class="clicks-by-referrer chart"></div>
         </div>
         <div class="keen-ui-col-4">
-          <div class="unique-clicks"></div>
+          <div class="unique-clicks chart"></div>
         </div>
       </div>
 
       <div class="keen-ui-row">
         <div class="keen-ui-col-12">
-          <div class="popular-links-clicked"></div>
+          <div class="popular-links-clicked chart"></div>
         </div>
       </div>
 
       <div class="keen-ui-row">
         <div class="keen-ui-col-6">
-          <div class="clicks-by-day"></div>
+          <div class="clicks-by-day chart"></div>
         </div>
         <div class="keen-ui-col-6">
-          <div class="engagement-funnel"></div>
+          <div class="engagement-funnel chart"></div>
         </div>
       </div>
 
       <div class="keen-ui-row">
         <div class="keen-ui-col-6">
-          <div class="clicks-by-browser"></div>
+          <div class="clicks-by-browser chart"></div>
         </div>
         <div class="keen-ui-col-6">
-          <div class="clicks-by-device"></div>
+          <div class="clicks-by-device chart"></div>
         </div>
       </div>
 
@@ -90,15 +86,15 @@
 
       document.getElementById("timeframe").innerHTML="timeframe: " + timeframe.replace(/_/g, ' ');
 
-      var clicksInterval = new Dataviz()
-        .height(300)
-        .el('.clicks-interval')
-        .title('Clicks by day')
-        .type('area')
-        .render();
+      const clicksInterval = new KeenDataviz({
+        container: '.clicks-interval',
+        title: 'Clicks by day',
+        type: 'area'
+      });
 
       client
-        .query('count', {
+        .query({
+          analysis_type: 'count',
           event_collection: 'clicks',
           timeframe: timeframe,
           interval: 'daily',
@@ -107,8 +103,7 @@
         .then(function(res){
           // Handle the result
           clicksInterval
-            .data(res)
-            .render();
+            .render(res);
         })
         .catch(function(err){
           // Handle the error
@@ -116,15 +111,15 @@
             .message(err.message);
         });
 
-      var clicks = new Dataviz()
-        .height(300)
-        .el('.total-clicks')
-        .type('metric')
-        .title('Clicks')
-        .prepare();
+      const clicks = new KeenDataviz({
+        container: '.total-clicks',
+        type: 'metric',
+        title: 'Clicks'
+      });
 
       client
-        .query('count', {
+        .query({
+          analysis_type: 'count',
           event_collection: 'clicks',
           timeframe: timeframe,
           timezone: 'UTC'
@@ -132,8 +127,7 @@
         .then(function(res){
           // Handle the result
           clicks
-            .data(res)
-            .render();
+            .render(res);
         })
         .catch(function(err){
           // Handle the error
@@ -142,33 +136,33 @@
         });
 
 
-      var clicksByReferrer = window.table = new Dataviz()
-        .el('.clicks-by-referrer')
-        .height(300)
-        .type('table')
-        .title('Clicks by Referrer')
-        .render();
+      const clicksByReferrer = window.table = new KeenDataviz({
+        container: '.clicks-by-referrer',
+        type: 'table',
+        title: 'Clicks by Referrer',
+        sortGroups: 'desc'
+      });
 
       client
-        .query('count', {
+        .query({
+          analysis_type: 'count',
           event_collection: 'clicks',
           timeframe: 'previous_1_months',
           filters: [
           {
-              "operator": "ne",
-              "property_name": "referrer.info.domain",
-              "property_value": null
+              'operator': 'ne',
+              'property_name': 'referrer.info.domain',
+              'property_value': null
           }],
           group_by: [
-          "referrer.info.domain"],
+            'referrer.info.domain'
+          ],
           timezone: 'UTC'
         })
         .then(function(res){
           // Handle the result
           clicksByReferrer
-            .data(res)
-            .sortGroups('desc')
-            .render();
+            .render(res);
         })
         .catch(function(err){
           // Handle the error
@@ -176,25 +170,24 @@
             .message(err.message);
         });
 
-      var uniqueClicks = new Dataviz()
-        .height(300)
-        .el('.unique-clicks')
-        .type('metric')
-        .title('Unique Clicks by UUID')
-        .prepare();
+      const uniqueClicks = new KeenDataviz({
+        container: '.unique-clicks',
+        type: 'metric',
+        title: 'Unique Clicks by UUID'
+      });
 
       client
-        .query('count', {
-          event_collection: "clicks",
-          target_property: "user.uuid",
+        .query({
+          analysis_type: 'count',
+          event_collection: 'clicks',
+          target_property: 'user.uuid',
           timeframe: timeframe,
-          timezone: "UTC"
+          timezone: 'UTC'
         })
         .then(function(res){
           // Handle the result
           uniqueClicks
-            .data(res)
-            .render();
+            .render(res);
         })
         .catch(function(err){
           // Handle the error
@@ -202,36 +195,35 @@
             .message(err.message);
         });
 
-      var clicksByDay = new Dataviz()
-        .height(300)
-        .el('.clicks-by-day')
-        .type('horizontal-bar')
-        .title('Clicks by Day of the Week')
-        .prepare();
+      const clicksByDay = new KeenDataviz({
+        container: '.clicks-by-day',
+        type: 'horizontal-bar',
+        title: 'Clicks by Day of the Week',
+        labelMapping: {
+          '1': 'Sunday',
+          '2': 'Monday',
+          '3': 'Tuesday',
+          '4': 'Wednesday',
+          '5': 'Thursday',
+          '6': 'Friday',
+          '7': 'Saturday'
+        }
+      });
 
       client
-        .query('count',  {
-          event_collection: "clicks",
+        .query({
+          analysis_type: 'count',
+          event_collection: 'clicks',
           group_by: [
-          "time.local.day_of_week"],
+            'time.local.day_of_week'
+          ],
           timeframe: timeframe,
-          timezone: "UTC"
+          timezone: 'UTC'
         })
         .then(function(res){
           // Handle the result
           clicksByDay
-            .data(res)
-            // This labelMapping order the days of the week in chronological order
-            .labelMapping({
-            '1': 'Sunday',
-            '2': 'Monday',
-            '3': 'Tuesday',
-            '4': 'Wednesday',
-            '5': 'Thursday',
-            '6': 'Friday',
-            '7': 'Saturday'
-            })
-            .render();
+            .render(res);
         })
         .catch(function(err){
           // Handle the error
@@ -239,26 +231,26 @@
             .message(err.message);
         });
 
-      var clicksByBrowser = new Dataviz()
-        .height(300)
-        .el('.clicks-by-browser')
-        .type('pie')
-        .title('Clicks by Browser')
-        .prepare();
+      const clicksByBrowser = new KeenDataviz({
+        container: '.clicks-by-browser',
+        type: 'pie',
+        title: 'Clicks by Browser'
+      });
 
       client
-        .query('count', {
-          event_collection: "clicks",
+        .query({
+          analysis_type: 'count',
+          event_collection: 'clicks',
           group_by: [
-          "tech.browser.family"],
+            'tech.browser.family'
+          ],
           timeframe: timeframe,
-          timezone: "UTC"
+          timezone: 'UTC'
         })
         .then(function(res){
           // Handle the result
           clicksByBrowser
-            .data(res)
-            .render();
+            .render(res);
         })
         .catch(function(err){
           // Handle the error
@@ -266,26 +258,26 @@
             .message(err.message);
         });
 
-      var clicksByDevice = new Dataviz()
-        .height(300)
-        .el('.clicks-by-device')
-        .type('pie')
-        .title('Clicks by Device Family')
-        .prepare();
+      const clicksByDevice = new KeenDataviz({
+        container: '.clicks-by-device',
+        type: 'pie',
+        title: 'Clicks by Device Family'
+      });
 
       client
-        .query('count', {
-          event_collection: "clicks",
+        .query({
+          analysis_type: 'count',
+          event_collection: 'clicks',
           group_by: [
-          "tech.device.family"],
+            'tech.device.family'
+          ],
           timeframe: timeframe,
-          timezone: "UTC"
+          timezone: 'UTC'
         })
         .then(function(res){
           // Handle the result
           clicksByDevice
-            .data(res)
-            .render();
+            .render(res);
         })
         .catch(function(err){
           // Handle the error
@@ -293,33 +285,33 @@
             .message(err.message);
         });
 
-      var popularLinks = new Dataviz()
-        .height(300)
-        .el('.popular-links-clicked')
-        .type('table')
-        .title('Popular Links Clicked by Href')
-        .prepare();
+      const popularLinks = new KeenDataviz({
+        container: '.popular-links-clicked',
+        type: 'table',
+        title: 'Popular Links Clicked by Href',
+        sortGroups: 'desc'
+      });
 
       client
-        .query('count', {
-          event_collection: "clicks",
+        .query({
+          analysis_type: 'count',
+          event_collection: 'clicks',
           filters: [
           {
-              "operator": "exists",
-              "property_name": "element.href",
-              "property_value": true
+              'operator': 'exists',
+              'property_name': 'element.href',
+              'property_value': true
           }],
           group_by: [
-          "element.href"],
+            'element.href'
+          ],
           timeframe: timeframe,
-          timezone: "UTC"
+          timezone: 'UTC'
         })
         .then(function(res){
           // Handle the result
           popularLinks
-            .data(res)
-            .sortGroups('desc')
-            .render();
+            .render(res);
         })
         .catch(function(err){
           // Handle the error
@@ -327,46 +319,45 @@
             .message(err.message);
         });
 
-      var engagementFunnel = new Dataviz()
-        .height(300)
-        .el('.engagement-funnel')
-        .type('bar')
-        .title('Engagement Funnel')
-        .prepare();
+      const engagementFunnel = new KeenDataviz({
+        container: '.engagement-funnel',
+        type: 'bar',
+        title: 'Engagement Funnel'
+      });
 
       client
-        .query('funnel', {
+        .query({
+          analysis_type: 'funnel',
           steps: [
           {
-              "actor_property": "user.uuid",
-              "event_collection": "pageviews",
-              "inverted": false,
-              "optional": false,
-              "timeframe": timeframe,
-              "timezone": "UTC"
+              'actor_property': 'user.uuid',
+              'event_collection': 'pageviews',
+              'inverted': false,
+              'optional': false,
+              'timeframe': timeframe,
+              'timezone': 'UTC'
           },
           {
-              "actor_property": "user.uuid",
-              "event_collection": "clicks",
-              "inverted": false,
-              "optional": false,
-              "timeframe": timeframe,
-              "timezone": "UTC"
+              'actor_property': 'user.uuid',
+              'event_collection': 'clicks',
+              'inverted': false,
+              'optional': false,
+              'timeframe': timeframe,
+              'timezone': 'UTC'
           },
           {
-              "actor_property": "user.uuid",
-              "event_collection": "form_submissions",
-              "inverted": false,
-              "optional": false,
-              "timeframe": timeframe,
-              "timezone": "UTC"
+              'actor_property': 'user.uuid',
+              'event_collection': 'form_submissions',
+              'inverted': false,
+              'optional': false,
+              'timeframe': timeframe,
+              'timezone': 'UTC'
           }]
         })
         .then(function(res){
           // Handle the result
           engagementFunnel
-            .data(res)
-            .render();
+            .render(res);
         })
         .catch(function(err){
           // Handle the error

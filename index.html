@@ -8,23 +8,17 @@
     <link rel="stylesheet" href="./assets/keen-dashboards.css" />
     <link rel="stylesheet" href="./assets/demo-styles.css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://d26b395fwzu5fz.cloudfront.net/keen-dataviz-1.1.3.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/keen-dataviz@3/dist/keen-dataviz.min.css" rel="stylesheet" />
     <!-- THEMES -->
     <link rel="stylesheet" href="./themes/dashboard.css" />
     <!-- JS -->
-    <script src="https://d26b395fwzu5fz.cloudfront.net/keen-tracking-1.1.3.min.js"></script>
-    <script src="https://d26b395fwzu5fz.cloudfront.net/keen-dataviz-1.1.3.min.js"></script>
-    <script src="https://d26b395fwzu5fz.cloudfront.net/keen-analysis-1.2.2.js"></script>
+    <script crossorigin src="https://cdn.jsdelivr.net/npm/keen-analysis@3"></script>
+    <script crossorigin src="https://cdn.jsdelivr.net/npm/keen-dataviz@3"></script>
+    <script crossorigin src="https://cdn.jsdelivr.net/npm/keen-dataviz@3.0/dist/keen-dataviz.min.js"></script>
     <!-- Keen IO Setttings -->
     <script src="./settings.js"></script>
-    <!-- Keen IO Auto-Collector -->
-    <script type="text/javascript">
-      function createKeenWebAutoCollector(){window.keenWebAutoCollector=window.KeenWebAutoCollector.create({projectId:'58f5422295cfc9addc2473d3',writeKey:'F5120F951F5B55E1DBAE60A583B23A5B94FFCA6822435187C05DB63CECE6803689FE10E8A3D90B889C8950D23E18CCA60A0FF346BF76A20D0DE59975927B2181AD6500D53BB2AA8E31E1CB0CFF31EB4B457CA4DC2E39051C4400FF19273CE009',onloadCallbacks:window.keenWebAutoCollector.onloadCallbacks}),window.keenWebAutoCollector.loaded()}function initKeenWebAutoCollector(){window.keenWebAutoCollector.domReady()?window.createKeenWebAutoCollector():document.addEventListener("readystatechange",function(){window.keenWebAutoCollector.domReady()&&window.createKeenWebAutoCollector()})}window.keenWebAutoCollector={onloadCallbacks:[],onload:function(a){this.onloadCallbacks.push(a)},domReady:function(){return["ready","complete"].indexOf(document.readyState)>-1}};
-    </script>
-    <script async type="text/javascript" src="https://d26b395fwzu5fz.cloudfront.net/keen-web-autocollector-1.0.8.min.js" onload="initKeenWebAutoCollector()"></script>
   </head>
   <body class="demo-theme-dashboard" onload="settings()">
-
     <div class="container">
       <h1>
         Keen IO Auto-Collector Dashboard
@@ -44,46 +38,46 @@
 
       <div class="keen-ui-row">
         <div class="keen-ui-col-8">
-          <div class="pageviews-interval"></div>
+          <div class="pageviews-interval chart"></div>
         </div>
         <div class="keen-ui-col-4">
-          <div class="total-pageviews"></div>
+          <div class="total-pageviews chart"></div>
         </div>
       </div>
 
       <div class="keen-ui-row">
         <div class="keen-ui-col-8">
-          <div class="pageviews-by-referrer"></div>
+          <div class="pageviews-by-referrer chart"></div>
         </div>
         <div class="keen-ui-col-4">
-          <div class="unique-pageviews"></div>
+          <div class="unique-pageviews chart"></div>
         </div>
       </div>
 
       <div class="keen-ui-row">
         <div class="keen-ui-col-6">
-          <div class="pageviews-by-day"></div>
+          <div class="pageviews-by-day chart"></div>
         </div>
         <div class="keen-ui-col-6">
-          <div class="popular-pages-visited"></div>
+          <div class="popular-pages-visited chart"></div>
         </div>
       </div>
 
       <div class="keen-ui-row">
         <div class="keen-ui-col-6">
-          <div class="pageviews-by-browser"></div>
+          <div class="pageviews-by-browser chart"></div>
         </div>
         <div class="keen-ui-col-6">
-          <div class="pageviews-by-device"></div>
+          <div class="pageviews-by-device chart"></div>
         </div>
       </div>
 
       <div>
         <div class="keen-ui-col-6">
-          <div class="pageviews-by-country"></div>
+          <div class="pageviews-by-country chart"></div>
         </div>
         <div class="keen-ui-col-6">
-          <div class="pageviews-by-city"></div>
+          <div class="pageviews-by-city chart"></div>
         </div>
       </div>
 
@@ -94,15 +88,15 @@
 
       document.getElementById("timeframe").innerHTML="timeframe: " + timeframe.replace(/_/g, ' ');
 
-      var pageviewsInterval = new Dataviz()
-        .height(300)
-        .el('.pageviews-interval')
-        .title('Pageviews by day')
-        .type('area')
-        .render();
+      const pageviewsInterval = new KeenDataviz({
+        container: '.pageviews-interval',
+        title: 'Pageviews by day',
+        type: 'area'
+      });
 
       client
-        .query('count', {
+        .query({
+          analysis_type: 'count',
           event_collection: 'pageviews',
           timeframe: timeframe,
           interval: 'daily',
@@ -111,8 +105,7 @@
         .then(function(res){
           // Handle the result
           pageviewsInterval
-            .data(res)
-            .render();
+            .render(res);
         })
         .catch(function(err){
           // Handle the error
@@ -120,15 +113,15 @@
             .message(err.message);
         });
 
-      var pageviews = new Dataviz()
-        .height(300)
-        .el('.total-pageviews')
-        .type('metric')
-        .title('Pageviews')
-        .prepare();
+      const pageviews = new KeenDataviz({
+        container: '.total-pageviews',
+        type: 'metric',
+        title: 'Pageviews'
+      });
 
       client
-        .query('count', {
+        .query({
+          analysis_type: 'count',
           event_collection: 'pageviews',
           timeframe: timeframe,
           timezone: 'UTC'
@@ -136,8 +129,7 @@
         .then(function(res){
           // Handle the result
           pageviews
-            .data(res)
-            .render();
+            .render(res);
         })
         .catch(function(err){
           // Handle the error
@@ -145,33 +137,32 @@
             .message(err.message);
         });
 
-      var pageviewsByReferrer = new Dataviz()
-        .el('.pageviews-by-referrer')
-        .height(300)
-        .type('table')
-        .title('Pageviews by Referrer')
-        .render();
+      const pageviewsByReferrer = new KeenDataviz({
+        container: '.pageviews-by-referrer',
+        type: 'table',
+        title: 'Pageviews by Referrer',
+        sortGroups: 'desc'
+      });
 
       client
-        .query('count', {
+        .query({
+          analysis_type: 'count',
           event_collection: 'pageviews',
           timeframe: 'previous_1_months',
           filters: [
           {
-              "operator": "ne",
-              "property_name": "referrer.info.domain",
-              "property_value": null
+              'operator': 'ne',
+              'property_name': 'referrer.info.domain',
+              'property_value': null
           }],
           group_by: [
-          "referrer.info.domain"],
+          'referrer.info.domain'],
           timezone: 'UTC'
         })
         .then(function(res){
           // Handle the result
           pageviewsByReferrer
-            .data(res)
-            .sortGroups('desc')
-            .render();
+            .render(res);
         })
         .catch(function(err){
           // Handle the error
@@ -179,25 +170,24 @@
             .message(err.message);
         });
 
-      var uniquePageviews = new Dataviz()
-        .height(300)
-        .el('.unique-pageviews')
-        .type('metric')
-        .title('Unique Pageviews by UUID')
-        .prepare();
+      const uniquePageviews = new KeenDataviz({
+        container: '.unique-pageviews',
+        type: 'metric',
+        title: 'Unique Pageviews by UUID'
+      });
 
       client
-        .query('count', {
-          event_collection: "pageviews",
-          target_property: "user.uuid",
+        .query({
+          analysis_type: 'count',
+          event_collection: 'pageviews',
+          target_property: 'user.uuid',
           timeframe: timeframe,
-          timezone: "UTC"
+          timezone: 'UTC'
         })
         .then(function(res){
           // Handle the result
           uniquePageviews
-            .data(res)
-            .render();
+            .render(res);
         })
         .catch(function(err){
           // Handle the error
@@ -205,35 +195,35 @@
             .message(err.message);
         });
 
-      var pageviewsByDay = new Dataviz()
-        .height(300)
-        .el('.pageviews-by-day')
-        .type('horizontal-bar')
-        .title('Pageviews by Day of the Week')
-        .prepare();
+      const pageviewsByDay = new KeenDataviz({
+        container: '.pageviews-by-day',
+        type: 'horizontal-bar',
+        title: 'Pageviews by Day of the Week',
+        labelMapping: {
+          '1': 'Sunday',
+          '2': 'Monday',
+          '3': 'Tuesday',
+          '4': 'Wednesday',
+          '5': 'Thursday',
+          '6': 'Friday',
+          '7': 'Saturday'
+         }
+      });
 
       client
-        .query('count',  {
-          event_collection: "pageviews",
+        .query({
+          analysis_type: 'count',
+          event_collection: 'pageviews',
           group_by: [
-          "time.local.day_of_week"],
+            'time.local.day_of_week'
+          ],
           timeframe: timeframe,
-          timezone: "UTC"
+          timezone: 'UTC'
         })
         .then(function(res){
           // Handle the result
           pageviewsByDay
-            .data(res)
-            .labelMapping({
-            '1': 'Sunday',
-            '2': 'Monday',
-            '3': 'Tuesday',
-            '4': 'Wednesday',
-            '5': 'Thursday',
-            '6': 'Friday',
-            '7': 'Saturday'
-            })
-            .render();
+            .render(res);
         })
         .catch(function(err){
           // Handle the error
@@ -241,26 +231,25 @@
             .message(err.message);
         });
 
-      var pageviewsByBrowser = new Dataviz()
-        .height(300)
-        .el('.pageviews-by-browser')
-        .type('pie')
-        .title('Pageviews by Browser')
-        .prepare();
+      const pageviewsByBrowser = new KeenDataviz({
+        container: '.pageviews-by-browser',
+        type: 'pie',
+        title: 'Pageviews by Browser'
+      });
 
       client
         .query('count', {
-          event_collection: "pageviews",
+          event_collection: 'pageviews',
           group_by: [
-          "tech.browser.family"],
+            'tech.browser.family'
+          ],
           timeframe: timeframe,
           timezone: "UTC"
         })
         .then(function(res){
           // Handle the result
           pageviewsByBrowser
-            .data(res)
-            .render();
+            .render(res);
         })
         .catch(function(err){
           // Handle the error
@@ -268,26 +257,26 @@
             .message(err.message);
         });
 
-      var pageviewsByDevice = new Dataviz()
-        .height(300)
-        .el('.pageviews-by-device')
-        .type('pie')
-        .title('Pageviews by Device Family')
-        .prepare();
+      const pageviewsByDevice = new KeenDataviz({
+        container: '.pageviews-by-device',
+        type: 'pie',
+        title: 'Pageviews by Device Family'
+      });
 
       client
-        .query('count', {
-          event_collection: "pageviews",
+        .query({
+          analysis_type: 'count',
+          event_collection: 'pageviews',
           group_by: [
-          "tech.device.family"],
+            'tech.device.family'
+          ],
           timeframe: timeframe,
-          timezone: "UTC"
+          timezone: 'UTC'
         })
         .then(function(res){
           // Handle the result
           pageviewsByDevice
-            .data(res)
-            .render();
+            .render(res);
         })
         .catch(function(err){
           // Handle the error
@@ -295,34 +284,32 @@
             .message(err.message);
         });
 
-      var popularPages = new Dataviz()
-        .height(300)
-        .el('.popular-pages-visited')
-        .type('line')
-        .chartOptions({
-          axis: {
-            y: {
-              padding: {bottom:0}
-            }
+      const popularPages = new KeenDataviz({
+        container: '.popular-pages-visited',
+        title: 'Popular Pages Visited by Title',
+        type: 'line',
+        axis: {
+          y: {
+            padding: {bottom:0}
           }
-        })
-        .title('Popular Pages Visited by Title')
-        .prepare();
+        }
+      });
 
       client
-        .query('count', {
-          event_collection: "pageviews",
+        .query({
+          analysis_type: 'count',
+          event_collection: 'pageviews',
           group_by: [
-          "url.info.path"],
+            'url.info.path'
+          ],
           timeframe: timeframe,
-          interval: "daily",
-          timezone: "UTC"
+          interval: 'daily',
+          timezone: 'UTC'
         })
         .then(function(res){
           // Handle the result
           popularPages
-            .data(res)
-            .render();
+            .render(res);
         })
         .catch(function(err){
           // Handle the error
@@ -330,27 +317,27 @@
             .message(err.message);
         });
 
-      var pageviewsByCountry = new Dataviz()
-        .el('.pageviews-by-country')
-        .height(300)
-        .type('table')
-        .title('Pageviews by Country')
-        .render();
+      const pageviewsByCountry = new KeenDataviz({
+        container: '.pageviews-by-country',
+        type: 'table',
+        title: 'Pageviews by Country',
+        sortGroups: 'desc'
+      });
 
       client
-        .query('count', {
-          event_collection: "pageviews",
+        .query({
+          analysis_type: 'count',
+          event_collection: 'pageviews',
           group_by: [
-          "geo.country"],
+            'geo.country'
+          ],
           timeframe: timeframe,
-          timezone: "UTC"
+          timezone: 'UTC'
         })
         .then(function(res){
           // Handle the result
           pageviewsByCountry
-            .data(res)
-            .sortGroups('desc')
-            .render();
+            .render(res);
         })
         .catch(function(err){
           // Handle the error
@@ -358,27 +345,27 @@
             .message(err.message);
         });
 
-       var pageviewsByCity = new Dataviz()
-        .el('.pageviews-by-city')
-        .height(300)
-        .type('table')
-        .title('Pageviews by City')
-        .render();
+      const pageviewsByCity = new KeenDataviz({
+        container: '.pageviews-by-city',
+        type: 'table',
+        title: 'Pageviews by City',
+        sortGroups: 'desc'
+      });
 
       client
-        .query('count', {
-          event_collection: "pageviews",
+        .query({
+          analysis_type: 'count',
+          event_collection: 'pageviews',
           group_by: [
-          "geo.city"],
+            'geo.city'
+          ],
           timeframe: timeframe,
-          timezone: "UTC"
+          timezone: 'UTC'
         })
         .then(function(res){
           // Handle the result
           pageviewsByCity
-            .data(res)
-            .sortGroups('desc')
-            .render();
+            .render(res);
         })
         .catch(function(err){
           // Handle the error
