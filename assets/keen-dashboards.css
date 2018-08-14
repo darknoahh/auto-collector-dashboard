@@ -9,11 +9,6 @@
   Button sets
 */
 
-.chart{
-  height: 300px;
-  overflow: hidden;
-}
-
 .keen-ui-btns,
 .keen-ui-btns-right {
   text-align: left;

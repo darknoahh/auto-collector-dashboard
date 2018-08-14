@@ -5,16 +5,16 @@
     <title>Keen IO Auto-Collector Dashboard</title>
     <link rel="shortcut icon" href="https://keen.io/assets/images/favicon.ico"/>
     <!-- CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/keen-dataviz@3/dist/keen-dataviz.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="./assets/keen-dashboards.css" />
     <link rel="stylesheet" href="./assets/demo-styles.css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link href="https://cdn.jsdelivr.net/npm/keen-dataviz@3/dist/keen-dataviz.min.css" rel="stylesheet" />
     <!-- THEMES -->
     <link rel="stylesheet" href="./themes/dashboard.css" />
     <!-- JS -->
     <script crossorigin src="https://cdn.jsdelivr.net/npm/keen-analysis@3"></script>
-    <script crossorigin src="https://cdn.jsdelivr.net/npm/keen-dataviz@3"></script>
-    <script crossorigin src="https://cdn.jsdelivr.net/npm/keen-dataviz@3.0/dist/keen-dataviz.min.js"></script>
+    <script crossorigin src="https://cdn.jsdelivr.net/npm/keen-dataviz@3/dist/keen-dataviz.min.js"></script>
+    <!-- Keen IO Setttings -->
     <script src="./settings.js"></script>
   </head>
   <body class="demo-theme-dashboard" onload="settings()">
@@ -38,19 +38,27 @@
 
       <div class="keen-ui-row">
         <div class="keen-ui-col-8">
-          <div class="forms-interval chart"></div>
+          <div class="chart-box">
+            <div class="forms-interval chart"></div>
+          </div>
         </div>
         <div class="keen-ui-col-4">
-          <div class="total-forms chart"></div>
+          <div class="chart-box-metric">
+            <div class="total-forms chart"></div>
+          </div>
         </div>
       </div>
 
       <div>
         <div class="keen-ui-col-8">
-          <div class="forms-by-id-interval"></div>
+          <div class="chart-box">
+            <div class="forms-by-id-interval chart"></div>
+          </div>
         </div>
         <div class="keen-ui-col-4">
-          <div class="forms-by-id chart"></div>
+          <div class="chart-box">
+            <div class="forms-by-id chart"></div>
+          </div>
         </div>
       </div>
 

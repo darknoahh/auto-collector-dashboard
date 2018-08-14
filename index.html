@@ -5,17 +5,16 @@
     <title>Keen IO Auto-Collector Dashboard</title>
     <link rel="shortcut icon" href="https://keen.io/assets/images/favicon.ico"/>
     <!-- CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/keen-dataviz@3/dist/keen-dataviz.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="./assets/keen-dashboards.css" />
     <link rel="stylesheet" href="./assets/demo-styles.css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link href="https://cdn.jsdelivr.net/npm/keen-dataviz@3/dist/keen-dataviz.min.css" rel="stylesheet" />
     <!-- THEMES -->
     <link rel="stylesheet" href="./themes/dashboard.css" />
     <!-- JS -->
     <script crossorigin src="https://cdn.jsdelivr.net/npm/keen-analysis@3"></script>
-    <script crossorigin src="https://cdn.jsdelivr.net/npm/keen-dataviz@3"></script>
-    <script crossorigin src="https://cdn.jsdelivr.net/npm/keen-dataviz@3.0/dist/keen-dataviz.min.js"></script>
-    <!-- Keen IO Setttings -->
+    <script crossorigin src="https://cdn.jsdelivr.net/npm/keen-dataviz@3.0.9/dist/keen-dataviz.min.js"></script>
+    <!-- Keen Setttings -->
     <script src="./settings.js"></script>
   </head>
   <body class="demo-theme-dashboard" onload="settings()">
@@ -38,46 +37,66 @@
 
       <div class="keen-ui-row">
         <div class="keen-ui-col-8">
-          <div class="pageviews-interval chart"></div>
+          <div class="chart-box">
+            <div class="pageviews-interval chart"></div>
+          </div>
         </div>
         <div class="keen-ui-col-4">
-          <div class="total-pageviews chart"></div>
+          <div class="chart-box-metric">
+            <div class="total-pageviews chart"></div>
+          </div>
         </div>
       </div>
 
       <div class="keen-ui-row">
         <div class="keen-ui-col-8">
-          <div class="pageviews-by-referrer chart"></div>
+          <div class="chart-box">
+            <div class="pageviews-by-referrer chart"></div>
+          </div>
         </div>
         <div class="keen-ui-col-4">
-          <div class="unique-pageviews chart"></div>
+          <div class="chart-box-metric">
+            <div class="unique-pageviews chart"></div>
+          </div>
         </div>
       </div>
 
       <div class="keen-ui-row">
         <div class="keen-ui-col-6">
-          <div class="pageviews-by-day chart"></div>
+          <div class="chart-box">
+            <div class="pageviews-by-day chart"></div>
+          </div>
         </div>
         <div class="keen-ui-col-6">
-          <div class="popular-pages-visited chart"></div>
+          <div class="chart-box">
+            <div class="popular-pages-visited chart"></div>
+          </div>
         </div>
       </div>
 
       <div class="keen-ui-row">
         <div class="keen-ui-col-6">
-          <div class="pageviews-by-browser chart"></div>
+          <div class="chart-box">
+            <div class="pageviews-by-browser chart"></div>
+          </div>
         </div>
         <div class="keen-ui-col-6">
-          <div class="pageviews-by-device chart"></div>
+          <div class="chart-box">
+            <div class="pageviews-by-device chart"></div>
+          </div>
         </div>
       </div>
 
       <div>
         <div class="keen-ui-col-6">
-          <div class="pageviews-by-country chart"></div>
+          <div class="chart-box">
+            <div class="pageviews-by-country chart"></div>
+          </div>
         </div>
         <div class="keen-ui-col-6">
-          <div class="pageviews-by-city chart"></div>
+          <div class="chart-box">
+            <div class="pageviews-by-city chart"></div>
+          </div>
         </div>
       </div>
 
@@ -88,28 +107,48 @@
 
       document.getElementById("timeframe").innerHTML="timeframe: " + timeframe.replace(/_/g, ' ');
 
-      const pageviewsInterval = new KeenDataviz({
-        container: '.pageviews-interval',
-        title: 'Pageviews by day',
-        type: 'area'
-      });
-
-      client
+      // https://github.com/keen/keen-analysis.js
+      const queryPageviews = client
         .query({
           analysis_type: 'count',
           event_collection: 'pageviews',
           timeframe: timeframe,
           interval: 'daily',
           timezone: window.timezone
-        })
-        .then(function(res){
+        });
+
+      const queryClicks = client
+        .query({
+          analysis_type: 'count',
+          event_collection: 'clicks',
+          timeframe: timeframe,
+          interval: 'daily',
+          timezone: window.timezone
+        });
+
+      client
+        .run([queryPageviews, queryClicks])
+        .then(function(results){
           // Handle the result
-          pageviewsInterval
-            .render(res);
+          // https://github.com/keen/keen-dataviz.js
+
+          const pageviewsInterval = new KeenDataviz({
+            container: '.pageviews-interval',
+            title: 'Pageviews by day',
+            type: 'area',
+            results,
+            labelMapping: {
+              'pageviews count': 'Pageviews',
+              'clicks count': 'Clicks'
+            },
+            legend: {
+              position: 'bottom'
+            }
+          });
         })
         .catch(function(err){
           // Handle the error
-          pageviewsInterval
+          pageviews
             .message(err.message);
         });
 
@@ -173,12 +212,12 @@
       const uniquePageviews = new KeenDataviz({
         container: '.unique-pageviews',
         type: 'metric',
-        title: 'Unique Pageviews by UUID'
+        title: 'Unique Pageviews'
       });
 
       client
         .query({
-          analysis_type: 'count',
+          analysis_type: 'count_unique',
           event_collection: 'pageviews',
           target_property: 'user.uuid',
           timeframe: timeframe,

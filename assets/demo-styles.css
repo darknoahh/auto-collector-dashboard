@@ -2,9 +2,7 @@ body {
   margin: 0;
   padding: 20px;
 }
-h1, h2, h3, label, select {
-  font-family: 'Gotham Rounded SSm A', 'Gotham Rounded SSm B', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-}
+
 h1 {
   font-weight: 200;
   margin: 0;
@@ -35,4 +33,31 @@ h3 {
   display: block;
   height: 32px;
   width: 100%;
+}
+
+.chart-box {
+  padding: 15px;
+  border: 1px solid #e7e7e7;
+  border-radius: 2px;
+  box-sizing: border-box;
+}
+
+.chart {
+  height: 300px;
+}
+
+.keen-dataviz-metric {
+  height: 332px;
+}
+
+.keen-dataviz .keen-dataviz-table {
+  height: 250px;
+}
+
+.keen-c3-legend-horizontal{
+  padding: 0em;
+  height: 1.8em;
+}
+.keen-dataviz-rendering .c3-chart {
+  flex-grow: 3;
 }
