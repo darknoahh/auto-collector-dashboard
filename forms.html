@@ -80,7 +80,7 @@
           event_collection: 'form_submissions',
           interval: 'daily',
           timeframe: timeframe,
-          timezone: 'UTC'
+          timezone: window.timezone
         })
         .then(function(res){
           // Handle the result
@@ -104,7 +104,7 @@
           analysis_type: 'count',
           event_collection: 'form_submissions',
           timeframe: timeframe,
-          timezone: 'UTC'
+          timezone: window.timezone
         })
         .then(function(res){
           // Handle the result
@@ -138,7 +138,7 @@
             'element.id'
           ],
           timeframe: timeframe,
-          timezone: 'UTC'
+          timezone: window.timezone
         })
         .then(function(res){
           // Handle the result
@@ -165,7 +165,7 @@
             'element.id'
           ],
           timeframe: timeframe,
-          timezone: 'UTC'
+          timezone: window.timezone
         })
         .then(function(res){
           // Handle the result

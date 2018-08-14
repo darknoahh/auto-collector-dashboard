@@ -98,7 +98,7 @@
           event_collection: 'clicks',
           timeframe: timeframe,
           interval: 'daily',
-          timezone: 'UTC'
+          timezone: window.timezone
         })
         .then(function(res){
           // Handle the result
@@ -122,7 +122,7 @@
           analysis_type: 'count',
           event_collection: 'clicks',
           timeframe: timeframe,
-          timezone: 'UTC'
+          timezone: window.timezone
         })
         .then(function(res){
           // Handle the result
@@ -157,7 +157,7 @@
           group_by: [
             'referrer.info.domain'
           ],
-          timezone: 'UTC'
+          timezone: window.timezone
         })
         .then(function(res){
           // Handle the result
@@ -182,7 +182,7 @@
           event_collection: 'clicks',
           target_property: 'user.uuid',
           timeframe: timeframe,
-          timezone: 'UTC'
+          timezone: window.timezone
         })
         .then(function(res){
           // Handle the result
@@ -218,7 +218,7 @@
             'time.local.day_of_week'
           ],
           timeframe: timeframe,
-          timezone: 'UTC'
+          timezone: window.timezone
         })
         .then(function(res){
           // Handle the result
@@ -245,7 +245,7 @@
             'tech.browser.family'
           ],
           timeframe: timeframe,
-          timezone: 'UTC'
+          timezone: window.timezone
         })
         .then(function(res){
           // Handle the result
@@ -272,7 +272,7 @@
             'tech.device.family'
           ],
           timeframe: timeframe,
-          timezone: 'UTC'
+          timezone: window.timezone
         })
         .then(function(res){
           // Handle the result
@@ -306,7 +306,7 @@
             'element.href'
           ],
           timeframe: timeframe,
-          timezone: 'UTC'
+          timezone: window.timezone
         })
         .then(function(res){
           // Handle the result
@@ -335,7 +335,7 @@
               'inverted': false,
               'optional': false,
               'timeframe': timeframe,
-              'timezone': 'UTC'
+              'timezone': window.timezone
           },
           {
               'actor_property': 'user.uuid',
@@ -343,7 +343,7 @@
               'inverted': false,
               'optional': false,
               'timeframe': timeframe,
-              'timezone': 'UTC'
+              'timezone': window.timezone
           },
           {
               'actor_property': 'user.uuid',
@@ -351,7 +351,7 @@
               'inverted': false,
               'optional': false,
               'timeframe': timeframe,
-              'timezone': 'UTC'
+              'timezone': window.timezone
           }]
         })
         .then(function(res){

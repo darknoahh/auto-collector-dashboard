@@ -100,7 +100,7 @@
           event_collection: 'pageviews',
           timeframe: timeframe,
           interval: 'daily',
-          timezone: 'UTC'
+          timezone: window.timezone
         })
         .then(function(res){
           // Handle the result
@@ -124,7 +124,7 @@
           analysis_type: 'count',
           event_collection: 'pageviews',
           timeframe: timeframe,
-          timezone: 'UTC'
+          timezone: window.timezone
         })
         .then(function(res){
           // Handle the result
@@ -157,7 +157,7 @@
           }],
           group_by: [
           'referrer.info.domain'],
-          timezone: 'UTC'
+          timezone: window.timezone
         })
         .then(function(res){
           // Handle the result
@@ -182,7 +182,7 @@
           event_collection: 'pageviews',
           target_property: 'user.uuid',
           timeframe: timeframe,
-          timezone: 'UTC'
+          timezone: window.timezone
         })
         .then(function(res){
           // Handle the result
@@ -218,7 +218,7 @@
             'time.local.day_of_week'
           ],
           timeframe: timeframe,
-          timezone: 'UTC'
+          timezone: window.timezone
         })
         .then(function(res){
           // Handle the result
@@ -271,7 +271,7 @@
             'tech.device.family'
           ],
           timeframe: timeframe,
-          timezone: 'UTC'
+          timezone: window.timezone
         })
         .then(function(res){
           // Handle the result
@@ -304,7 +304,7 @@
           ],
           timeframe: timeframe,
           interval: 'daily',
-          timezone: 'UTC'
+          timezone: window.timezone
         })
         .then(function(res){
           // Handle the result
@@ -332,7 +332,7 @@
             'geo.country'
           ],
           timeframe: timeframe,
-          timezone: 'UTC'
+          timezone: window.timezone
         })
         .then(function(res){
           // Handle the result
@@ -360,7 +360,7 @@
             'geo.city'
           ],
           timeframe: timeframe,
-          timezone: 'UTC'
+          timezone: window.timezone
         })
         .then(function(res){
           // Handle the result
