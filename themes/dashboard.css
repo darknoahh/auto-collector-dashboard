@@ -1,24 +1,9 @@
-.demo-theme-dashboard h1 {
-  color: #333;
-}
-.demo-theme-dashboard h2 {
-  color: #555;
-  font-size: 18px;
-}
-.demo-theme-dashboard h3 {
-  color: #888;
-  font-size: 14px;
-  font-weight: 200;
-  margin: 20px 0 5px;
-  text-transform: uppercase;
-}
 
 .demo-theme-dashboard .keen-dataviz {
 
 }
 .demo-theme-dashboard .keen-dataviz-title {
-  padding: 1rem;
-  text-transform: uppercase;
+
 }
 .demo-theme-dashboard .keen-dataviz-stage {
   padding: 10px;

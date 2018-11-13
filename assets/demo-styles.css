@@ -1,50 +1,37 @@
 body {
   margin: 0;
-  padding: 20px;
+  font-family: "Roboto", Tahoma, Arial;
+  background: #fbfbfb;
 }
 
-h1 {
-  font-weight: 200;
-  margin: 0;
-}
-h2 {
-  font-size: 21px;
-  margin: 48px 0 24px;
-  text-transform: uppercase;
-}
-h3 {
-  font-size: 16px;
-  margin: 0 0 24px;
-}
-
-#theme-selector {
-  background: #FFF;
-  border-radius: 0 0 2px 2px;
-  padding: 5px 10px 0;
-  position: absolute;
-  right: 20px;
-  top: 0px;
-  width: 200px;
-}
-#theme-selector label {
-  display: block;
-}
-#theme-selector select {
-  display: block;
-  height: 32px;
-  width: 100%;
-}
-
-.chart-box {
-  padding: 15px;
-  border: 1px solid #e7e7e7;
+.chart-box, .chart-box-metric {
+  padding: 1.5em;
+  border: 1px solid #f8f8f8;
+  background: #fff;
   border-radius: 2px;
   box-sizing: border-box;
+  border-radius: 0.5em;
+  box-shadow: 1px 1px 3px rgba(0,0,0,0.03);
 }
 
 .chart {
   height: 300px;
 }
+.chart-sm{
+  height: 150px;
+}
+
+.chart-donut .c3-chart-arc text {
+  fill: #555;
+  font-size: 1em;
+  transform: translate(0,0);
+  display: none;
+}
+
+.chart-donut .c3-chart-arcs .c3-target-1 text {
+  display: inherit;
+}
+
 
 .keen-dataviz-metric {
   height: 332px;
@@ -60,4 +47,144 @@ h3 {
 }
 .keen-dataviz-rendering .c3-chart {
   flex-grow: 3;
+}
+
+.c3-line {
+  stroke-width: 3px;
+}
+
+.keen-c3-legend-horizontal-items {
+  display: flex;
+  flex-direction: row;
+  height: 1.5em;
+}
+
+.c3-tooltip{
+  background: #555;
+  color: #fff;
+}
+
+.c3-tooltip-container span{
+  border-radius: 100%;
+}
+
+
+.keen-dataviz {
+  font-family: "Roboto", Tahoma, Arial;
+}
+
+.keen-dataviz .c3-tooltip-container th{
+  color: #fff;
+}
+
+.keen-dataviz .keen-dataviz-table .table-data-row td {
+    background-color: #fff;
+}
+.keen-dataviz .keen-dataviz-table .table-data-row:hover td{
+  background-color: #fff;
+}
+
+.keen-dataviz .keen-dataviz-table .table-data-row:nth-child(2n) td {
+    background-color: #fbfbfb;
+}
+
+.c3-axis-y g:nth-child(2n+1) {
+  display: none;
+  opacity: 0;
+}
+
+.c3-ygrids line:first-child{
+  display: none;
+  opacity: 0;
+}
+
+.keen-c3-legend .legend-item {
+    width: auto;
+}
+
+.c3 svg {
+  font: inherit;
+}
+
+.keen-dataviz .tick line, .keen-dataviz path.domain {
+  stroke-opacity: .1;
+}
+
+
+.c3-axis {
+  fill: #555;
+  font-size: 0.8em;
+}
+
+.keen-c3-legend-bottom {
+  margin-top:1em;
+  height: 2.5em;
+}
+
+.keen-c3-legend .legend-item {
+  align-items: center;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+}
+
+.keen-dataviz .keen-dataviz-table {
+  border: 0;
+}
+
+.keen-dataviz .keen-dataviz-table table {
+    font-size: 0.8em;
+    height: 100%;
+}
+
+.keen-c3-legend .legend-item-color-sample {
+    width: 1em;
+    height: 1em;
+    border-radius: 100%;
+}
+
+nav {
+  background: #fff;
+  padding: 0.5em;
+  display: flex;
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+nav .container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+}
+
+.keen-logo{
+  height: 2.5em;
+  margin-right: 0.5em;
+}
+
+.nav li{
+}
+
+.nav-tabs{
+  border: 0px;
+}
+
+.nav-tabs .nav-link.active{
+  border: 1px solid #fff;
+}
+
+.nav-tabs .nav-link:hover{
+  border: 1px solid #fff;
+}
+
+.nav-links{
+  flex: 1;
+}
+
+.nav-deploy-buttons{
+  flex: 0;
+  flex-wrap: nowrap;
+}
+
+.nav-deploy-buttons .nav-link{
+  padding: 0 0.5rem 0 0;
 }

@@ -2,72 +2,130 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Keen IO Auto-Collector Dashboard</title>
+    <title>Keen Auto-Collector Dashboard</title>
     <link rel="shortcut icon" href="https://keen.io/assets/images/favicon.ico"/>
     <!-- CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
     <link href="https://cdn.jsdelivr.net/npm/keen-dataviz@3/dist/keen-dataviz.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="./assets/keen-dashboards.css" />
     <link rel="stylesheet" href="./assets/demo-styles.css" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <!-- THEMES -->
     <link rel="stylesheet" href="./themes/dashboard.css" />
     <!-- JS -->
     <script crossorigin src="https://cdn.jsdelivr.net/npm/keen-analysis@3"></script>
-    <script crossorigin src="https://cdn.jsdelivr.net/npm/keen-dataviz@3.0.9/dist/keen-dataviz.min.js"></script>
+    <script crossorigin src="https://cdn.jsdelivr.net/npm/keen-dataviz@3/dist/keen-dataviz.min.js"></script>
     <!-- Keen Setttings -->
     <script src="./settings.js"></script>
   </head>
   <body class="demo-theme-dashboard" onload="settings()">
-    <div class="container">
-      <h1>
-        Keen IO Auto-Collector Dashboard
-        <a href="https://glitch.com/edit/#!/remix/auto-collector-dashboard"><img src="https://cdn.glitch.com/2703baf2-b643-4da7-ab91-7ee2a2d00b5b%2Fremix-button.svg" alt="Remix on Glitch" /></a>
-      </h1>
 
       <nav>
-        <ul class="nav nav-tabs">
-          <li role="presentation" class="active"><a href="./index.html">Pageviews</a></li>
-          <li role="presentation"><a href="./clicks.html">Clicks</a></li>
-          <li role="presentation"><a href="./forms.html">Forms</a></li>
-          <li role="presentation"><a href="https://github.com/keen/auto-collector-dashboard">Source Code on Github</a></li>
+        <div class="container">
+        <ul class="nav nav-tabs nav-links">
+          <li class="nav-item"><a class="nav-logo" href="./index.html"><img class="keen-logo" src="/img/logo.png"></a></li>
+          <li class="nav-item"><a class="nav-link active" href="./index.html">Overview</a></li>
+          <li class="nav-item"><a class="nav-link text-black-50" href="./index.html">Views</a></li>
+          <li class="nav-item"><a class="nav-link text-black-50" href="./clicks.html">Clicks</a></li>
+          <li class="nav-item"><a class="nav-link text-black-50" href="./forms.html">Forms</a></li>
         </ul>
+
+        <ul class="nav nav-tabs nav-deploy-buttons">
+          <li class="nav-item">
+            <a class="nav-link" href="https://app.netlify.com/start/deploy?repository=https://github.com/keen/auto-collector-dashboard">
+              <img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify">
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="https://heroku.com/deploy?template=https://github.com/keen/auto-collector-dashboard">
+              <img src="https://www.herokucdn.com/deploy/button.svg" alt="Deploy to Heroku">
+            </a>
+          </li>
+        </ul>
+      </div>
       </nav>
 
-      <h3 id="timeframe"></h3>
+      <div class="container">
+
+      <div class="mt-5 mb-3 w-100 d-flex">
+        <h3 class="flex-fill mb-0">
+          Keen Auto-Collector Dashboard
+        </h3>
+        <div class="align-self-end text-black-50" id="current-datetime"></div>
+      </div>
+
+
 
       <div class="keen-ui-row">
-        <div class="keen-ui-col-8">
+        <div class="keen-ui-col-9">
           <div class="chart-box">
             <div class="pageviews-interval chart"></div>
           </div>
         </div>
-        <div class="keen-ui-col-4">
-          <div class="chart-box-metric">
-            <div class="total-pageviews chart"></div>
+        <div class="keen-ui-col-3">
+        <div class="chart-box">
+          <div class="x-chart5 chart chart chart-donut"></div>
+        </div>
+        </div>
+      </div>
+
+      <div class="keen-ui-row">
+        <div class="keen-ui-col-2">
+          <div class="chart-box">
+            <div class="x-chart chart chart-sm chart-donut"></div>
+          </div>
+        </div>
+
+        <div class="keen-ui-col-2">
+          <div class="chart-box">
+            <div class="x-chart2 chart chart-sm chart-donut"></div>
+          </div>
+        </div>
+        <div class="keen-ui-col-8">
+          <div class="chart-box">
+            <div class="revenue-chart chart chart-sm "></div>
           </div>
         </div>
       </div>
 
       <div class="keen-ui-row">
+
         <div class="keen-ui-col-8">
           <div class="chart-box">
-            <div class="pageviews-by-referrer chart"></div>
+            <div class="top-5-w-referral chart"></div>
           </div>
         </div>
+
         <div class="keen-ui-col-4">
-          <div class="chart-box-metric">
-            <div class="unique-pageviews chart"></div>
-          </div>
+            <div class="chart-box">
+              <div class="x-chart3 chart chart chart-donut"></div>
+            </div>
         </div>
+
       </div>
 
       <div class="keen-ui-row">
         <div class="keen-ui-col-6">
+          <div class="chart-box">
+            <div class="top-5-avg-time chart"></div>
+          </div>
+        </div>
+        <div class="keen-ui-col-6">
+          <div class="chart-box">
+            <div class="views-by-page chart"></div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="keen-ui-row">
+        <div class="keen-ui-col-7">
           <div class="chart-box">
             <div class="pageviews-by-day chart"></div>
           </div>
         </div>
-        <div class="keen-ui-col-6">
+        <div class="keen-ui-col-5">
           <div class="chart-box">
             <div class="popular-pages-visited chart"></div>
           </div>
@@ -82,30 +140,336 @@
         </div>
         <div class="keen-ui-col-6">
           <div class="chart-box">
-            <div class="pageviews-by-device chart"></div>
+            <div class="pageviews-by-mobile chart"></div>
           </div>
         </div>
       </div>
 
-      <div>
-        <div class="keen-ui-col-6">
-          <div class="chart-box">
-            <div class="pageviews-by-country chart"></div>
-          </div>
-        </div>
-        <div class="keen-ui-col-6">
+      <div class="keen-ui-row">
+        <div class="keen-ui-col-5">
           <div class="chart-box">
             <div class="pageviews-by-city chart"></div>
           </div>
         </div>
+
+        <div class="keen-ui-col-7">
+          <div class="chart-box">
+            <div class="pageviews-by-country chart"></div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="keen-ui-row">
+        <div class="keen-ui-col-8">
+      <div class="chart-box">
+        <div class="pageviews-by-referrer chart"></div>
+      </div>
+        </div>
+
+          <div class="keen-ui-col-4">
+            <div class="chart-box">
+              <div class="x-chart4 chart  chart-donut"></div>
+            </div>
+          </div>
+
+</div>
       </div>
 
     </div>
 
     <script>
-    window.renderCharts = function(client, timeframe) {
+    /*
+autocollector-dashboard-demo---count-pageviews-previous-24h
+autocollector-dashboard-demo---count-pageviews-previous-48h
+autocollector-dashboard-demo---count-pageviews-previous-24h-interval-hourly
 
-      document.getElementById("timeframe").innerHTML="timeframe: " + timeframe.replace(/_/g, ' ');
+autocollector-dashboard-demo---count-pageviews-previous-7d
+autocollector-dashboard-demo---count-pageviews-previous-14d
+autocollector-dashboard-demo---count-pageviews-previous-7d-interval-daily
+
+autocollector-dashboard-demo---count-clicks-previous-24h
+autocollector-dashboard-demo---count-clicks-previous-48h
+autocollector-dashboard-demo---count-clicks-previous-24h-interval-hourly
+
+autocollector-dashboard-demo---count-clicks-previous-14d
+autocollector-dashboard-demo---count-clicks-previous-7d
+autocollector-dashboard-demo---count-clicks-previous-7d-interval-daily
+
+autocollector-dashboard-demo---count-pageviews-top-referrers-previous-7-days-interval-daily
+
+autocollector-dashboard-demo---count-pageviews-by-browser-family
+
+// avg time on site
+
+autocollector-dashboard-demo---count-unique-pageviews
+autocollector-dashboard-demo---count-unique-clicks
+
+
+// PERCENT of users on mobile (gauge)
+autocollector-dashboard-demo---count-pageviews-previous-24h
+autocollector-dashboard-demo---count-pageviews-previous-24h-mobile
+
+
+*/
+
+
+    const colors = ['#51a5de', '#76ddfb', '#5eadff', '#5e77ff', '#8698fc', '#6d83ff', '#5770ff', '#6d9aff'];
+
+    const pieColors = [
+      '#5E77FF',
+      '#9C60FE',
+      '#F162FE',
+      '#FD65B7',
+      '#FD6768',
+      '#FDB86A',
+      '#F2FC6C',
+      '#A5FC6E',
+      '#71FB85',
+      '#73FBD0',
+      '#76DDFA'
+    ];
+
+    const triadicColors = [
+      '#5e77ff',
+      '#ff5e77',
+      '#77ff5e',
+      '#ffe65e'
+    ];
+
+    const barColors = [
+      '#fed760',
+      '#FD5E76',
+      '#965eff',
+      '#9bc77b',
+      '#5e77ff',
+      '#ffe65e',
+      '#ff5e77',
+
+    ];
+
+    function parseInto2DArray(result, columnKey, rowKey){
+      const columns = [];
+      const rows = [];
+      const matrix = [];
+      matrix.push(['Index']);
+      const nulls = [];
+      result.forEach(item => {
+        let newColumn = item[columnKey];
+        if (matrix[0].indexOf(newColumn) === -1) {
+          matrix[0][matrix[0].length] = newColumn;
+          nulls.push(null);
+        }
+      });
+
+      result.forEach(item => {
+        let newRow = item[rowKey];
+        let rowIndex = matrix.findIndex(rowItem => rowItem[0] === newRow);
+        if (rowIndex === -1) {
+          matrix[matrix.length] = [newRow, ...nulls];
+          rowIndex = matrix.length - 1;
+        }
+        let columnIndex = matrix[0].findIndex(rowItem => rowItem === item[columnKey]);
+        matrix[rowIndex][columnIndex] = item.result;
+      });
+
+      return matrix;
+    }
+
+    window.renderCharts = function(client, timeframe) {
+/*
+      client
+    .query({
+      saved_query_name: '-clicks-on-sdks-by-name'
+    })
+    .then(res => {
+      // Handle results
+      console.log(res);
+    })
+    .catch(err => {
+      // Handle errors
+    });
+
+        return;
+*/
+
+
+      const revenuexChart = new KeenDataviz({
+        container: '.x-chart',
+        title: 'Conversion rate',
+        type: 'donut',
+        point: {
+        },
+        colors: [pieColors[0], '#fafafa'],
+        padding: {
+        },
+        legend: { show: false },
+      //  label: { show: false },
+        tooltip: {
+  show: false
+},
+donut: {
+  width: 12,
+  label: {
+
+    format: function (value, ratio, id) {
+  //    return d3.format('$')(value);
+      return value + '%';
+    }
+  //  show: false
+  }
+},
+        results: {result: [{x:1, result: 66}, {x:2, result:34}]}
+      });
+
+
+
+      const revenuexChart2 = new KeenDataviz({
+        container: '.x-chart2',
+        title: 'Total orders',
+        type: 'donut',
+        point: {
+        },
+        colors: [pieColors[1], '#fafafa'],
+        padding: {
+        },
+        legend: { show: false },
+      //  label: { show: false },
+        tooltip: {
+  show: false
+},
+donut: {
+  width: 12,
+  label: {
+
+    format: function (value, ratio, id) {
+  //    return d3.format('$')(value);
+      return '$' + value;
+    }
+  //  show: false
+  }
+},
+        results: {result: [{x:1, result: 1260}, {x:2, result:300}]}
+      });
+
+
+      new KeenDataviz({
+        container: '.x-chart3',
+        title: 'Traffic New vs Returning',
+        type: 'bar',
+        point: {
+        },
+        colors: barColors,
+        padding: {
+        },
+      //  label: { show: false },
+donut: {
+  width: 12
+},
+        results: {result: [{x:'New', result: 360}, {x:'Returning', result:700}]}
+      });
+
+      new KeenDataviz({
+        container: '.x-chart4',
+        title: 'Revenue New vs Recurring',
+        type: 'donut',
+        point: {
+        },
+        colors: triadicColors,
+        padding: {
+        },
+      //  label: { show: false },
+
+
+donut: {
+  width: 20,
+  label: {
+    format: function (value, ratio, id) {
+  //    return d3.format('$')(value);
+      return  id + ' ' + value + '%';
+    }
+},
+},
+        results: {result: [{x:'New', result: 1360}, {x:'Recurring', result:300}]}
+      });
+
+
+
+
+      new KeenDataviz({
+        container: '.x-chart5',
+        title: 'Traffic Direct vs Referrals',
+        type: 'donut',
+        point: {
+        },
+        colors: pieColors,
+        padding: {
+        },
+        legend:{
+          position: 'bottom'
+        },
+      //  label: { show: false },
+donut: {
+  width: 20
+},
+        results: {result: [{x:'Direct', result: 160}, {x:'Referrals', result:220}]}
+      });
+
+      const revenueChart = new KeenDataviz({
+        container: '.revenue-chart',
+        title: 'Reveune this month',
+        type: 'area-spline',
+        point: {
+          r: 0,
+          focus: {
+            expand: {
+              r: 5,
+              enabled: true
+            },
+          },
+          select: {
+            r: 5,
+            enabled: true
+          }
+        },
+
+        axis: {
+  y: {
+    show: false
+  },
+  x: {
+    show:false
+  }
+},
+
+grid:{
+  x: {
+    show: false
+  },
+  y: {
+    show: false
+  }
+
+},
+
+        colors: triadicColors,
+        padding: {
+          left: -25,
+          right: -25
+        },
+      });
+      revenueChart.call(function(){
+        const dataset = [['Index', 'Result']];
+        let sum = 21422;
+        for(let i=1;i<13;i++){
+          sum = Math.round(30000 * Math.random() );
+          dataset.push([i, sum]);
+        }
+        this.dataset.matrix = dataset;
+      })
+      .render();
+
+      // document.getElementById("timeframe").innerHTML="timeframe: " + timeframe.replace(/_/g, ' ');
 
       // https://github.com/keen/keen-analysis.js
       const queryPageviews = client
@@ -134,8 +498,8 @@
 
           const pageviewsInterval = new KeenDataviz({
             container: '.pageviews-interval',
-            title: 'Pageviews by day',
-            type: 'area',
+            title: 'Page Views By Day',
+            type: 'line',
             results,
             labelMapping: {
               'pageviews count': 'Pageviews',
@@ -143,32 +507,29 @@
             },
             legend: {
               position: 'bottom'
-            }
+            },
+            point: {
+              r: 0,
+              focus: {
+                expand: {
+                  r: 3,
+                  enabled: true
+                },
+              },
+              select: {
+                r: 4,
+                enabled: true
+              }
+            },
+            colors: triadicColors,
+            padding: {
+              right: 20,
+              left: 40,
+            },
           });
-        })
-        .catch(function(err){
-          // Handle the error
-          pageviews
-            .message(err.message);
-        });
 
-      const pageviews = new KeenDataviz({
-        container: '.total-pageviews',
-        type: 'metric',
-        title: 'Pageviews'
-      });
+          pageviewsInterval.view._artifacts.c3.select(false, false);
 
-      client
-        .query({
-          analysis_type: 'count',
-          event_collection: 'pageviews',
-          timeframe: timeframe,
-          timezone: window.timezone
-        })
-        .then(function(res){
-          // Handle the result
-          pageviews
-            .render(res);
         })
         .catch(function(err){
           // Handle the error
@@ -178,9 +539,17 @@
 
       const pageviewsByReferrer = new KeenDataviz({
         container: '.pageviews-by-referrer',
-        type: 'table',
-        title: 'Pageviews by Referrer',
-        sortGroups: 'desc'
+        type: 'horizontal-bar',
+        title: 'Top 10 Referral Sources',
+        sortGroups: 'desc',
+        colors: triadicColors
+        /*
+        labelMapping: {
+          Index: 'Source',
+          Result: 'Count'
+        },
+        labelMappingDimension: 'both'
+        */
       });
 
       client
@@ -190,9 +559,9 @@
           timeframe: 'previous_1_months',
           filters: [
           {
-              'operator': 'ne',
-              'property_name': 'referrer.info.domain',
-              'property_value': null
+            'operator': 'ne',
+            'property_name': 'referrer.info.domain',
+            'property_value': null
           }],
           group_by: [
           'referrer.info.domain'],
@@ -209,6 +578,109 @@
             .message(err.message);
         });
 
+      client
+          .query({
+            analysis_type: 'count',
+            event_collection: 'pageviews',
+            timeframe: 'previous_1_months',
+            filters: [
+            {
+              'operator': 'ne',
+              'property_name': 'referrer.info.domain',
+              'property_value': null
+            }],
+            group_by: ['url.info.path', 'referrer.info.domain'],
+            timezone: window.timezone
+          })
+          .then(function(res){
+            // Handle the result
+
+            pageviewsByPageByReferrer
+  .call(function(){
+    this.dataset.matrix = parseInto2DArray(res.result, 'referrer.info.domain', 'url.info.path');
+  })
+  .render();
+
+          })
+          .catch(function(err){
+            // Handle the error
+            pageviewsByPageByReferrer
+              .message(err.message);
+          });
+          const pageviewsByPageByReferrer = new KeenDataviz({
+            container: '.top-5-w-referral',
+            type: 'bar',
+            stacked: true,
+            title: 'Top 5 Pages /w referral source',
+            sortGroups: 'desc',
+            colors: barColors,
+            legend: {
+              position: 'bottom',
+            }
+          });
+
+          const top5avgTime = new KeenDataviz({
+            container: '.top-5-avg-time',
+            type: 'pie',
+            title: 'Top 5 Pages Avg Time One Page',
+            colors: pieColors,
+            sortGroups: 'desc',
+          });
+
+          client
+            .query({
+              analysis_type: 'average',
+              target_property: 'time.local.hour',
+              event_collection: 'pageviews',
+              group_by: 'geo.country',
+              timeframe: timeframe,
+              timezone: window.timezone
+            })
+            .then(function(res){
+              // Handle the result
+              top5avgTime
+                .render(res);
+            })
+            .catch(function(err){
+              // Handle the error
+              top5avgTime
+                .message(err.message);
+            });
+
+
+            const viewsByPage = new KeenDataviz({
+              container: '.views-by-page',
+              type: 'table',
+              title: 'Views By Page',
+              labelMapping: {
+                Index: 'Page',
+                Result: 'Views'
+              },
+              labelMappingDimension: 'both',
+              sortGroups: 'desc',
+            });
+
+            client
+              .query({
+                analysis_type: 'count',
+                event_collection: 'pageviews',
+                timeframe: 'previous_1_months',
+                group_by: ['url.info.path'],
+                timezone: window.timezone
+              })
+              .then(function(res){
+                // Handle the result
+                viewsByPage
+                  .render(res);
+              })
+              .catch(function(err){
+                // Handle the error
+                viewsByPage
+                  .message(err.message);
+              });
+
+
+      /*
       const uniquePageviews = new KeenDataviz({
         container: '.unique-pageviews',
         type: 'metric',
@@ -233,11 +705,11 @@
           uniquePageviews
             .message(err.message);
         });
-
+*/
       const pageviewsByDay = new KeenDataviz({
         container: '.pageviews-by-day',
-        type: 'horizontal-bar',
-        title: 'Pageviews by Day of the Week',
+        type: 'bar',
+        title: 'Views by Day of the Week',
         labelMapping: {
           '1': 'Sunday',
           '2': 'Monday',
@@ -246,7 +718,8 @@
           '5': 'Thursday',
           '6': 'Friday',
           '7': 'Saturday'
-         }
+        },
+        labelMappingDimension: 'row'
       });
 
       client
@@ -256,13 +729,14 @@
           group_by: [
             'time.local.day_of_week'
           ],
-          timeframe: timeframe,
+          timeframe,
           timezone: window.timezone
         })
         .then(function(res){
           // Handle the result
           pageviewsByDay
             .render(res);
+
         })
         .catch(function(err){
           // Handle the error
@@ -272,8 +746,9 @@
 
       const pageviewsByBrowser = new KeenDataviz({
         container: '.pageviews-by-browser',
-        type: 'pie',
-        title: 'Pageviews by Browser'
+        type: 'donut',
+        title: 'Pageviews by Browser',
+        colors: pieColors
       });
 
       client
@@ -282,8 +757,18 @@
           group_by: [
             'tech.browser.family'
           ],
-          timeframe: timeframe,
-          timezone: "UTC"
+          filters: [{
+            property_name: 'tech.browser.family',
+            operator: 'ne',
+            property_value: 'Other'
+          },
+          {
+            property_name: 'tech.browser.family',
+            operator: 'ne',
+            property_value: 'Googlebot'
+          }],
+          timeframe,
+          timezone
         })
         .then(function(res){
           // Handle the result
@@ -296,41 +781,76 @@
             .message(err.message);
         });
 
-      const pageviewsByDevice = new KeenDataviz({
-        container: '.pageviews-by-device',
-        type: 'pie',
-        title: 'Pageviews by Device Family'
-      });
 
-      client
-        .query({
-          analysis_type: 'count',
-          event_collection: 'pageviews',
-          group_by: [
-            'tech.device.family'
-          ],
-          timeframe: timeframe,
-          timezone: window.timezone
-        })
-        .then(function(res){
-          // Handle the result
-          pageviewsByDevice
-            .render(res);
-        })
-        .catch(function(err){
-          // Handle the error
-          pageviewsByDevice
-            .message(err.message);
+        const pageviewsByMobile = new KeenDataviz({
+          container: '.pageviews-by-mobile',
+          type: 'donut',
+          title: 'Bounce rate',
+          colors: pieColors,
+          legend: false,
+
         });
+
+        client
+          .query('count', {
+            event_collection: 'pageviews',
+            filters: [{
+              property_name: 'tech.browser.family',
+              operator: 'contains',
+              property_value: 'Mobile'
+            },
+            {
+              property_name: 'tech.browser.family',
+              operator: 'ne',
+              property_value: 'Googlebot'
+            }],
+            timeframe,
+            timezone
+          })
+          .then(function(res){
+            // Handle the result
+
+            client
+              .query('count', {
+                event_collection: 'pageviews',
+                filters: [{
+                  property_name: 'tech.browser.family',
+                  operator: 'not_contains',
+                  property_value: 'Mobile'
+                },
+                {
+                  property_name: 'tech.browser.family',
+                  operator: 'ne',
+                  property_value: 'Googlebot'
+                }],
+                timeframe,
+                timezone
+              })
+              .then(function(res2){
+                pageviewsByMobile.call(function(){
+                  const dataset = [['Index', 'Result']];
+                  dataset.push(['Desktop', res2.result]);
+                  dataset.push(['Mobile', res.result]);
+                  this.dataset.matrix = dataset;
+                })
+                .render();
+              });
+
+          })
+          .catch(function(err){
+            // Handle the error
+            pageviewsByMobile
+              .message(err.message);
+          });
 
       const popularPages = new KeenDataviz({
         container: '.popular-pages-visited',
-        title: 'Popular Pages Visited by Title',
-        type: 'line',
-        axis: {
-          y: {
-            padding: {bottom:0}
-          }
+        title: 'Page views by title',
+        type: 'bar',
+        stacked: true,
+        colors: barColors,
+        legend:{
+          position: 'top'
         }
       });
 
@@ -339,11 +859,11 @@
           analysis_type: 'count',
           event_collection: 'pageviews',
           group_by: [
-            'url.info.path'
+            'page.title'
           ],
-          timeframe: timeframe,
+          timeframe,
           interval: 'daily',
-          timezone: window.timezone
+          timezone
         })
         .then(function(res){
           // Handle the result
@@ -358,9 +878,10 @@
 
       const pageviewsByCountry = new KeenDataviz({
         container: '.pageviews-by-country',
-        type: 'table',
+        type: 'horizontal-bar',
         title: 'Pageviews by Country',
-        sortGroups: 'desc'
+        sortGroups: 'desc',
+        colors: triadicColors
       });
 
       client
@@ -370,8 +891,8 @@
           group_by: [
             'geo.country'
           ],
-          timeframe: timeframe,
-          timezone: window.timezone
+          timeframe,
+          timezone
         })
         .then(function(res){
           // Handle the result
@@ -398,8 +919,8 @@
           group_by: [
             'geo.city'
           ],
-          timeframe: timeframe,
-          timezone: window.timezone
+          timeframe,
+          timezone
         })
         .then(function(res){
           // Handle the result
@@ -412,17 +933,6 @@
             .message(err.message);
         });
 
-      function rand(a, b){
-        return Math.floor((Math.random() * b) + a);
-      }
-
-      function gen(n){
-        var arr = [ faker.internet.exampleEmail() ];
-        for (var i = 0; i < n; i++) {
-          arr.push(rand(0, 1000));
-        }
-        return arr;
-      }
 
     }
     </script>

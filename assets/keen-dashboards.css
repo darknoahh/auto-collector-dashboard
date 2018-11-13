@@ -871,7 +871,6 @@
 .keen-dashboard .keen-dataviz-title {
   border-bottom: 1px solid #E7E7E7;
   border-radius: 2px 2px 0 0;
-  font-size: 12px;
   padding: 0 10px;
 }
 
@@ -883,8 +882,6 @@
   background: #FBFBFB;
   border-radius: 0 0 2px 2px;
   border-top: 1px solid #E7E7E7;
-  font-family: 'Gotham Rounded SSm A', 'Gotham Rounded SSm B', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font-size: 11px;
   padding: 5px 10px;
 }
 
@@ -895,7 +892,6 @@
 /*! Viewer app styles */
 
 .keen-dashboard {
-  font-family: 'Gotham Rounded SSm A', 'Gotham Rounded SSm B', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   margin: 0 0 10px;
 }
 
