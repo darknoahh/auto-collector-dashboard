@@ -18,6 +18,10 @@
     <script crossorigin src="https://cdn.jsdelivr.net/npm/keen-dataviz@3/dist/keen-dataviz.min.js"></script>
     <!-- Keen Setttings -->
     <script src="./settings.js"></script>
+    <script src="./coordinates.js"></script>
+
+    <link href='https://api.tiles.mapbox.com/mapbox.js/v2.0.1/mapbox.css' rel='stylesheet' />
+    <script type="text/javascript" src="https://api.tiles.mapbox.com/mapbox.js/v2.0.1/mapbox.js"></script>
   </head>
   <body class="demo-theme-dashboard" onload="settings()">
 
@@ -54,8 +58,6 @@
         </h3>
         <div class="align-self-end text-black-50" id="current-datetime"></div>
       </div>
-
-
 
       <div class="keen-ui-row">
         <div class="keen-ui-col-9">
@@ -173,10 +175,14 @@
             </div>
           </div>
 
-</div>
+        </div>
       </div>
 
+      <div id="map" class="map"></div>
+
     </div>
+
+
 
     <script>
     /*
@@ -210,9 +216,10 @@ autocollector-dashboard-demo---count-unique-clicks
 autocollector-dashboard-demo---count-pageviews-previous-24h
 autocollector-dashboard-demo---count-pageviews-previous-24h-mobile
 
+MAP
+autocollector-dashboard-demo---count-pageviews-by-city
 
 */
-
 
     const colors = ['#51a5de', '#76ddfb', '#5eadff', '#5e77ff', '#8698fc', '#6d83ff', '#5770ff', '#6d9aff'];
 
@@ -277,21 +284,199 @@ autocollector-dashboard-demo---count-pageviews-previous-24h-mobile
     }
 
     window.renderCharts = function(client, timeframe) {
-/*
+
       client
     .query({
-      saved_query_name: '-clicks-on-sdks-by-name'
+      saved_query_name: 'autocollector-dashboard-demo---count-pageviews-by-city'
     })
     .then(res => {
-      // Handle results
-      console.log(res);
-    })
-    .catch(err => {
-      // Handle errors
+
+      const citiesFromResult = res.result;
+      citiesFromResult.forEach(cityFromResult => {
+        let cityInCoordinatesArray =
+          coordinates.find(item => item.fields.city.toLowerCase() === cityFromResult['geo.city'].toLowerCase());
+        if (cityInCoordinatesArray) {
+          cityFromResult.coordinates = cityInCoordinatesArray.geometry.coordinates;
+        }
+      });
+
+      const citiesWithCoordinates = citiesFromResult.filter(city => !!city.coordinates);
+
+      console.log(citiesWithCoordinates);
+
+      var DEFAULTS,
+          GEO,
+          client,
+          circle,
+          marker,
+          map,
+          activeMapData,
+          keenMapData;
+
+      // DOM Elements
+      var appWrapperNode,
+          appMapAreaNode,
+          latNode,
+          lngNode,
+          radiusValueNode,
+          radiusUnitsNode,
+          timeframeStartNode,
+          timeframeEndNode,
+          refreshButton;
+
+      DEFAULTS = {
+        timeframe: {
+          start: '2014-08-01',
+          end: '2014-08-15'
+        },
+        lat: 35.77350,
+        lng: -95.41104,
+        radius: 10,
+        units: 'km',
+        zoom: 5
+      };
+
+      GEO = {
+        meters: 0,
+        miles: 0,
+        lat: DEFAULTS.lat,
+        lng: DEFAULTS.lng,
+        center: [ DEFAULTS.lat, DEFAULTS.lng ],
+        radius: DEFAULTS.radius,
+        units: DEFAULTS.units,
+        zoom: DEFAULTS.zoom
+      };
+
+
+        // DOM is ready
+    //   appWrapperNode     = document.getElementById('app-wrapper');
+        appMapAreaNode     = document.getElementById('map');
+       latNode            = '35,7735';
+        lngNode            = '-122,41104';
+      radiusValueNode    = '1000'
+        radiusUnitsNode    = 'km';
+        timeframeStartNode = '01/08/2014';
+     timeframeEndNode   = '15/08/2014';
+
+        adjust();
+        init();
+
+      function init(){
+        var params = getParams();
+
+        // Get params
+        if (params.center) {
+          GEO.center = params.center.split(',');
+        }
+        if (params.latitude && params.longitude) {
+          GEO.lat = parseFloat(params.latitude);
+          GEO.lng = parseFloat(params.longitude);
+        }
+        if (params.units) {
+          GEO.units = params.units;
+          radiusUnitsNode.value = GEO.units;
+        }
+        if (params.meters) {
+          GEO.meters = parseFloat(params.meters);
+          if (GEO.units === 'km') radiusValueNode.value = parseInt(GEO.meters) / 1000;
+        }
+        if (params.miles) {
+          GEO.miles = parseFloat(params.miles);
+          if (GEO.units === 'mi') radiusValueNode.value = GEO.miles;
+        }
+        if (params.zoom) {
+          GEO.zoom = parseFloat(params.zoom);
+        }
+
+        // Create map instance
+        L.mapbox.accessToken = 'pk.eyJ1Ijoia2Vlbi1pbyIsImEiOiIza0xnNXBZIn0.PgzKlxBmYkOq6jBGErpqOg';
+        map = L.mapbox.map('map', 'keen-io.kae20cg0', {
+          attributionControl: true,
+          center: GEO.center,
+          zoom: GEO.zoom
+        });
+
+        activeMapData = L.layerGroup().addTo(map);
+
+        setGeoSelection();
+
+        keenMapData = L.layerGroup().addTo(map);
+
+        refresh();
+      }
+
+      function getParams(selector) {
+        return {};
+      }
+
+      function updateQuery() {
+        var params, str;
+        setGeoSelection();
+      }
+
+      function setGeoSelection(){
+      }
+
+      function refresh() {
+        draw();
+      }
+
+      function adjust(){
+
+      }
+
+      function draw(){
+        var options = {
+          start: timeframeStartNode.value,
+          end: timeframeEndNode.value,
+          latitude: latNode.value,
+          longitude: lngNode.value,
+          radius: GEO.miles,
+          zoom: GEO.zoom
+        };
+
+          activeMapData.clearLayers();
+
+          citiesWithCoordinates.forEach((city, index) => {
+            let size = 'small';
+            if (city.result > 3) {
+              size = 'medium';
+            }
+            if (city.result > 7) {
+              size = 'large';
+            }
+                      var em = L.marker(new L.LatLng(city.coordinates[1], city.coordinates[0]), {
+                        icon: L.mapbox.marker.icon({
+                          'marker-color': '#00bbde',
+                          'marker-color': '#7056bf',
+                          'marker-size':  size,
+                          'marker-symbol': city.result
+                        })
+
+
+                      }).addTo(activeMapData);;
+                    });
+          /*
+
+          icon: L.icon({
+            'marker-color': '#00bbde',
+  iconUrl: './img/large.png',
+  iconRetinaUrl: './img/large.png',
+  iconSize: [size, size]
+})
+
+          */
+
+      }
+
+
+
+
+
     });
 
         return;
-*/
+
 
 
       const revenuexChart = new KeenDataviz({
