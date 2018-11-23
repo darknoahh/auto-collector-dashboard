@@ -9,9 +9,7 @@
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/keen-dataviz@3/dist/keen-dataviz.min.css" rel="stylesheet" />
-  <link rel="stylesheet" href="./assets/keen-dashboards.css" />
   <link rel="stylesheet" href="./assets/demo-styles.css" />
-  <link rel="stylesheet" href="./themes/dashboard.css" />
   <!-- JS -->
   <script crossorigin src="https://cdn.jsdelivr.net/npm/keen-analysis@3"></script>
   <script crossorigin src="https://cdn.jsdelivr.net/npm/keen-dataviz@3/dist/keen-dataviz.min.js"></script>
@@ -52,26 +50,37 @@
       <div class="align-self-end text-black-50" id="current-datetime"></div>
     </div>
 
-    <div class="keen-ui-row">
-      <div class="keen-ui-col-3">
+
+    <div class="row">
+      <div class="col-sm-12">
+        <div
+          id="chart-views-uniques-7d"
+          class="chart-box chart-box-relative">
+      </div>
+    </div>
+    </div>
+
+
+    <div class="row">
+      <div class="col-sm-3">
         <div
           id="chart-views-last-24h"
           class="chart-box chart-box-relative">
       </div>
     </div>
-    <div class="keen-ui-col-3">
+    <div class="col-sm-3">
       <div
         id="chart-views-last-7d"
         class="chart-box chart-box-relative">
     </div>
   </div>
-  <div class="keen-ui-col-3">
+  <div class="col-sm-3">
     <div
       id="chart-clicks-last-24h"
       class="chart-box chart-box-relative">
     </div>
   </div>
-  <div class="keen-ui-col-3">
+  <div class="col-sm-3">
     <div
       id="chart-clicks-last-7d"
       class="chart-box chart-box-relative">
@@ -79,126 +88,57 @@
   </div>
 </div>
 
-<div class="keen-ui-row">
-  <div class="keen-ui-col-7">
+<div class="row d-flex">
+  <div class="col-sm-7 d-flex">
     <div class="chart-box views-box">
       <div class="chart-top-referrers chart"></div>
     </div>
   </div>
-  <div class="keen-ui-col-5">
-    <div class="chart-box">
+  <div class="col-sm-5 d-flex">
+    <div class="chart-box d-flex">
       <div class="chart-user-agents chart"></div>
     </div>
   </div>
 </div>
 
-<div class="keen-ui-row">
-  <div class="keen-ui-col-2">
+<div class="row">
+  <div class="col-sm-3 d-flex">
     <div class="chart-box">
-      <div class="x-chart chart chart-sm chart-donut"></div>
+      <div class="metric-box" id="unique-users-this-7d">
+      </div>
     </div>
   </div>
-
-  <div class="keen-ui-col-2">
+  <div class="col-sm-3 d-flex">
     <div class="chart-box">
-      <div class="x-chart2 chart chart-sm chart-donut"></div>
+      <div class="metric-box" id="average-time-on-page">
+      </div>
     </div>
   </div>
-  <div class="keen-ui-col-8">
+  <div class="col-sm-3 d-flex">
     <div class="chart-box">
-      <div class="revenue-chart chart chart-sm "></div>
+      <div class="metric-box" id="average-clicks-per-user">
+      </div>
     </div>
   </div>
-</div>
-
-<div class="keen-ui-row">
-
-  <div class="keen-ui-col-8">
+  <div class="col-sm-3 d-flex">
     <div class="chart-box">
-      <div class="top-5-w-referral chart"></div>
-    </div>
-  </div>
-
-  <div class="keen-ui-col-4">
-    <div class="chart-box">
-      <div class="x-chart3 chart chart chart-donut"></div>
+      <div class="metric-box" id="average-scroll-ratio">
+      </div>
     </div>
   </div>
 
 </div>
 
-<div class="keen-ui-row">
-  <div class="keen-ui-col-6">
-    <div class="chart-box">
-      <div class="top-5-avg-time chart"></div>
-    </div>
-  </div>
-  <div class="keen-ui-col-6">
-    <div class="chart-box">
-      <div class="views-by-page chart"></div>
-    </div>
+<div class="row">
+  <div class="col-sm-12 chart-box-top">
+    <div class="map-label">Visitor locations</div>
+    <div id="map" class="map"></div>
   </div>
 </div>
 
-
-<div class="keen-ui-row">
-  <div class="keen-ui-col-7">
-    <div class="chart-box">
-      <div class="pageviews-by-day chart"></div>
-    </div>
-  </div>
-  <div class="keen-ui-col-5">
-    <div class="chart-box">
-      <div class="popular-pages-visited chart"></div>
-    </div>
-  </div>
 </div>
 
-<div class="keen-ui-row">
-  <div class="keen-ui-col-6">
-    <div class="chart-box">
-      <div class="pageviews-by-browser chart"></div>
-    </div>
-  </div>
-  <div class="keen-ui-col-6">
-    <div class="chart-box">
-      <div class="pageviews-by-mobile chart"></div>
-    </div>
-  </div>
-</div>
 
-<div class="keen-ui-row">
-  <div class="keen-ui-col-5">
-    <div class="chart-box">
-      <div class="pageviews-by-city chart"></div>
-    </div>
-  </div>
-
-  <div class="keen-ui-col-7">
-    <div class="chart-box">
-      <div class="pageviews-by-country chart"></div>
-    </div>
-  </div>
-
-</div>
-
-<div class="keen-ui-row">
-  <div class="keen-ui-col-8">
-    <div class="chart-box">
-      <div class="pageviews-by-referrer chart"></div>
-    </div>
-  </div>
-
-  <div class="keen-ui-col-4">
-    <div class="chart-box">
-      <div class="x-chart4 chart  chart-donut"></div>
-    </div>
-  </div>
-
-</div>
-</div>
-
-<div id="map" class="map"></div>
 
 </div>
 
@@ -460,7 +400,7 @@ window.renderCharts = function(client, timeframe) {
       L.mapbox.accessToken = 'pk.eyJ1Ijoia2Vlbi1pbyIsImEiOiIza0xnNXBZIn0.PgzKlxBmYkOq6jBGErpqOg';
       const map = L.mapbox.map('map', 'keen-io.kae20cg0', {
         attributionControl: true,
-        center: [ 35.77350, -95.41104 ],
+        center: [ 35.77350, -98.41104 ],
         zoom: 5
       });
       activeMapData = L.layerGroup().addTo(map);
@@ -478,6 +418,7 @@ window.renderCharts = function(client, timeframe) {
           icon: L.mapbox.marker.icon({
             'marker-color': '#00bbde',
             'marker-color': '#7056bf',
+            'marker-color': '#5e77ff',
             'marker-size':  size,
             'marker-symbol': city.result
           })
@@ -511,19 +452,77 @@ client
     padding: {
       left: 50,
       top: 0,
-      right: 20,
-      bottom: 0
+      right: 35,
+      bottom: 10
     },
-    axis: {
-      y: {
-    padding: {
-      top: 100
-    }
-  }
-    },
-
   });
 });
+
+
+
+
+
+// !!! pageviews
+
+client
+.query({
+  saved_query_name: 'autocollector-dashboard-demo---count-pageviews-previous-7d-interval-daily'
+})
+.then(results => {
+
+  client
+  .query({
+    saved_query_name: 'autocollector-dashboard-demo---count-pageviews-previous-7d-interval-daily-unique-users'
+  })
+  .then(results2 => {
+
+  const pageviewsInterval = new KeenDataviz({
+    container: '#chart-views-uniques-7d',
+    title: 'Page Views by Day',
+    type: 'line',
+    colors: pieColors,
+    results: [results, results2],
+    legend: {
+      position: 'top'
+    },
+    sortGroups: 'desc',
+    padding: {
+      left: 50,
+      top: 0,
+      right: 35,
+      bottom: 10
+    },
+
+    point: {
+      r: 0,
+      focus: {
+        expand: {
+          r: 3,
+          enabled: true
+        },
+      },
+      select: {
+        r: 4,
+        enabled: true
+      }
+    },
+    colors: pieColors,
+    padding: {
+      right: 20,
+      left: 40,
+    },
+  });
+
+  pageviewsInterval.view._artifacts.c3.select(false, false);
+
+
+
+
+
+    });
+
+});
+
 
 
 client
@@ -538,12 +537,97 @@ const revenuexChart = new KeenDataviz({
   type: 'pie',
   colors: pieColors,
   results,
-  sortGroups: 'desc'
+  sortGroups: 'desc',
+  legend: {
+    pagination: {
+      limit: 3
+    }
+  }
 });
 });
+
+
+const metricBox = ({ title, value, container, icon }) => {
+  const element = document.getElementById(container);
+  element.innerHTML = `
+  <i class='fas fa-${icon}'></i>
+  <div class='label'>
+    <div class='value'>${value}</div>
+    <div class='title'>${title}</div>
+  </div>
+  `;
+};
+
+client
+.query({
+  saved_query_name: 'autocollector-dashboard-demo---unique-users-this-7d'
+})
+.then(results => {
+  metricBox({
+    title: 'Unique Visitors',
+    icon: 'users',
+    value: results.result,
+    container: 'unique-users-this-7d'
+  });
+});
+
+client
+.query({
+  saved_query_name: 'autocollector-dashboard-demo---average-time-on-page'
+})
+.then(results => {
+  metricBox({
+    title: 'Avg Time on Site',
+    icon: 'clock',
+    value: results.result.toFixed(0) + ' seconds',
+    container: 'average-time-on-page'
+  });
+});
+
+client
+.query({
+  saved_query_name: 'autocollector-dashboard-demo---average-clicks-per-user'
+})
+.then(results => {
+  const clicksPerUser = Math.floor(
+    results.result.reduce((acc = 0, item) => {
+      return (acc.result || acc || 0) + parseInt(item.result);
+    }) / results.result.length
+  );
+  metricBox({
+    title: 'Avg Clicks per User',
+    icon: 'hand-pointer',
+    value: clicksPerUser,
+    container: 'average-clicks-per-user'
+  });
+});
+
+client
+.query({
+  saved_query_name: 'autocollector-dashboard-demo---average-scroll-ratio'
+})
+.then(results => {
+  metricBox({
+    title: 'Avg Page Read',
+    icon: 'percent',
+    value: results.result.toFixed(2) * 100,
+    container: 'average-scroll-ratio'
+  });
+});
+
+// autocollector-dashboard-demo---unique-users-this-7d
+// autocollector-dashboard-demo---average-time-on-page
+// autocollector-dashboard-demo---average-clicks-per-user
+// autocollector-dashboard-demo---average-scroll-ratio
+
 return;
 
 // autocollector-dashboard-demo---count-pageviews-top-referrers-previous-7-days-interval-daily
+
+// autocollector-dashboard-demo---unique-users-this-7d
+// autocollector-dashboard-demo---average-time-on-page
+// autocollector-dashboard-demo---average-clicks-per-user
+// autocollector-dashboard-demo---average-scroll-ratio
 
 const revenuexChart = new KeenDataviz({
   container: '.x-chart',

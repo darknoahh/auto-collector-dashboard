@@ -12,6 +12,7 @@ body {
   border-radius: 0.5em;
   box-shadow: 1px 1px 3px rgba(0,0,0,0.03);
   padding: 0.5em;
+  flex: 1;
 }
 
 .chart {
@@ -117,7 +118,7 @@ body {
 }
 
 .keen-c3-legend-pagination-icons i {
-    border-top: 1.5em solid #AAACAD;
+    border-top: 1.5em solid #e5e5e5;
 }
 
 .keen-c3-legend-bottom {
@@ -196,7 +197,47 @@ nav .container {
 #map{
   width: 100%;
   height: 500px;
+  border-radius: 0.3em;
 }
+
+.metric-box{
+  display: flex;
+  flex-direction: row;
+  padding: 1.5em;
+  align-items: center;
+}
+
+.metric-box .label{
+  align-self: flex-start;
+  flex: 3;
+      align-items: center;
+}
+
+.metric-box .value{
+  align-self: flex-start;
+  font-size: 1.3em;
+      flex: 1;
+      align-items: center;
+}
+
+.metric-box .title{
+  align-self: flex-start;
+      flex: 1;
+      font-size: 0.8em;
+      align-items: center;
+}
+
+.metric-box .fas{
+  align-self: flex-start;
+  color: #5e77ff;
+  font-size: 3.1em;
+  align-items: center;
+  flex: 1;
+  display: flex;
+  height: 100%;
+  padding-right: 0.4em;
+}
+
 
 .chart-inline-label-increased{
   color: #13d0a7;
@@ -270,5 +311,126 @@ padding-bottom: 0;
 }
 
 .chart-user-agents{
+  height: 100%;
+}
+
+.keen-c3-legend{
+  width: 130px;
+  z-index: 99999;
+  position: absolute;
+  right: 0;
+  top: 1em;
+}
+.keen-c3-legend .legend-item {
+  width: 100%;
+}
+
+.keen-c3-legend {
+    width: 88px;
+    z-index: 99999;
+    position: absolute;
+    right: 1.5em;
+    top: 1.5em;
+    overflow: hidden;
+}
+
+.demo-theme-dashboard .keen-dataviz-title{
+
+}
+
+.chart-user-agents .c3-chart svg{
+  margin: 1em auto;
+
+}
+
+.chart-user-agents .keen-dataviz-rendering .c3-chart {
+  margin-top: -2.5em;
+}
+
+.keen-ui-row{
+  display: flex;
+}
+
+.row{
+  margin: 0 -1rem 1rem;
+}
+
+.col, .col-1, .col-10, .col-11, .col-12, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-auto, .col-lg, .col-lg-1, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-auto, .col-md, .col-md-1, .col-md-10, .col-md-11, .col-md-12, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-auto, .col-sm, .col-sm-1, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-auto, .col-xl, .col-xl-1, .col-xl-10, .col-xl-11, .col-xl-12, .col-xl-2, .col-xl-3, .col-xl-4, .col-xl-5, .col-xl-6, .col-xl-7, .col-xl-8, .col-xl-9, .col-xl-auto{
+  padding: 0 0.5rem;
+}
+
+.demo-theme-dashboard .keen-dataviz {
+
+}
+.demo-theme-dashboard .keen-dataviz-title {
+
+}
+.demo-theme-dashboard .keen-dataviz-stage {
+  padding: 10px;
+}
+.demo-theme-dashboard .keen-dataviz-notes {
+  background: #fbfbfb;
+  border-radius: 0 0 2px 2px;
+  border-top: 1px solid #e7e7e7;
+  font-size: 11px;
+  padding: 0 10px;
+}
+
+.demo-theme-dashboard .keen-dataviz .keen-dataviz-metric {
+  border-radius: 2px;
+}
+
+.demo-theme-dashboard .keen-dataviz .keen-spinner-indicator {
+  border-top-color: rgba(0, 187, 222, .4);
+}
+
+body > div.container > div.row.d-flex > div.col-sm-7.d-flex > div > div > div > div.keen-dataviz-rendering.keen-dataviz-rendering-horizontal > div > svg > g:nth-child(2) > g.c3-axis.c3-axis-y > g:nth-child(2) {
+  display: none;
+}
+
+body > div.container > div.row.d-flex > div.col-sm-7.d-flex > div > div > div > div.keen-dataviz-rendering.keen-dataviz-rendering-horizontal > div > svg > g:nth-child(2) > g.c3-axis.c3-axis-x > g:nth-child(2) > line {
+  display: none;
+}
+
+body > div.container > div.row.d-flex > div.col-sm-7.d-flex > div > div > div > div.keen-dataviz-rendering.keen-dataviz-rendering-horizontal > div > svg > g:nth-child(2) > g.c3-axis.c3-axis-x > g:nth-child(8) > line{
+  display: none;
+}
+
+.chart-top-referrers .keen-dataviz-title, .chart-user-agents .keen-dataviz-title{
+  font-size: 1.2em;
+}
+
+
+
+body {
+  background: #fbfbfb;
+  background: #fff;
+}
+
+.chart-inline-label-decreased {
+  color: #5e77ff;
+}
+
+.chart-box, .chart-box-metric {
+    border: 1px solid #0000000d;
+    background: #fff;
+    border-radius: 2px;
+    box-sizing: border-box;
+    border-radius: 0.3em;
+    box-shadow: none;
+    flex: 1;
+}
+
+.map-label {
+  padding: 0.6em 0.3em 0.3em;
+  font-size: 1.3em;
+}
+
+#chart-views-uniques-7d{
   height: 300px;
+  padding: 1em;
+}
+
+#chart-views-uniques-7d .keen-c3-legend{
+  width: 250px;
 }
