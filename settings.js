@@ -7,7 +7,7 @@ window.settings = () => {
 
   // This is the projectId and readKey for an example project
   // Replace both with your own projectId and readKey to visualize data from your own Auto-Collector project
-  window.renderCharts(new KeenAnalysis({
+  window.initializeDashboard(new KeenAnalysis({
   //   projectId: '5812b6058db53dfda8a75af9',
   //  readKey: '9AD57194D00E31D4D7D0DF02EF72E00162C6E515B343BB3BB75EFFD0B00D8DF1'
    projectId: '5011efa95f546f2ce2000000',

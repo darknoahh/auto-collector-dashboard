@@ -113,7 +113,7 @@ body {
 
 
 .c3-axis {
-  fill: #AAACAD;
+  fill: #636363;
   font-size: 0.8em;
 }
 
@@ -152,6 +152,7 @@ nav {
   padding: 0.5em;
   display: flex;
   box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.2);
 }
 
 nav .container {
@@ -298,8 +299,11 @@ nav .container {
 }
 
 .chart-top-referrers .keen-dataviz-title{
-  margin-bottom: 0;
-padding-bottom: 0;
+
+}
+
+.chart-top-referrers .keen-c3-legend{
+  width: 270px;
 }
 
 .c3-axis-y:nth-child(1){
@@ -396,19 +400,50 @@ body > div.container > div.row.d-flex > div.col-sm-7.d-flex > div > div > div > 
   display: none;
 }
 
+#tab-content-clicks > div:nth-child(1) > div > div > div > div.keen-dataviz-rendering.keen-dataviz-rendering-vertical > div.c3-chart.c3 > svg > g:nth-child(2) > g.c3-axis.c3-axis-y > g:nth-child(2) > text > tspan {
+display: none;
+}
+
+#tab-content-clicks > div:nth-child(1) > div > div > div > div.keen-dataviz-rendering.keen-dataviz-rendering-vertical > div.c3-chart.c3 > svg > g:nth-child(2) > g.c3-axis.c3-axis-x > g:nth-child(2) > text > tspan
+{  display: none;
+}
+
+#tab-content-overview > div.row.d-flex > div.col-sm-7.d-flex > div > div > div > div.keen-dataviz-rendering.keen-dataviz-rendering-horizontal > div > svg > g:nth-child(2) > g.c3-axis.c3-axis-y > g:nth-child(2) > text > tspan{
+  display: none;
+}
+
+#chart-views-uniques-7d > div > div.keen-dataviz-rendering.keen-dataviz-rendering-horizontal > div.c3-chart.c3-chart-100-percent.c3 > svg > g:nth-child(2) > g.c3-axis.c3-axis-y > g:nth-child(2) > text > tspan{
+  display: none;
+}
+
+#tab-content-overview > div.row.d-flex > div > div > div > div > div.keen-dataviz-rendering.keen-dataviz-rendering-horizontal > div > svg > g:nth-child(2) > g.c3-axis.c3-axis-y > g:nth-child(2) > text > tspan{
+  display: none;
+}
+
 .chart-top-referrers .keen-dataviz-title, .chart-user-agents .keen-dataviz-title{
   font-size: 1.2em;
 }
 
+.chart-user-agents .keen-dataviz-rendering{
+
+}
 
 
 body {
   background: #fbfbfb;
-  background: #fff;
+  xbackground: #fff;
 }
 
-.chart-inline-label-decreased {
+.alternative .chart-inline-label-decreased {
   color: #5e77ff;
+}
+
+.alternative .chart-inline-label-decreased-important {
+  color: #9c60fe !important;
+}
+
+.box-small .keen-dataviz-title{
+  font-size: 1.1em;
 }
 
 .chart-box, .chart-box-metric {
@@ -427,10 +462,203 @@ body {
 }
 
 #chart-views-uniques-7d{
-  height: 300px;
+  height: 400px;
   padding: 1em;
 }
 
 #chart-views-uniques-7d .keen-c3-legend{
-  width: 250px;
+  width: 170px;
+}
+
+.chart-pageviews-by-country-interval-daily, .chart-views-by-hour{
+  height: 380px;
+}
+
+.chart-pageviews-by-country-interval-daily .keen-c3-legend {
+width: 120px;
+top: 100px;
+}
+
+.chart-pageviews-by-day-of-week{
+  height: 380px;
+}
+
+.chart-count-views-by-page{
+  height: 380px;
+}
+
+.chart-longest-time-on-page{
+  height: 380px;
+}
+
+.chart-pageviews-by-user{
+  height: 24em;
+}
+
+.chart-pageviews-by-referrer{
+  height: 24em;
+}
+
+.chart-top-pages-with-referral{
+  height: 24em;
+}
+
+.chart-pageviews-by-os{
+  height: 24em;
+}
+
+.chart-top-pages-screen-width{
+  height: 24em;
+}
+
+.chart-count-views-by-page .keen-dataviz-title{
+  margin-bottom:0;
+}
+
+.chart-top-pages-screen-width .keen-dataviz-title{
+  margin-bottom:0;
+  padding-bottom: 0;
+}
+
+.chart-count-views-by-page .keen-c3-legend {
+    width: 88px;
+    z-index: 99999;
+    position: absolute;
+    right: 8%;
+    top: 22%;
+    overflow: hidden;
+}
+
+.chart-count-views-by-page .keen-c3-legend{
+  width: 150px;
+  overflow: visible;
+}
+
+.keen-dataviz-title{
+  font-size: 1.3em;
+  color: #485465;
+}
+
+.keen-c3-legend {
+
+}
+
+.chart-table {
+    height: 24em;
+}
+
+.chart-table .keen-dataviz .keen-dataviz-table {
+    height: 20em;
+}
+
+.chart-table .keen-dataviz-title{
+  margin-bottom:0;
+  padding-bottom:0;
+}
+
+.chart-table .keen-dataviz-table td,
+.chart-table .keen-dataviz-table th {
+  padding: 1.5em;
+}
+
+.chart-pageviews-by-referrer .c3-chart {
+  flex-grow: inherit;
+  padding-left: 25%;
+  margin-top: -5%;
+}
+
+.chart-pageviews-by-referrer .keen-c3-legend {
+    width: 170px;
+    left: 1.2em;
+    top: 3.7em;
+}
+
+
+.chart-count-views-by-page .c3-chart {
+  flex-grow: inherit;
+  padding-left: 37%;
+  margin-top: -5%;
+}
+
+.chart-count-views-by-page .keen-c3-legend {
+    width: 190px;
+    left: 1.2em;
+    top: 3.7em;
+}
+
+.hide{
+  display:none;
+}
+
+.chart-clicks-by-country-daily,
+.chart-clicks-by-country{
+  height: 24em;
+}
+
+.chart-clicks-by-country-daily .keen-dataviz-title{
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.chart-clicks-by-country-daily .keen-c3-legend {
+    width: 120px;
+}
+
+
+.chart-clicks-by-country{
+  height: 24em;
+}
+
+.chart-clicks-by-country .keen-dataviz-title{
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.chart-clicks-by-country .keen-c3-legend {
+    width: 120px;
+}
+
+.chart-outbound-clicks{
+  width: 100%;
+}
+
+.chart-clicks-by-html-tag,
+.chart-clicks-by-button-in-org-section,
+.chart-clicks-by-button-in-static-section,
+.chart-clicks-api-docs-sdks,
+.chart-clicks-login-google-github,
+.chart-clicks-api-docs-sdks-by-country,
+.chart-clicks-explorer
+{
+  height: 24em;
+}
+
+.chart-clicks-by-button-in-org-section .keen-dataviz-title,
+.chart-clicks-by-button-in-static-section .keen-dataviz-title,
+.chart-clicks-by-html-tag .keen-dataviz-title,
+.chart-clicks-api-docs-sdks .keen-dataviz-title,
+.chart-clicks-login-google-github .keen-dataviz-title,
+.chart-clicks-api-docs-sdks-by-country .keen-dataviz-title
+{
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+
+.chart-clicks-by-button-in-static-section .keen-c3-legend{
+  width: 120px;
+}
+
+.chart-clicks-by-button-in-static-section{
+
+
+}
+
+.c3-tooltip-container {
+    z-index: 99999999;
+}
+
+
+.z{
+
 }

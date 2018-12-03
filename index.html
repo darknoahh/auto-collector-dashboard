@@ -22,13 +22,15 @@
 
 <body class="demo-theme-dashboard" onload="settings()">
 
+
+
   <nav>
     <div class="container">
       <ul class="nav nav-tabs nav-links">
-        <li class="nav-item"><a class="nav-logo" href="./index.html"><img class="keen-logo" src="/img/logo.png"></a></li>
-        <li class="nav-item"><a class="nav-link active" href="./index.html">Overview</a></li>
-        <li class="nav-item"><a class="nav-link text-black-50" href="./index.html">Views</a></li>
-        <li class="nav-item"><a class="nav-link text-black-50" href="./clicks.html">Clicks</a></li>
+        <li class="nav-item"><a id="a-logo" class="nav-logo" href="./index.html"><img class="keen-logo" src="/img/logo.png"></a></li>
+        <li class="nav-item tab tab-overview"><a id="a-overview" class="nav-link active" href="#">Overview</a></li>
+        <li class="nav-item tab tab-views"><a id="a-views" class="nav-link" href="#">Views</a></li>
+        <li class="nav-item tab tab-clicks"><a id="a-clicks" class="nav-link" href="#">Clicks</a></li>
       </ul>
 
       <ul class="nav nav-tabs nav-deploy-buttons">
@@ -43,108 +45,289 @@
 
   <div class="container">
 
-    <div class="mt-5 mb-3 w-100 d-flex">
-      <h3 class="flex-fill mb-0">
-        Keen Auto-Collector Dashboard
-      </h3>
+    <div class="mt-5 mb-4 w-100 d-flex">
+      <h4 class="flex-fill mb-0">
+        Keen - AutoCollector Dash - <span id="header-tab-name"></span>
+      </h4>
       <div class="align-self-end text-black-50" id="current-datetime"></div>
     </div>
 
 
+
+
+    <div id="tab-content-overview" class="hide tab-content">
+        <div class="row">
+          <div class="col-sm-3">
+            <div
+              id="chart-views-last-24h"
+              class="chart-box chart-box-relative box-small">
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div
+            id="chart-views-last-7d"
+            class="chart-box chart-box-relative box-small">
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <div
+          id="chart-clicks-last-24h"
+          class="chart-box chart-box-relative box-small">
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <div
+          id="chart-clicks-last-7d"
+          class="chart-box chart-box-relative box-small">
+        </div>
+      </div>
+    </div>
+
+    <div class="row d-flex">
+      <div class="col-sm-12 d-flex">
+        <div class="chart-box views-box">
+          <div class="chart-top-referrers chart"></div>
+        </div>
+      </div>
+    </div>
+
     <div class="row">
+      <div class="col-sm-3 d-flex">
+        <div class="chart-box">
+          <div class="metric-box" id="unique-users-this-7d">
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-3 d-flex">
+        <div class="chart-box">
+          <div class="metric-box" id="average-time-on-page">
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-3 d-flex">
+        <div class="chart-box">
+          <div class="metric-box" id="average-clicks-per-user">
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-3 d-flex">
+        <div class="chart-box">
+          <div class="metric-box" id="average-scroll-ratio">
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12 chart-box-top">
+        <div class="map-label">Visitor locations</div>
+        <div id="map" class="map"></div>
+      </div>
+    </div>
+
+    </div>
+
+
+
+
+
+
+
+<div id="tab-content-views" class="hide tab-content">
+
+<div class="row">
       <div class="col-sm-12">
         <div
           id="chart-views-uniques-7d"
           class="chart-box chart-box-relative">
       </div>
     </div>
+</div>
+
+<div class="row">
+    <div class=" col-sm-6">
+      <div class="chart chart-box chart-count-views-by-page"></div>
     </div>
+    <div class=" col-sm-6">
+      <div class="chart chart-box chart-table chart-pageviews-by-referrer"></div>
+    </div>
+</div>
+
+<div class="row">
+    <div class=" col-sm-4">
+      <div class="chart chart-box chart-pageviews-by-day-of-week"></div>
+    </div>
+    <div class=" col-sm-8">
+      <div class="chart chart-box chart-views-by-hour"></div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-6">
+      <div class="chart chart-box chart-table chart-percent-of-page-read"></div>
+    </div>
+    <div class=" col-sm-6">
+      <div class="chart chart-box chart-table chart-longest-time-on-page"></div>
+    </div>
+</div>
+
+
+<div class="row">
+<div class=" col-sm-12">
+  <div class="chart chart-box chart-pageviews-by-country-interval-daily"></div>
+</div>
+</div>
+
+
+<div class="row">
+    <div class="col-sm-6">
+      <div class="chart chart-box chart-pageviews-by-os"></div>
+    </div>
+    <div class="col-sm-6">
+      <div class="chart chart-box chart-top-pages-screen-width"></div>
+    </div>
+</div>
+
+</div>
+
+
+
+
+<div id="tab-content-clicks" class="hide tab-content">
+
+  <div class="row">
+    <div class="col-sm-12">
+    <div class="chart chart-box chart-clicks-explorer">
+    </div>
+    </div>
+  </div>
+
 
 
     <div class="row">
-      <div class="col-sm-3">
-        <div
-          id="chart-views-last-24h"
-          class="chart-box chart-box-relative">
+      <div class="col-sm-6">
+        <div class="chart chart-box chart-clicks-by-country">
+          </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="chart chart-box chart-table chart-outbound-clicks">
+        </div>
       </div>
     </div>
-    <div class="col-sm-3">
-      <div
-        id="chart-views-last-7d"
-        class="chart-box chart-box-relative">
-    </div>
-  </div>
-  <div class="col-sm-3">
-    <div
-      id="chart-clicks-last-24h"
-      class="chart-box chart-box-relative">
-    </div>
-  </div>
-  <div class="col-sm-3">
-    <div
-      id="chart-clicks-last-7d"
-      class="chart-box chart-box-relative">
-    </div>
-  </div>
-</div>
 
-<div class="row d-flex">
-  <div class="col-sm-7 d-flex">
-    <div class="chart-box views-box">
-      <div class="chart-top-referrers chart"></div>
+  <div class="row">
+    <div class="col-sm-6">
+    <div class=" chart chart-box chart-clicks-by-button-in-org-section">
     </div>
-  </div>
-  <div class="col-sm-5 d-flex">
-    <div class="chart-box d-flex">
-      <div class="chart-user-agents chart"></div>
     </div>
-  </div>
-</div>
 
-<div class="row">
-  <div class="col-sm-3 d-flex">
-    <div class="chart-box">
-      <div class="metric-box" id="unique-users-this-7d">
-      </div>
+    <div class="col-sm-6">
+    <div class="chart chart-box chart-clicks-by-button-in-static-section">
+    </div>
     </div>
   </div>
-  <div class="col-sm-3 d-flex">
-    <div class="chart-box">
-      <div class="metric-box" id="average-time-on-page">
-      </div>
+
+
+  <div class="row">
+    <div class="col-sm-12">
+    <div class="chart chart-box chart-clicks-by-country-daily">
+    </div>
     </div>
   </div>
-  <div class="col-sm-3 d-flex">
-    <div class="chart-box">
-      <div class="metric-box" id="average-clicks-per-user">
-      </div>
+
+
+  <div class="row">
+    <div class="col-sm-4">
+    <div class="chart chart-box chart-clicks-login-google-github">
+    </div>
+    </div>
+    <div class="col-sm-8">
+    <div class="chart chart-box chart-clicks-api-docs-sdks-by-country">
+    </div>
     </div>
   </div>
-  <div class="col-sm-3 d-flex">
-    <div class="chart-box">
-      <div class="metric-box" id="average-scroll-ratio">
-      </div>
+
+  <div class="row">
+
+    <div class="col-sm-6">
+    <div class="chart chart-box chart-clicks-by-html-tag">
     </div>
+    </div>
+
+    <div class="col-sm-6">
+    <div class="chart chart-box chart-clicks-api-docs-sdks">
+    </div>
+    </div>
+
   </div>
+
 
 </div>
 
-<div class="row">
-  <div class="col-sm-12 chart-box-top">
-    <div class="map-label">Visitor locations</div>
-    <div id="map" class="map"></div>
-  </div>
 </div>
-
-</div>
-
-
 
 </div>
 
 
 
 <script>
+
+
+let activeTab;
+
+function jsUcfirst(string)
+{
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+function switchTab(tabName){
+  activeTab = tabName;
+  const headerTab = document.querySelector('#header-tab-name');
+  headerTab.innerHTML = jsUcfirst(tabName);
+  const tabs = document.querySelectorAll('.nav-links .tab a');
+  tabs.forEach(tab => {
+    tab.classList.remove('active');
+    tab.classList.add('text-black-50');
+  });
+  const tab = document.querySelector(`.nav-links .tab-${tabName} a`);
+  tab.classList.add('active');
+  tab.classList.remove('text-black-50');
+  const tabContents = document.querySelectorAll('.tab-content');
+  tabContents.forEach(tab => {
+    tab.classList.add('hide');
+  });
+  const tabContent = document.getElementById(`tab-content-${tabName}`);
+  tabContent.classList.remove('hide');
+  window.renderCharts();
+}
+
+const aLogo = document.getElementById('a-logo');
+aLogo.addEventListener('click', (e) => {
+  e.preventDefault();
+  switchTab('overview');
+});
+
+const aOverview = document.getElementById('a-overview');
+aOverview.addEventListener('click', (e) => {
+  e.preventDefault();
+  switchTab('overview');
+});
+
+const aViews = document.getElementById('a-views');
+aViews.addEventListener('click', (e) => {
+  e.preventDefault();
+  switchTab('views');
+});
+
+const aClicks = document.getElementById('a-clicks');
+aClicks.addEventListener('click', (e) => {
+  e.preventDefault();
+  switchTab('clicks');
+});
+
+
+
 /*
 
 autocollector-dashboard-demo---count-pageviews-top-referrers-previous-7-days-interval-daily
@@ -179,7 +362,10 @@ const pieColors = [
   '#A5FC6E',
   '#71FB85',
   '#73FBD0',
-  '#76DDFA'
+  '#76DDFA',
+  '#76f4fa',
+  '#bb76fa',
+  '#fa76bf'
 ];
 
 const triadicColors = [
@@ -267,7 +453,7 @@ const areaChartWithDetails = ({
       let faDirection = 'up';
       if (percentDifference < 0){
         faDirection = 'down';
-        percentLabel.classList.add('chart-inline-label-decreased');
+        percentLabel.classList.add('chart-inline-label-decreased', 'chart-inline-label-decreased-important');
         countLabel.classList.add('chart-inline-label-decreased');
       }
       if (percentDifference > 0){
@@ -322,14 +508,763 @@ const areaChartWithDetails = ({
       },
       colors: ['#5e77ff'],
       padding: {
-        left: -25,
-        right: -25
+        left: 0,
+        right: 0
       },
     });
   });
 };
 
-window.renderCharts = function(client, timeframe) {
+window.initializeDashboard = function(client, timeframe) {
+
+  window.renderCharts = () => {
+
+  /*
+    query: 'autocollector-dashboard-demo---top-pages-with-referral',
+  */
+
+if (activeTab === 'views') {
+client
+  .query({
+    saved_query_name: 'autocollector-dashboard-demo---pageviews-by-country-interval-daily'
+  })
+  .then(results => {
+    results.result.forEach(result => {
+      result.value.sort((a,b) =>{
+        return b.result - a.result;
+      })
+      .splice(7, 9999);
+    });
+    const chart = new KeenDataviz({
+      container: `.chart-pageviews-by-country-interval-daily`,
+      title: 'Views by country',
+      type: 'bar',
+      legend: {
+        position: 'right',
+        pagination: {
+          limit: 9
+        },
+        label: {
+          textMaxLength: 30
+        }
+      },
+      results,
+      sortGroups: 'desc',
+      colors: pieColors,
+      padding: {
+        left: 55,
+        top: 0,
+        right: 25,
+        bottom: 30
+      }
+    });
+});
+
+client
+  .query({
+    saved_query_name: 'autocollector-dashboard-demo---count-pageviews-by-day-of-week'
+  })
+  .then(results => {
+    const chart = new KeenDataviz({
+      container: `.chart-pageviews-by-day-of-week`,
+      title: 'Views by day of the week',
+      type: 'area',
+      labelMapping: {
+        1: 'Sun',
+        2: 'Mon',
+        3: 'Tue',
+        4: 'Wed',
+        5: 'Thu',
+        6: 'Fri',
+        7: 'Sat'
+      },
+      legend: {
+        position: 'right',
+        pagination: {
+          limit: 7
+        },
+        label: {
+          textMaxLength: 30
+        }
+      },
+      colors: pieColors,
+      results,
+      padding: {
+        left: 60,
+        top: 0,
+        right: 30,
+        bottom: 20
+      }
+    });
+});
+
+client
+  .query({
+    saved_query_name: 'autocollector-dashboard-demo---views-by-hour'
+  })
+  .then(results => {
+    const chart = new KeenDataviz({
+      container: `.chart-views-by-hour`,
+      title: 'Views by hour',
+      type: 'bar',
+      legend: {
+        position: 'right',
+        pagination: {
+          limit: 7
+        },
+        label: {
+          textMaxLength: 30
+        }
+      },
+      colors: pieColors,
+      results,
+      padding: {
+        left: 45,
+        top: 0,
+        right: 20,
+        bottom: 20
+      },
+      axis:{
+
+      }
+    });
+});
+
+
+
+client
+  .query({
+    saved_query_name: 'autocollector-dashboard-demo---count-views-by-page'
+  })
+  .then(results => {
+    results.result.sort((a,b) =>{
+      return b.result - a.result;
+    })
+    .splice(10, 9999);
+    const chart = new KeenDataviz({
+      container: `.chart-count-views-by-page`,
+      title: 'Top pages by views',
+      type: 'pie',
+      stacked: true,
+    //  sortGroups: 'desc',
+      legend: {
+        position: 'right',
+        pagination: {
+          limit: 10
+        },
+        label: {
+          textMaxLength: 30
+        }
+      },
+      colors: pieColors,
+      results,
+      padding: {
+        left: 0,
+        top: 0,
+        right: 0,
+        bottom: 0
+      }
+    });
+});
+
+client
+  .query({
+    saved_query_name: 'autocollector-dashboard-demo---longest-time-on-page'
+  })
+  .then(results => {
+    results.result.forEach(a =>{
+      a.result = (a.result).toFixed(0);
+    });
+    results.result.sort((a,b) =>{
+      return b.result - a.result;
+    });
+    const chart = new KeenDataviz({
+      container: `.chart-longest-time-on-page`,
+      title: 'Time on page',
+      type: 'table',
+      labelMapping: {
+        Index: 'Link',
+        Result: 'Seconds'
+      },
+      labelMappingDimension: 'column',
+      results
+    });
+});
+
+client
+  .query({
+    saved_query_name: 'autocollector-dashboard-demo---percent-of-page-read'
+  })
+  .then(results => {
+    results.result.forEach(a =>{
+      a.result = (a.result * 100).toFixed(0);
+    });
+    results.result.sort((a,b) =>{
+      return b.result - a.result;
+    });
+    const chart = new KeenDataviz({
+      container: `.chart-percent-of-page-read`,
+      title: 'Pages by scroll depth',
+      type: 'table',
+      labelMapping: {
+        Index: 'Page',
+        Result: '%'
+      },
+      labelMappingDimension: 'column',
+      legend: {
+        position: 'right',
+        pagination: {
+          limit: 6
+        },
+        label: {
+          textMaxLength: 30
+        }
+      },
+      colors: pieColors,
+      results
+    });
+});
+
+
+client
+.query({
+  saved_query_name: 'autocollector-dashboard-demo---count-pageviews-top-referrers-previous-7-days'
+})
+    .then(function(results){
+      // Handle the result
+      results.result.sort((a,b) =>{
+        return b.result - a.result;
+      })
+      .splice(20,9999);
+      const chart = new KeenDataviz({
+        container: `.chart-pageviews-by-referrer`,
+        title: 'Pageviews by referrer',
+        type: 'donut',
+        labelMapping: {
+          Index: 'Domain',
+          Result: 'Visitors'
+        },
+        labelMappingDimension: 'column',
+        legend: {
+          position: 'left',
+          label: {
+            textMaxLength: 32
+          },
+          pagination: {
+            limit: 11
+          }
+        },
+        padding:{
+          left: 40
+        },
+        donut: {
+          width: 60
+        },
+        colors: pieColors,
+
+        results
+      });
+
+    })
+    .catch(function(err){
+      // Handle the error
+
+    });
+
+
+client
+    .query({
+      saved_query_name: 'autocollector-dashboard-demo---screen-width'
+    })
+        .then(function(results){
+          // Handle the result
+          results.result.sort((a,b) =>{
+            return b.result - a.result;
+          })
+          .splice(10,9999);
+
+          const chart = new KeenDataviz({
+            container: `.chart-top-pages-screen-width`,
+            title: 'Screen resolutions',
+            type: 'horizontal-bar',
+            results,
+            colors: pieColors,
+            padding: {
+              bottom: 20
+            }
+          });
+
+        })
+        .catch(function(err){
+          // Handle the error
+
+        });
+
+client
+            .query({
+              saved_query_name: 'autocollector-dashboard-demo---pageviews-by-os'
+            })
+                .then(function(results){
+                  // Handle the result
+                  results.result.sort((a,b) =>{
+                    return b.result - a.result;
+                  })
+                  .splice(3,9999);
+
+                  const chart = new KeenDataviz({
+                    container: `.chart-pageviews-by-os`,
+                    title: 'Guests by OS',
+                    type: 'bar',
+                    results,
+                    colors: pieColors,
+                    padding: {
+                      bottom: 20,
+                      right: 30
+                    }
+                  });
+
+                })
+                .catch(function(err){
+                  // Handle the error
+
+                });
+
+                // !!! pageviews
+
+                client
+                .query({
+                  saved_query_name: 'autocollector-dashboard-demo---count-pageviews-previous-7d-interval-daily'
+                })
+                .then(results => {
+
+                  client
+                  .query({
+                    saved_query_name: 'autocollector-dashboard-demo---count-pageviews-previous-7d-interval-daily-unique-users'
+                  })
+                  .then(results2 => {
+
+                  const pageviewsInterval = new KeenDataviz({
+                    container: '#chart-views-uniques-7d',
+                    title: 'Page views by day',
+                    type: 'area',
+                    colors: pieColors,
+                    results: [results, results2],
+                    legend: {
+                      position: 'top'
+                    },
+                    labelMapping: {
+                      'pageviews count': 'Views',
+                      'pageviews count_unique': 'Uniques'
+                    },
+                    sortGroups: 'desc',
+                    padding: {
+                      left: 50,
+                      top: 0,
+                      right: 35,
+                      bottom: 10
+                    },
+
+                    point: {
+                      r: 0,
+                      focus: {
+                        expand: {
+                          r: 4,
+                          enabled: true
+                        },
+                      },
+                      select: {
+                        r: 5,
+                        enabled: true
+                      }
+                    },
+                    padding: {
+                      right: 20,
+                      left: 40,
+                    },
+                  });
+
+                  pageviewsInterval.view._artifacts.c3.select(false, false);
+
+                    });
+
+                });
+
+return;
+}
+
+
+if (activeTab === 'clicks') {
+
+
+  client
+  .query({
+    saved_query_name: 'autocollector-dashboard-demo---clicks-by-country-daily'
+  })
+      .then(function(results){
+        // Handle the result
+        results.result.forEach(result => {
+          result.value.sort((a,b) =>{
+            return b.result - a.result;
+          })
+          .splice(7, 9999);
+        });
+        const chart = new KeenDataviz({
+          container: `.chart-clicks-by-country-daily`,
+          title: 'Clicks by Country daily',
+          type: 'bar',
+          padding:{
+            left: 60,
+            bottom: 20
+          },
+          legend: {
+            pagination:{
+              limit: 12
+            },
+            label: {
+              textMaxLength: 32
+            }
+          },
+          colors: pieColors,
+          results,
+          sortGroups: 'desc'
+        });
+        chart.view._artifacts.c3.select(false, false);
+      })
+      .catch(function(err){
+        // Handle the error
+
+      });
+
+  client
+      .query({
+        saved_query_name: 'autocollector-dashboard-demo---clicks-by-country'
+      })
+          .then(function(results){
+            // Handle the result
+
+            const chart = new KeenDataviz({
+              container: `.chart-clicks-by-country`,
+              title: 'Overall clicks by Country',
+              type: 'pie',
+              padding:{
+                left: 50,
+                bottom: 20
+              },
+              legend: {
+                pagination:{
+                  limit: 8
+                },
+                label: {
+                  textMaxLength: 32
+                }
+              },
+              colors: pieColors,
+              results,
+              sortGroups: 'desc'
+            });
+          })
+          .catch(function(err){
+            // Handle the error
+
+          });
+
+
+
+
+
+
+          client
+            .query({
+              saved_query_name: 'autocollector-dashboard-demo---outbound-clicks'
+            })
+            .then(results => {
+              results.result.sort((a,b) =>{
+                return b.result - a.result;
+              })
+              .splice(10,9999);
+              const chart = new KeenDataviz({
+                container: `.chart-outbound-clicks`,
+                title: 'Outbound link clicks',
+                type: 'table',
+                labelMapping: {
+                  Index: 'Link',
+                  Result: 'Clicks'
+                },
+                labelMappingDimension: 'column',
+                results
+              });
+          });
+
+
+
+          client
+            .query({
+              saved_query_name: 'autocollector-dashboard-demo---clicks-by-html-tag'
+            })
+            .then(results => {
+              results.result
+              .splice(10,9999);
+              const chart = new KeenDataviz({
+                container: `.chart-clicks-by-html-tag`,
+                title: 'Clicks by HTML tag',
+                type: 'donut',
+                colors: pieColors,
+                results,
+                sortGroups: 'desc',
+                legend: {
+                  pagination: {
+                    limit: 18
+                  }
+                },
+                padding:{
+                  bottom: 20
+                }
+              });
+          });
+
+          client
+            .query({
+              saved_query_name: 'autocollector-dashboard-demo---clicks-by-button-in-org-section'
+            })
+            .then(results => {
+              results.result
+              .splice(10,9999);
+
+              results.result.forEach(item => {
+                item['element.text'] = item['element.text'].trim();
+              });
+
+              results.result = results.result.filter(item => {
+                return !!item['element.text'];
+              });
+
+              const chart = new KeenDataviz({
+                container: `.chart-clicks-by-button-in-org-section`,
+                title: 'Clicks by Button in Projects',
+                type: 'horizontal-bar',
+                results,
+                colors: pieColors,
+                sortGroups: 'desc',
+                padding:{
+                  left: 140,
+                  bottom: 20
+                },
+              });
+          });
+
+          client
+            .query({
+              saved_query_name: 'autocollector-dashboard-demo---clicks-by-button-in-static-section'
+            })
+            .then(results => {
+
+              results.result.sort((a,b) =>{
+                return b.result - a.result;
+              })
+              .splice(12,9999);
+
+              results.result.forEach(item => {
+                item['element.text'] = item['element.text'].trim();
+              });
+
+              results.result = results.result.filter(item => {
+                return !!item['element.text'];
+              });
+
+    const chart = new KeenDataviz({
+                container: `.chart-clicks-by-button-in-static-section`,
+                title: 'Clicks by Button in Docs',
+                type: 'pie',
+                colors: pieColors,
+                results,
+                sortGroups: 'desc',
+                padding:{
+                  left: 20,
+                  bottom: 20
+                },
+                legend:{
+                  pagination: {
+                    limit: 22
+                  },
+                  label:{
+                    textMaxLength: 32
+                  }
+                }
+              });
+          });
+
+
+
+          client
+            .query({
+              saved_query_name: 'autocollector-dashboard-demo---clicks-api-docs-sdks'
+            })
+            .then(results => {
+
+              results.result.sort((a,b) =>{
+                return b.result - a.result;
+              })
+              .splice(12,9999);
+
+              results.result.forEach(item => {
+                item['element.text'] = item['element.text'].trim();
+              });
+
+              results.result = results.result.filter(item => {
+                return !!item['element.text'];
+              });
+
+    const chart = new KeenDataviz({
+                container: `.chart-clicks-api-docs-sdks`,
+                title: 'API SDKs',
+                type: 'pie',
+                colors: pieColors,
+                results,
+                sortGroups: 'desc',
+                padding:{
+                  left: 20,
+                  bottom: 20
+                },
+                legend:{
+                  pagination: {
+                    limit: 22
+                  },
+                  label:{
+                    textMaxLength: 32
+                  }
+                }
+              });
+          });
+
+
+
+
+
+          client
+            .query({
+              saved_query_name: 'autocollector-dashboard-demo---clicks-login-google-github'
+            })
+            .then(results => {
+              results.result.sort((a,b) =>{
+                return b.result - a.result;
+              })
+              .splice(2,9999);
+
+    const chart = new KeenDataviz({
+                container: `.chart-clicks-login-google-github`,
+                title: 'Sign Up clicks',
+                type: 'bar',
+                colors: pieColors,
+                results,
+                sortGroups: 'desc',
+                padding:{
+                  left: 50,
+                  bottom: 20
+                },
+                legend:{
+                  label:{
+                    textMaxLength: 32
+                  }
+                }
+              });
+          });
+
+
+
+          client
+            .query({
+              saved_query_name: 'autocollector-dashboard-demo---clicks-api-docs-sdks-by-country'
+            })
+            .then(results => {
+
+              results.result.sort((a,b) =>{
+                return b.result - a.result;
+              })
+              .splice(6,9999);
+
+    const chart = new KeenDataviz({
+                container: `.chart-clicks-api-docs-sdks-by-country`,
+                title: 'The most popular SDKs by Country',
+                type: 'bar',
+                colors: pieColors,
+                results,
+                sortGroups: 'desc',
+                padding:{
+                  left: 50,
+                  bottom: 20
+                },
+                legend:{
+                  label:{
+                    textMaxLength: 32
+                  }
+                }
+              });
+          });
+
+
+
+          client
+            .query({
+              saved_query_name: 'autocollector-dashboard-demo---clicks-explorer'
+            })
+            .then(results => {
+
+       const chart = new KeenDataviz({
+                container: `.chart-clicks-explorer`,
+                title: 'Clicks in the Keen Explorer',
+                type: 'area-step',
+                colors: pieColors,
+                results,
+                sortGroups: 'desc',
+                padding:{
+                  left: 50,
+                  bottom: 20
+                },
+                legend:{
+                  label:{
+                    textMaxLength: 32
+                  }
+                }
+              });
+          });
+
+
+}
+
+if (activeTab === 'overview') {
+/*
+
+    client
+    .query({
+      analysis_type: 'count',
+      event_collection: 'pageviews',
+      timeframe: 'previous_1_months',
+      filters: [
+        {
+          'operator': 'ne',
+          'property_name': 'referrer.info.domain',
+          'property_value': null
+        }],
+        group_by: ['url.info.path', 'referrer.info.domain'],
+        timezone: window.timezone
+      })
+      .then(function(res){
+        // Handle the result
+
+        pageviewsByPageByReferrer
+        .call(function(){
+          this.dataset.matrix = parseInto2DArray(res.result, 'referrer.info.domain', 'url.info.path');
+        })
+        .render();
+
+      })
+      .catch(function(err){
+        // Handle the error
+        pageviewsByPageByReferrer
+        .message(err.message);
+      });
+*/
+
 
   areaChartWithDetails({
     client,
@@ -394,9 +1329,8 @@ window.renderCharts = function(client, timeframe) {
     let activeMapData;
     const appMapAreaNode = document.getElementById('map');
 
-    init();
-
     function init(){
+      window.mapInited = true;
       L.mapbox.accessToken = 'pk.eyJ1Ijoia2Vlbi1pbyIsImEiOiIza0xnNXBZIn0.PgzKlxBmYkOq6jBGErpqOg';
       const map = L.mapbox.map('map', 'keen-io.kae20cg0', {
         attributionControl: true,
@@ -416,9 +1350,11 @@ window.renderCharts = function(client, timeframe) {
         }
         var em = L.marker(new L.LatLng(city.coordinates[1], city.coordinates[0]), {
           icon: L.mapbox.marker.icon({
-            'marker-color': '#00bbde',
-            'marker-color': '#7056bf',
-            'marker-color': '#5e77ff',
+            'marker-color': {
+                small: pieColors[0],
+                medium: pieColors[1],
+                large: pieColors[2]
+              }[size],
             'marker-size':  size,
             'marker-symbol': city.result
           })
@@ -434,6 +1370,10 @@ window.renderCharts = function(client, timeframe) {
     */
   }
 
+  if (!window.mapInited) {
+    init();
+  }
+
 });
 
 client
@@ -447,80 +1387,22 @@ client
     type: 'area-spline',
     colors: pieColors,
     results,
-    legend: false,
-    sortGroups: 'desc',
-    padding: {
-      left: 50,
-      top: 0,
-      right: 35,
-      bottom: 10
-    },
-  });
-});
-
-
-
-
-
-// !!! pageviews
-
-client
-.query({
-  saved_query_name: 'autocollector-dashboard-demo---count-pageviews-previous-7d-interval-daily'
-})
-.then(results => {
-
-  client
-  .query({
-    saved_query_name: 'autocollector-dashboard-demo---count-pageviews-previous-7d-interval-daily-unique-users'
-  })
-  .then(results2 => {
-
-  const pageviewsInterval = new KeenDataviz({
-    container: '#chart-views-uniques-7d',
-    title: 'Page Views by Day',
-    type: 'line',
-    colors: pieColors,
-    results: [results, results2],
     legend: {
       position: 'top'
     },
+    labelMapping: {
+      'fbads': 'Facebook',
+      'adwords': 'Google',
+      'sendgrid_docs': 'Sendgrid'
+    },
     sortGroups: 'desc',
     padding: {
       left: 50,
       top: 0,
       right: 35,
-      bottom: 10
-    },
-
-    point: {
-      r: 0,
-      focus: {
-        expand: {
-          r: 3,
-          enabled: true
-        },
-      },
-      select: {
-        r: 4,
-        enabled: true
-      }
-    },
-    colors: pieColors,
-    padding: {
-      right: 20,
-      left: 40,
-    },
+      bottom: 0
+    }
   });
-
-  pageviewsInterval.view._artifacts.c3.select(false, false);
-
-
-
-
-
-    });
-
 });
 
 
@@ -540,8 +1422,11 @@ const revenuexChart = new KeenDataviz({
   sortGroups: 'desc',
   legend: {
     pagination: {
-      limit: 3
+      limit: 4
     }
+  },
+  size: {
+    width: 320
   }
 });
 });
@@ -622,6 +1507,12 @@ client
 
 return;
 
+}
+
+}
+
+switchTab('overview');
+
 // autocollector-dashboard-demo---count-pageviews-top-referrers-previous-7-days-interval-daily
 
 // autocollector-dashboard-demo---unique-users-this-7d
@@ -629,6 +1520,7 @@ return;
 // autocollector-dashboard-demo---average-clicks-per-user
 // autocollector-dashboard-demo---average-scroll-ratio
 
+/*
 const revenuexChart = new KeenDataviz({
   container: '.x-chart',
   title: 'Conversion rate',
@@ -877,13 +1769,6 @@ const pageviewsByReferrer = new KeenDataviz({
   title: 'Top 10 Referral Sources',
   sortGroups: 'desc',
   colors: triadicColors
-  /*
-  labelMapping: {
-  Index: 'Source',
-  Result: 'Count'
-},
-labelMappingDimension: 'both'
-*/
 });
 
 client
@@ -1039,7 +1924,7 @@ client
 uniquePageviews
 .message(err.message);
 });
-*/
+
 const pageviewsByDay = new KeenDataviz({
   container: '.pageviews-by-day',
   type: 'bar',
@@ -1267,7 +2152,7 @@ client
   .message(err.message);
 });
 
-
+*/
 }
 </script>
 </body>
