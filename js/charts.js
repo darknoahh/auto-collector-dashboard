@@ -1,63 +1,17 @@
+// KeenTracking - https://github.com/keen/keen-tracking.js#automated-event-tracking
+// KeenAnalysis - API client - https://github.com/keen/keen-analysis.js
+// KeenDataviz - Data visualisation library - https://github.com/keen/keen-dataviz.js
+
+const client = new KeenAnalysis({
+  projectId: '5011efa95f546f2ce2000000', // replace it with your Project Id
+  readKey: 'D9E2872BB0841C7D080D77BA1CC6E49E07FBBF8C9312D650396711AA0B02B2F8' // replace it with your Write key
+});
+
 // You an replace this timeframe with other relative timeframes
 // Examples: 'this_6_months', 'previous_6_weeks', or 'this_7_days'
 // See the Keen API docs for more relative timeframes: https://keen.io/docs/api/#relative-timeframes
 const timeframe = 'this_4_weeks';
 const timezone = 'UTC'; // https://keen.io/docs/api/#timezone
-
-const client = new KeenAnalysis({
-  projectId: '5011efa95f546f2ce2000000',
-  readKey: 'D9E2872BB0841C7D080D77BA1CC6E49E07FBBF8C9312D650396711AA0B02B2F8'
-});
-
-const elementCurrentDatetime = document.getElementById('current-datetime');
-if (elementCurrentDatetime) elementCurrentDatetime.innerHTML = new Date().toUTCString();
-
-let activeTab;
-
-function switchTab(tabName){
-  activeTab = tabName;
-  const headerTab = document.querySelector('#header-tab-name');
-  headerTab.innerHTML = tabName;
-  const tabs = document.querySelectorAll('.nav-links .tab a');
-  tabs.forEach(tab => {
-    tab.classList.remove('active');
-    tab.classList.add('text-black-50');
-  });
-  const tab = document.querySelector(`.nav-links .tab-${tabName} a`);
-  tab.classList.add('active');
-  tab.classList.remove('text-black-50');
-  const tabContents = document.querySelectorAll('.tab-content');
-  tabContents.forEach(tab => {
-    tab.classList.add('hide');
-  });
-  const tabContent = document.getElementById(`tab-content-${tabName}`);
-  tabContent.classList.remove('hide');
-  window.renderCharts();
-}
-
-const aLogo = document.getElementById('a-logo');
-aLogo.addEventListener('click', (e) => {
-  e.preventDefault();
-  switchTab('overview');
-});
-
-const aOverview = document.getElementById('a-overview');
-aOverview.addEventListener('click', (e) => {
-  e.preventDefault();
-  switchTab('overview');
-});
-
-const aViews = document.getElementById('a-views');
-aViews.addEventListener('click', (e) => {
-  e.preventDefault();
-  switchTab('views');
-});
-
-const aClicks = document.getElementById('a-clicks');
-aClicks.addEventListener('click', (e) => {
-  e.preventDefault();
-  switchTab('clicks');
-});
 
 const chartColors = [
   '#5E77FF',
@@ -76,34 +30,7 @@ const chartColors = [
   '#fa76bf'
 ];
 
-function parseInto2DArray(result, columnKey, rowKey){
-  const columns = [];
-  const rows = [];
-  const matrix = [];
-  matrix.push(['Index']);
-  const nulls = [];
-  result.forEach(item => {
-    let newColumn = item[columnKey];
-    if (matrix[0].indexOf(newColumn) === -1) {
-      matrix[0][matrix[0].length] = newColumn;
-      nulls.push(null);
-    }
-  });
-
-  result.forEach(item => {
-    let newRow = item[rowKey];
-    let rowIndex = matrix.findIndex(rowItem => rowItem[0] === newRow);
-    if (rowIndex === -1) {
-      matrix[matrix.length] = [newRow, ...nulls];
-      rowIndex = matrix.length - 1;
-    }
-    let columnIndex = matrix[0].findIndex(rowItem => rowItem === item[columnKey]);
-    matrix[rowIndex][columnIndex] = item.result;
-  });
-
-  return matrix;
-}
-
+// helper function for rendering 1st row's small charts on the Overview page
 const areaChartWithDetails = ({
   client,
   container,
@@ -160,12 +87,12 @@ const areaChartWithDetails = ({
   .query({
     saved_query_name: queries.area
   })
-  .then(res => {
+  .then(results => {
     const chartRoot = containerElement.querySelector(".chart");
     const revenueChart = new KeenDataviz({
       container: chartRoot,
       title,
-      results: res,
+      results,
       type: 'area-spline',
       point: {
         r: 0,
@@ -196,7 +123,7 @@ const areaChartWithDetails = ({
           show: false
         }
       },
-      colors: ['#5e77ff'],
+      colors: chartColors,
       padding: {
         left: 0,
         right: 0
@@ -206,8 +133,214 @@ const areaChartWithDetails = ({
 };
 
 
+renderCharts = () => {
 
-window.renderCharts = () => {
+  // Overview Tab
+
+  if (activeTab === 'overview') {
+
+    areaChartWithDetails({
+      client,
+      title: 'Views Last 24h',
+      container: 'chart-views-last-24h',
+      queries: {
+        current: 'autocollector-dashboard-demo---count-pageviews-previous-24h',
+        compareWith: 'autocollector-dashboard-demo---count-pageviews-previous-48h',
+        area: 'autocollector-dashboard-demo---count-pageviews-previous-24h-interval-hourly'
+      }
+    });
+
+    areaChartWithDetails({
+      client,
+      title: 'Views Last 7d',
+      container: 'chart-views-last-7d',
+      queries: {
+        current: 'autocollector-dashboard-demo---count-pageviews-previous-7d',
+        compareWith: 'autocollector-dashboard-demo---count-pageviews-previous-14d',
+        area: 'autocollector-dashboard-demo---count-pageviews-previous-7d-interval-daily'
+      }
+    });
+
+    areaChartWithDetails({
+      client,
+      title: 'Clicks Last 24h',
+      container: 'chart-clicks-last-24h',
+      queries: {
+        current: 'autocollector-dashboard-demo---count-clicks-previous-24h',
+        compareWith: 'autocollector-dashboard-demo---count-clicks-previous-48h',
+        area: 'autocollector-dashboard-demo---count-clicks-previous-24h-interval-hourly'
+      }
+    });
+
+    areaChartWithDetails({
+      client,
+      title: 'Clicks Last 7d',
+      container: 'chart-clicks-last-7d',
+      queries: {
+        current: 'autocollector-dashboard-demo---count-clicks-previous-7d',
+        compareWith: 'autocollector-dashboard-demo---count-clicks-previous-14d',
+        area: 'autocollector-dashboard-demo---count-clicks-previous-7d-interval-daily'
+      }
+    });
+
+    client
+    .query({
+      saved_query_name: 'autocollector-dashboard-demo---count-pageviews-by-city'
+    })
+    .then(res => {
+
+      const citiesFromResult = res.result;
+      citiesFromResult.forEach(cityFromResult => {
+        let cityInCoordinatesArray =
+        coordinates.find(item => item.fields.city.toLowerCase() === cityFromResult['geo.city'].toLowerCase());
+        if (cityInCoordinatesArray) {
+          cityFromResult.coordinates = cityInCoordinatesArray.geometry.coordinates;
+        }
+      });
+      const citiesWithCoordinates = citiesFromResult.filter(city => !!city.coordinates);
+
+      let activeMapData;
+      const appMapAreaNode = document.getElementById('map');
+
+      function init(){
+        window.mapInited = true;
+        L.mapbox.accessToken = 'pk.eyJ1Ijoia2Vlbi1pbyIsImEiOiIza0xnNXBZIn0.PgzKlxBmYkOq6jBGErpqOg';
+        const map = L.mapbox.map('map', 'keen-io.kae20cg0', {
+          attributionControl: true,
+          center: [ 35.77350, -98.41104 ],
+          zoom: 5
+        });
+        activeMapData = L.layerGroup().addTo(map);
+        activeMapData.clearLayers();
+
+        citiesWithCoordinates.forEach((city, index) => {
+          let size = 'small';
+          if (city.result > 3) {
+            size = 'medium';
+          }
+          if (city.result > 7) {
+            size = 'large';
+          }
+          var em = L.marker(new L.LatLng(city.coordinates[1], city.coordinates[0]), {
+            icon: L.mapbox.marker.icon({
+              'marker-color': {
+                small: chartColors[0],
+                medium: chartColors[1],
+                large: chartColors[2]
+              }[size],
+              'marker-size':  size,
+              'marker-symbol': city.result
+            })
+          }).addTo(activeMapData);;
+        });
+    }
+
+    if (!window.mapInited) {
+      init();
+    }
+
+  });
+
+  client
+  .query({
+    saved_query_name: 'autocollector-dashboard-demo---count-pageviews-top-referrers-previous-7-days-interval-daily'
+  })
+  .then(results => {
+    new KeenDataviz({
+      container: '.chart-top-referrers',
+      title: 'Views By Top 3 Sources',
+      type: 'area-spline',
+      colors: chartColors,
+      results,
+      legend: {
+        position: 'top'
+      },
+      labelMapping: {
+        'fbads': 'Facebook',
+        'adwords': 'Google',
+        'sendgrid_docs': 'Sendgrid'
+      },
+      sortGroups: 'desc',
+      padding: {
+        left: 50,
+        top: 0,
+        right: 35,
+        bottom: 0
+      }
+    });
+  });
+
+const metricBox = ({ title, value, container, icon }) => {
+  const element = document.getElementById(container);
+  element.innerHTML = `
+  <i class='fas fa-${icon}'></i>
+  <div class='label'>
+  <div class='value'>${value}</div>
+  <div class='title'>${title}</div>
+  </div>
+  `;
+};
+
+client
+.query({
+  saved_query_name: 'autocollector-dashboard-demo---unique-users-this-7d'
+})
+.then(results => {
+  metricBox({
+    title: 'Unique Visitors',
+    icon: 'users',
+    value: results.result,
+    container: 'unique-users-this-7d'
+  });
+});
+
+client
+.query({
+  saved_query_name: 'autocollector-dashboard-demo---average-time-on-page'
+})
+.then(results => {
+  metricBox({
+    title: 'Avg Time on Site',
+    icon: 'clock',
+    value: results.result.toFixed(0) + ' seconds',
+    container: 'average-time-on-page'
+  });
+});
+
+client
+.query({
+  saved_query_name: 'autocollector-dashboard-demo---average-clicks-per-user'
+})
+.then(results => {
+  const clicksPerUser = Math.floor(
+    results.result.reduce((acc = 0, item) => {
+      return (acc.result || acc || 0) + parseInt(item.result);
+    }) / results.result.length
+  );
+  metricBox({
+    title: 'Avg Clicks per User',
+    icon: 'hand-pointer',
+    value: clicksPerUser,
+    container: 'average-clicks-per-user'
+  });
+});
+
+client
+.query({
+  saved_query_name: 'autocollector-dashboard-demo---average-scroll-ratio'
+})
+.then(results => {
+  metricBox({
+    title: 'Avg Page Read',
+    icon: 'percent',
+    value: results.result.toFixed(2) * 100,
+    container: 'average-scroll-ratio'
+  });
+});
+}
+
+
+  // Views Tab
 
   if (activeTab === 'views') {
     client
@@ -575,9 +708,9 @@ window.renderCharts = () => {
   }
 
 
+  // Clicks Tab
+
   if (activeTab === 'clicks') {
-
-
     client
     .query({
       saved_query_name: 'autocollector-dashboard-demo---clicks-by-country-daily'
@@ -647,13 +780,7 @@ window.renderCharts = () => {
     })
     .catch(function(err){
       // Handle the error
-
     });
-
-
-
-
-
 
     client
     .query({
@@ -676,8 +803,6 @@ window.renderCharts = () => {
         results
       });
     });
-
-
 
     client
     .query({
@@ -775,8 +900,6 @@ window.renderCharts = () => {
       });
     });
 
-
-
     client
     .query({
       saved_query_name: 'autocollector-dashboard-demo---clicks-api-docs-sdks'
@@ -818,10 +941,6 @@ window.renderCharts = () => {
       });
     });
 
-
-
-
-
     client
     .query({
       saved_query_name: 'autocollector-dashboard-demo---clicks-login-google-github'
@@ -850,8 +969,6 @@ window.renderCharts = () => {
         }
       });
     });
-
-
 
     client
     .query({
@@ -883,8 +1000,6 @@ window.renderCharts = () => {
       });
     });
 
-
-
     client
     .query({
       saved_query_name: 'autocollector-dashboard-demo---clicks-explorer'
@@ -910,222 +1025,11 @@ window.renderCharts = () => {
       });
     });
 
-
   }
-
-  if (activeTab === 'overview') {
-
-    areaChartWithDetails({
-      client,
-      title: 'Views Last 24h',
-      container: 'chart-views-last-24h',
-      queries: {
-        current: 'autocollector-dashboard-demo---count-pageviews-previous-24h',
-        compareWith: 'autocollector-dashboard-demo---count-pageviews-previous-48h',
-        area: 'autocollector-dashboard-demo---count-pageviews-previous-24h-interval-hourly'
-      }
-    });
-
-    areaChartWithDetails({
-      client,
-      title: 'Views Last 7d',
-      container: 'chart-views-last-7d',
-      queries: {
-        current: 'autocollector-dashboard-demo---count-pageviews-previous-7d',
-        compareWith: 'autocollector-dashboard-demo---count-pageviews-previous-14d',
-        area: 'autocollector-dashboard-demo---count-pageviews-previous-7d-interval-daily'
-      }
-    });
-
-    areaChartWithDetails({
-      client,
-      title: 'Clicks Last 24h',
-      container: 'chart-clicks-last-24h',
-      queries: {
-        current: 'autocollector-dashboard-demo---count-clicks-previous-24h',
-        compareWith: 'autocollector-dashboard-demo---count-clicks-previous-48h',
-        area: 'autocollector-dashboard-demo---count-clicks-previous-24h-interval-hourly'
-      }
-    });
-
-    areaChartWithDetails({
-      client,
-      title: 'Clicks Last 7d',
-      container: 'chart-clicks-last-7d',
-      queries: {
-        current: 'autocollector-dashboard-demo---count-clicks-previous-7d',
-        compareWith: 'autocollector-dashboard-demo---count-clicks-previous-14d',
-        area: 'autocollector-dashboard-demo---count-clicks-previous-7d-interval-daily'
-      }
-    });
-
-    client
-    .query({
-      saved_query_name: 'autocollector-dashboard-demo---count-pageviews-by-city'
-    })
-    .then(res => {
-
-      const citiesFromResult = res.result;
-      citiesFromResult.forEach(cityFromResult => {
-        let cityInCoordinatesArray =
-        coordinates.find(item => item.fields.city.toLowerCase() === cityFromResult['geo.city'].toLowerCase());
-        if (cityInCoordinatesArray) {
-          cityFromResult.coordinates = cityInCoordinatesArray.geometry.coordinates;
-        }
-      });
-      const citiesWithCoordinates = citiesFromResult.filter(city => !!city.coordinates);
-
-      let activeMapData;
-      const appMapAreaNode = document.getElementById('map');
-
-      function init(){
-        window.mapInited = true;
-        L.mapbox.accessToken = 'pk.eyJ1Ijoia2Vlbi1pbyIsImEiOiIza0xnNXBZIn0.PgzKlxBmYkOq6jBGErpqOg';
-        const map = L.mapbox.map('map', 'keen-io.kae20cg0', {
-          attributionControl: true,
-          center: [ 35.77350, -98.41104 ],
-          zoom: 5
-        });
-        activeMapData = L.layerGroup().addTo(map);
-        activeMapData.clearLayers();
-
-        citiesWithCoordinates.forEach((city, index) => {
-          let size = 'small';
-          if (city.result > 3) {
-            size = 'medium';
-          }
-          if (city.result > 7) {
-            size = 'large';
-          }
-          var em = L.marker(new L.LatLng(city.coordinates[1], city.coordinates[0]), {
-            icon: L.mapbox.marker.icon({
-              'marker-color': {
-                small: chartColors[0],
-                medium: chartColors[1],
-                large: chartColors[2]
-              }[size],
-              'marker-size':  size,
-              'marker-symbol': city.result
-            })
-          }).addTo(activeMapData);;
-        });
-        /*
-        icon: L.icon({
-        'marker-color': '#00bbde',
-        iconUrl: './img/large.png',
-        iconRetinaUrl: './img/large.png',
-        iconSize: [size, size]
-      })
-      */
-    }
-
-    if (!window.mapInited) {
-      init();
-    }
-
-  });
-
-  client
-  .query({
-    saved_query_name: 'autocollector-dashboard-demo---count-pageviews-top-referrers-previous-7-days-interval-daily'
-  })
-  .then(results => {
-    new KeenDataviz({
-      container: '.chart-top-referrers',
-      title: 'Views By Top 3 Sources',
-      type: 'area-spline',
-      colors: chartColors,
-      results,
-      legend: {
-        position: 'top'
-      },
-      labelMapping: {
-        'fbads': 'Facebook',
-        'adwords': 'Google',
-        'sendgrid_docs': 'Sendgrid'
-      },
-      sortGroups: 'desc',
-      padding: {
-        left: 50,
-        top: 0,
-        right: 35,
-        bottom: 0
-      }
-    });
-  });
-
-const metricBox = ({ title, value, container, icon }) => {
-  const element = document.getElementById(container);
-  element.innerHTML = `
-  <i class='fas fa-${icon}'></i>
-  <div class='label'>
-  <div class='value'>${value}</div>
-  <div class='title'>${title}</div>
-  </div>
-  `;
-};
-
-client
-.query({
-  saved_query_name: 'autocollector-dashboard-demo---unique-users-this-7d'
-})
-.then(results => {
-  metricBox({
-    title: 'Unique Visitors',
-    icon: 'users',
-    value: results.result,
-    container: 'unique-users-this-7d'
-  });
-});
-
-client
-.query({
-  saved_query_name: 'autocollector-dashboard-demo---average-time-on-page'
-})
-.then(results => {
-  metricBox({
-    title: 'Avg Time on Site',
-    icon: 'clock',
-    value: results.result.toFixed(0) + ' seconds',
-    container: 'average-time-on-page'
-  });
-});
-
-client
-.query({
-  saved_query_name: 'autocollector-dashboard-demo---average-clicks-per-user'
-})
-.then(results => {
-  const clicksPerUser = Math.floor(
-    results.result.reduce((acc = 0, item) => {
-      return (acc.result || acc || 0) + parseInt(item.result);
-    }) / results.result.length
-  );
-  metricBox({
-    title: 'Avg Clicks per User',
-    icon: 'hand-pointer',
-    value: clicksPerUser,
-    container: 'average-clicks-per-user'
-  });
-});
-
-client
-.query({
-  saved_query_name: 'autocollector-dashboard-demo---average-scroll-ratio'
-})
-.then(results => {
-  metricBox({
-    title: 'Avg Page Read',
-    icon: 'percent',
-    value: results.result.toFixed(2) * 100,
-    container: 'average-scroll-ratio'
-  });
-});
-
-return;
-
-}
 
 }
 
 switchTab('overview');
+
+const elementCurrentDatetime = document.getElementById('current-datetime');
+if (elementCurrentDatetime) elementCurrentDatetime.innerHTML = new Date().toUTCString();

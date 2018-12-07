@@ -10,13 +10,14 @@
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/keen-dataviz@3/dist/keen-dataviz.min.css" rel="stylesheet" />
   <link href='https://api.tiles.mapbox.com/mapbox.js/v2.0.1/mapbox.css' rel='stylesheet' />
-  <link rel="stylesheet" href="./assets/demo-styles.css" />
+  <link rel="stylesheet" href="./css/main.css" />
   <!-- JS -->
   <script crossorigin src="https://cdn.jsdelivr.net/npm/keen-analysis@3"></script>
   <script crossorigin src="https://cdn.jsdelivr.net/npm/keen-dataviz@3/dist/keen-dataviz.min.js"></script>
-  <script type="text/javascript" src="https://api.tiles.mapbox.com/mapbox.js/v2.0.1/mapbox.js"></script>
-  <script src="./coordinates.js"></script>
-  <script src="./charts.js" defer></script>
+  <script src="https://api.tiles.mapbox.com/mapbox.js/v2.0.1/mapbox.js"></script>
+  <script src="./js/coordinates.js"></script>
+  <script src="./js/nav.js" defer></script>
+  <script src="./js/charts.js" defer></script>
 </head>
 
 <body class="demo-theme-dashboard">
@@ -49,17 +50,17 @@
 
   <div class="container">
 
-    <div class="mt-5 mb-4 w-100 d-flex">
-      <h4 class="flex-fill mb-0">
+    <div class="mt-5 mb-4 w-100 d-flex row m-0">
+      <h4 class="flex-fill mb-0 col-xs-12">
         Keen - AutoCollector Dash - <span id="header-tab-name" class="text-capitalize"></span>
       </h4>
-      <div class="align-self-end text-black-50" id="current-datetime"></div>
+      <div class="align-self-end text-black-50 col-xs-12" id="current-datetime"></div>
     </div>
 
 
     <!-- Overview -->
 
-    <div id="tab-content-overview" class="hide tab-content">
+    <div id="tab-content-overview" class="d-none tab-content">
       <div class="row">
         <div class="col-sm-3">
           <div
@@ -135,12 +136,12 @@
 
   <!--- Views --->
 
-  <div id="tab-content-views" class="hide tab-content">
+  <div id="tab-content-views" class="d-none tab-content">
     <div class="row">
       <div class="col-sm-12">
         <div
           id="chart-views-uniques-7d"
-          class="chart-box position-relative ">
+          class="chart-box chart-views-uniques-7d position-relative p-3">
         </div>
       </div>
     </div>
@@ -196,7 +197,7 @@
 
   <!-- Clicks -->
 
-  <div id="tab-content-clicks" class="hide tab-content">
+  <div id="tab-content-clicks" class="d-none tab-content">
     <div class="row">
       <div class="col-sm-12">
         <div class="chart chart-box chart-clicks-explorer">
@@ -209,7 +210,7 @@
         </div>
       </div>
       <div class="col-sm-6">
-        <div class="chart chart-box chart-table chart-outbound-clicks">
+        <div class="chart chart-box chart-table chart-outbound-clicks w-100">
         </div>
       </div>
     </div>
