@@ -9,13 +9,12 @@
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/keen-dataviz@3/dist/keen-dataviz.min.css" rel="stylesheet" />
-  <link rel="stylesheet" href="./assets/demo-styles.css" />
   <link href='https://api.tiles.mapbox.com/mapbox.js/v2.0.1/mapbox.css' rel='stylesheet' />
+  <link rel="stylesheet" href="./assets/demo-styles.css" />
   <!-- JS -->
   <script crossorigin src="https://cdn.jsdelivr.net/npm/keen-analysis@3"></script>
   <script crossorigin src="https://cdn.jsdelivr.net/npm/keen-dataviz@3/dist/keen-dataviz.min.js"></script>
   <script type="text/javascript" src="https://api.tiles.mapbox.com/mapbox.js/v2.0.1/mapbox.js"></script>
-  <!-- Keen Setttings -->
   <script src="./coordinates.js"></script>
   <script src="./charts.js" defer></script>
 </head>
@@ -25,12 +24,19 @@
   <nav>
     <div class="container">
       <ul class="nav nav-tabs nav-links">
-        <li class="nav-item"><a id="a-logo" class="nav-logo" href="#"><img class="keen-logo" src="/img/logo.png"></a></li>
-        <li class="nav-item tab tab-overview"><a id="a-overview" class="nav-link active" href="#">Overview</a></li>
-        <li class="nav-item tab tab-views"><a id="a-views" class="nav-link" href="#">Views</a></li>
-        <li class="nav-item tab tab-clicks"><a id="a-clicks" class="nav-link" href="#">Clicks</a></li>
+        <li class="nav-item">
+          <a id="a-logo" class="nav-logo" href="#"><img class="keen-logo" src="/img/logo.png"></a>
+        </li>
+        <li class="nav-item tab tab-overview">
+          <a id="a-overview" class="nav-link" href="#">Overview</a>
+        </li>
+        <li class="nav-item tab tab-views">
+          <a id="a-views" class="nav-link" href="#">Views</a>
+        </li>
+        <li class="nav-item tab tab-clicks">
+          <a id="a-clicks" class="nav-link" href="#">Clicks</a>
+        </li>
       </ul>
-
       <ul class="nav nav-tabs nav-deploy-buttons">
         <li class="nav-item">
           <a class="nav-link" href="https://app.netlify.com/start/deploy?repository=https://github.com/keen/auto-collector-dashboard">
@@ -45,7 +51,7 @@
 
     <div class="mt-5 mb-4 w-100 d-flex">
       <h4 class="flex-fill mb-0">
-        Keen - AutoCollector Dash - <span id="header-tab-name"></span>
+        Keen - AutoCollector Dash - <span id="header-tab-name" class="text-capitalize"></span>
       </h4>
       <div class="align-self-end text-black-50" id="current-datetime"></div>
     </div>
@@ -57,188 +63,194 @@
       <div class="row">
         <div class="col-sm-3">
           <div
-          id="chart-views-last-24h"
-          class="chart-box chart-box-relative box-small">
+            id="chart-views-last-24h"
+            class="chart-box position-relative p-0 small">
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div
+            id="chart-views-last-7d"
+            class="chart-box position-relative p-0 small">
         </div>
       </div>
       <div class="col-sm-3">
         <div
-        id="chart-views-last-7d"
-        class="chart-box chart-box-relative box-small">
+          id="chart-clicks-last-24h"
+          class="chart-box position-relative p-0 small">
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <div
+          id="chart-clicks-last-7d"
+          class="chart-box position-relative p-0 small">
+        </div>
       </div>
     </div>
-    <div class="col-sm-3">
-      <div
-      id="chart-clicks-last-24h"
-      class="chart-box chart-box-relative box-small">
-    </div>
-  </div>
-  <div class="col-sm-3">
-    <div
-    id="chart-clicks-last-7d"
-    class="chart-box chart-box-relative box-small">
-  </div>
-</div>
-</div>
-
-<div class="row d-flex">
-  <div class="col-sm-12 d-flex">
-    <div class="chart-box views-box">
-      <div class="chart-top-referrers chart"></div>
-    </div>
-  </div>
-</div>
-
-<div class="row">
-  <div class="col-sm-3 d-flex">
-    <div class="chart-box">
-      <div class="metric-box" id="unique-users-this-7d">
+    <div class="row d-flex">
+      <div class="col-sm-12 d-flex">
+        <div class="chart-box views-box">
+          <div class="chart-top-referrers chart">
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="col-sm-3 d-flex">
-    <div class="chart-box">
-      <div class="metric-box" id="average-time-on-page">
+    <div class="row">
+       <div class="col-sm-3 d-flex">
+        <div class="chart-box">
+          <div class="metric-box" id="unique-users-this-7d">
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-3 d-flex">
+        <div class="chart-box">
+          <div class="metric-box" id="average-time-on-page">
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-3 d-flex">
+        <div class="chart-box">
+          <div class="metric-box" id="average-clicks-per-user">
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-3 d-flex">
+        <div class="chart-box">
+          <div class="metric-box" id="average-scroll-ratio">
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="col-sm-3 d-flex">
-    <div class="chart-box">
-      <div class="metric-box" id="average-clicks-per-user">
-      </div>
-    </div>
-  </div>
-  <div class="col-sm-3 d-flex">
-    <div class="chart-box">
-      <div class="metric-box" id="average-scroll-ratio">
-      </div>
-    </div>
-  </div>
-
-</div>
-
-<div class="row">
-  <div class="col-sm-12 chart-box-top">
-    <div class="map-label">Visitor locations</div>
-    <div id="map" class="map"></div>
-  </div>
-</div>
-
-</div>
-
-
-
-
-    <!-- Views -->
-
-<div id="tab-content-views" class="hide tab-content">
-  <div class="row">
-    <div class="col-sm-12">
-      <div
-      id="chart-views-uniques-7d"
-      class="chart-box chart-box-relative">
-    </div>
-  </div>
-</div>
-<div class="row">
-  <div class=" col-sm-6">
-    <div class="chart chart-box chart-count-views-by-page"></div>
-  </div>
-  <div class=" col-sm-6">
-    <div class="chart chart-box chart-table chart-pageviews-by-referrer"></div>
-  </div>
-</div>
-<div class="row">
-  <div class=" col-sm-4">
-    <div class="chart chart-box chart-pageviews-by-day-of-week"></div>
-  </div>
-  <div class=" col-sm-8">
-    <div class="chart chart-box chart-views-by-hour"></div>
-  </div>
-</div>
-<div class="row">
-  <div class="col-sm-6">
-    <div class="chart chart-box chart-table chart-percent-of-page-read"></div>
-  </div>
-  <div class=" col-sm-6">
-    <div class="chart chart-box chart-table chart-longest-time-on-page"></div>
-  </div>
-</div>
-<div class="row">
-  <div class=" col-sm-12">
-    <div class="chart chart-box chart-pageviews-by-country-interval-daily"></div>
-  </div>
-</div>
-<div class="row">
-  <div class="col-sm-6">
-    <div class="chart chart-box chart-pageviews-by-os"></div>
-  </div>
-  <div class="col-sm-6">
-    <div class="chart chart-box chart-top-pages-screen-width"></div>
-  </div>
-</div>
-</div>
-
-
-
-    <!-- Clicks -->
-
-
-<div id="tab-content-clicks" class="hide tab-content">
-  <div class="row">
-    <div class="col-sm-12">
-      <div class="chart chart-box chart-clicks-explorer">
+    <div class="row">
+      <div class="col-sm-12 chart-box-top">
+        <div class="map-label">
+          Visitor locations
+        </div>
+        <div id="map" class="map">
+        </div>
       </div>
     </div>
   </div>
-  <div class="row">
-    <div class="col-sm-6">
-      <div class="chart chart-box chart-clicks-by-country">
+
+
+
+  <!--- Views --->
+
+  <div id="tab-content-views" class="hide tab-content">
+    <div class="row">
+      <div class="col-sm-12">
+        <div
+          id="chart-views-uniques-7d"
+          class="chart-box position-relative ">
+        </div>
       </div>
     </div>
-    <div class="col-sm-6">
-      <div class="chart chart-box chart-table chart-outbound-clicks">
+    <div class="row">
+      <div class=" col-sm-6">
+        <div class="chart chart-box chart-count-views-by-page">
+        </div>
+      </div>
+      <div class=" col-sm-6">
+        <div class="chart chart-box chart-table chart-pageviews-by-referrer">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class=" col-sm-4">
+        <div class="chart chart-box chart-pageviews-by-day-of-week">
+        </div>
+      </div>
+      <div class=" col-sm-8">
+        <div class="chart chart-box chart-views-by-hour">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="chart chart-box chart-table chart-percent-of-page-read">
+        </div>
+      </div>
+      <div class=" col-sm-6">
+        <div class="chart chart-box chart-table chart-longest-time-on-page">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class=" col-sm-12">
+        <div class="chart chart-box chart-pageviews-by-country-interval-daily">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="chart chart-box chart-pageviews-by-os">
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="chart chart-box chart-top-pages-screen-width">
+        </div>
       </div>
     </div>
   </div>
-  <div class="row">
-    <div class="col-sm-6">
-      <div class=" chart chart-box chart-clicks-by-button-in-org-section">
+
+
+
+  <!-- Clicks -->
+
+  <div id="tab-content-clicks" class="hide tab-content">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="chart chart-box chart-clicks-explorer">
+        </div>
       </div>
     </div>
-    <div class="col-sm-6">
-      <div class="chart chart-box chart-clicks-by-button-in-static-section">
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="chart chart-box chart-clicks-by-country">
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="chart chart-box chart-table chart-outbound-clicks">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6">
+        <div class=" chart chart-box chart-clicks-by-button-in-org-section">
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="chart chart-box chart-clicks-by-button-in-static-section">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="chart chart-box chart-clicks-by-country-daily">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-4">
+        <div class="chart chart-box chart-clicks-login-google-github">
+        </div>
+      </div>
+      <div class="col-sm-8">
+        <div class="chart chart-box chart-clicks-api-docs-sdks-by-country">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="chart chart-box chart-clicks-by-html-tag">
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="chart chart-box chart-clicks-api-docs-sdks">
+        </div>
       </div>
     </div>
   </div>
-  <div class="row">
-    <div class="col-sm-12">
-      <div class="chart chart-box chart-clicks-by-country-daily">
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-sm-4">
-      <div class="chart chart-box chart-clicks-login-google-github">
-      </div>
-    </div>
-    <div class="col-sm-8">
-      <div class="chart chart-box chart-clicks-api-docs-sdks-by-country">
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-sm-6">
-      <div class="chart chart-box chart-clicks-by-html-tag">
-      </div>
-    </div>
-    <div class="col-sm-6">
-      <div class="chart chart-box chart-clicks-api-docs-sdks">
-      </div>
-    </div>
-  </div>
-</div>
-</div>
+
 </div>
 
 </body>

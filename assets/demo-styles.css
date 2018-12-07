@@ -284,7 +284,7 @@ nav .container {
 
 .current-count{
     position: absolute;
-    margin: 1.8em 0 0;
+    margin: 2em 0 0;
     width: 100%;
     text-align: center;
     font-size: 1.8em;
@@ -464,6 +464,10 @@ body {
 #chart-views-uniques-7d{
   height: 400px;
   padding: 1em;
+}
+
+#chart-views-uniques-7d .keen-dataviz-title{
+  margin-bottom: 0.6em;
 }
 
 #chart-views-uniques-7d .keen-c3-legend{

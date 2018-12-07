@@ -14,15 +14,10 @@ if (elementCurrentDatetime) elementCurrentDatetime.innerHTML = new Date().toUTCS
 
 let activeTab;
 
-function jsUcfirst(string)
-{
-  return string.charAt(0).toUpperCase() + string.slice(1);
-}
-
 function switchTab(tabName){
   activeTab = tabName;
   const headerTab = document.querySelector('#header-tab-name');
-  headerTab.innerHTML = jsUcfirst(tabName);
+  headerTab.innerHTML = tabName;
   const tabs = document.querySelectorAll('.nav-links .tab a');
   tabs.forEach(tab => {
     tab.classList.remove('active');
@@ -64,9 +59,7 @@ aClicks.addEventListener('click', (e) => {
   switchTab('clicks');
 });
 
-const colors = ['#51a5de', '#76ddfb', '#5eadff', '#5e77ff', '#8698fc', '#6d83ff', '#5770ff', '#6d9aff'];
-
-const pieColors = [
+const chartColors = [
   '#5E77FF',
   '#9C60FE',
   '#F162FE',
@@ -81,24 +74,6 @@ const pieColors = [
   '#76f4fa',
   '#bb76fa',
   '#fa76bf'
-];
-
-const triadicColors = [
-  '#5e77ff',
-  '#ff5e77',
-  '#77ff5e',
-  '#ffe65e'
-];
-
-const barColors = [
-  '#fed760',
-  '#FD5E76',
-  '#965eff',
-  '#9bc77b',
-  '#5e77ff',
-  '#ffe65e',
-  '#ff5e77',
-
 ];
 
 function parseInto2DArray(result, columnKey, rowKey){
@@ -261,7 +236,7 @@ window.renderCharts = () => {
         },
         results,
         sortGroups: 'desc',
-        colors: pieColors,
+        colors: chartColors,
         padding: {
           left: 55,
           top: 0,
@@ -298,7 +273,7 @@ window.renderCharts = () => {
             textMaxLength: 30
           }
         },
-        colors: pieColors,
+        colors: chartColors,
         results,
         padding: {
           left: 60,
@@ -327,7 +302,7 @@ window.renderCharts = () => {
             textMaxLength: 30
           }
         },
-        colors: pieColors,
+        colors: chartColors,
         results,
         padding: {
           left: 45,
@@ -367,7 +342,7 @@ window.renderCharts = () => {
             textMaxLength: 30
           }
         },
-        colors: pieColors,
+        colors: chartColors,
         results,
         padding: {
           left: 0,
@@ -431,7 +406,7 @@ window.renderCharts = () => {
             textMaxLength: 30
           }
         },
-        colors: pieColors,
+        colors: chartColors,
         results
       });
     });
@@ -471,7 +446,7 @@ window.renderCharts = () => {
         donut: {
           width: 60
         },
-        colors: pieColors,
+        colors: chartColors,
 
         results
       });
@@ -499,7 +474,7 @@ window.renderCharts = () => {
         title: 'Screen resolutions',
         type: 'horizontal-bar',
         results,
-        colors: pieColors,
+        colors: chartColors,
         padding: {
           bottom: 20
         }
@@ -527,7 +502,7 @@ window.renderCharts = () => {
         title: 'Guests by OS',
         type: 'bar',
         results,
-        colors: pieColors,
+        colors: chartColors,
         padding: {
           bottom: 20,
           right: 30
@@ -558,7 +533,7 @@ window.renderCharts = () => {
           container: '#chart-views-uniques-7d',
           title: 'Page views by day',
           type: 'area',
-          colors: pieColors,
+          colors: chartColors,
           results: [results, results2],
           legend: {
             position: 'top'
@@ -571,8 +546,8 @@ window.renderCharts = () => {
           padding: {
             left: 50,
             top: 0,
-            right: 35,
-            bottom: 10
+            right: 20,
+            bottom: 0
           },
 
           point: {
@@ -587,11 +562,7 @@ window.renderCharts = () => {
               r: 5,
               enabled: true
             }
-          },
-          padding: {
-            right: 20,
-            left: 40,
-          },
+          }
         });
 
         pageviewsInterval.view._artifacts.c3.select(false, false);
@@ -635,7 +606,7 @@ window.renderCharts = () => {
             textMaxLength: 32
           }
         },
-        colors: pieColors,
+        colors: chartColors,
         results,
         sortGroups: 'desc'
       });
@@ -669,7 +640,7 @@ window.renderCharts = () => {
             textMaxLength: 32
           }
         },
-        colors: pieColors,
+        colors: chartColors,
         results,
         sortGroups: 'desc'
       });
@@ -719,7 +690,7 @@ window.renderCharts = () => {
         container: `.chart-clicks-by-html-tag`,
         title: 'Clicks by HTML tag',
         type: 'donut',
-        colors: pieColors,
+        colors: chartColors,
         results,
         sortGroups: 'desc',
         legend: {
@@ -754,7 +725,7 @@ window.renderCharts = () => {
         title: 'Clicks by Button in Projects',
         type: 'horizontal-bar',
         results,
-        colors: pieColors,
+        colors: chartColors,
         sortGroups: 'desc',
         padding:{
           left: 140,
@@ -786,7 +757,7 @@ window.renderCharts = () => {
         container: `.chart-clicks-by-button-in-static-section`,
         title: 'Clicks by Button in Docs',
         type: 'pie',
-        colors: pieColors,
+        colors: chartColors,
         results,
         sortGroups: 'desc',
         padding:{
@@ -829,7 +800,7 @@ window.renderCharts = () => {
         container: `.chart-clicks-api-docs-sdks`,
         title: 'API SDKs',
         type: 'pie',
-        colors: pieColors,
+        colors: chartColors,
         results,
         sortGroups: 'desc',
         padding:{
@@ -865,7 +836,7 @@ window.renderCharts = () => {
         container: `.chart-clicks-login-google-github`,
         title: 'Sign Up clicks',
         type: 'bar',
-        colors: pieColors,
+        colors: chartColors,
         results,
         sortGroups: 'desc',
         padding:{
@@ -897,7 +868,7 @@ window.renderCharts = () => {
         container: `.chart-clicks-api-docs-sdks-by-country`,
         title: 'The most popular SDKs by Country',
         type: 'bar',
-        colors: pieColors,
+        colors: chartColors,
         results,
         sortGroups: 'desc',
         padding:{
@@ -924,7 +895,7 @@ window.renderCharts = () => {
         container: `.chart-clicks-explorer`,
         title: 'Clicks in the Keen Explorer',
         type: 'area-step',
-        colors: pieColors,
+        colors: chartColors,
         results,
         sortGroups: 'desc',
         padding:{
@@ -1029,9 +1000,9 @@ window.renderCharts = () => {
           var em = L.marker(new L.LatLng(city.coordinates[1], city.coordinates[0]), {
             icon: L.mapbox.marker.icon({
               'marker-color': {
-                small: pieColors[0],
-                medium: pieColors[1],
-                large: pieColors[2]
+                small: chartColors[0],
+                medium: chartColors[1],
+                large: chartColors[2]
               }[size],
               'marker-size':  size,
               'marker-symbol': city.result
@@ -1063,7 +1034,7 @@ window.renderCharts = () => {
       container: '.chart-top-referrers',
       title: 'Views By Top 3 Sources',
       type: 'area-spline',
-      colors: pieColors,
+      colors: chartColors,
       results,
       legend: {
         position: 'top'
@@ -1082,33 +1053,6 @@ window.renderCharts = () => {
       }
     });
   });
-
-
-  /*
-  client
-  .query({
-  saved_query_name: 'autocollector-dashboard-demo---count-pageviews-by-browser-family'
-})
-.then(results => {
-
-const revenuexChart = new KeenDataviz({
-container: '.chart-user-agents',
-title: 'User agents',
-type: 'pie',
-colors: pieColors,
-results,
-sortGroups: 'desc',
-legend: {
-pagination: {
-limit: 4
-}
-},
-size: {
-width: 320
-}
-});
-});
-*/
 
 const metricBox = ({ title, value, container, icon }) => {
   const element = document.getElementById(container);
