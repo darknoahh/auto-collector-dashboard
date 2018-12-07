@@ -1,14 +1,14 @@
 # Keen Auto-Collector Dashboard
 
+[Live Demo](https://keen.github.io/auto-collector-dashboard/)
+
 An instant analytics dashboard for Keen IO projects using the web [Auto-Collector](https://keen.io/docs/streams/web-auto-collection/?s=gh_ac_dash).
 
 This dashboard comes pre-populated with charts based on the standard event data model used by the web [Auto-Collector](https://keen.io/docs/streams/web-auto-collection/?s=gh_ac_dash).
 
-You can clone the project to make it your own in Glitch with your own Keen IO data here:
+You can clone the project to make it your own in Glitch with your own Keen data here:
 
-[![Remix on Glitch](https://cdn.glitch.com/2703baf2-b643-4da7-ab91-7ee2a2d00b5b%2Fremix-button.svg)](https://glitch.com/edit/#!/remix/auto-collector-dashboard)
-
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/keen/auto-collector-dashboard)
+[![Remix on Glitch](https://cdn.glitch.com/2703baf2-b643-4da7-ab91-7ee2a2d00b5b%2Fremix-button.svg)](https://glitch.com/edit/#!/remix/auto-collector-dashboard) [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/keen/auto-collector-dashboard)
 
 ## Getting Started
 
