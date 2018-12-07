@@ -20,7 +20,7 @@ If you don’t already have Auto-Collector installed, drop in [this snippet](htt
 
 Once you have these two things, you can clone (or "remix") the code in [Glitch](https://glitch.com/edit/#!/remix/auto-collector-dashboard) or locally by git cloning this repo.
 
-Next, you need to replace the example `projectId` and `readKey` in the charts.js file with those for your project.
+Next, you need to replace the example `projectId` and `readKey` in the `/js/charts.js` file with those for your project.
 
 ## Running the Application
 

@@ -3,14 +3,14 @@
 // KeenDataviz - Data visualisation library - https://github.com/keen/keen-dataviz.js
 
 const client = new KeenAnalysis({
-  projectId: '5011efa95f546f2ce2000000', // replace it with your Project Id
-  readKey: 'D9E2872BB0841C7D080D77BA1CC6E49E07FBBF8C9312D650396711AA0B02B2F8' // replace it with your Write key
+  projectId: '', // your Project Id
+  readKey: '' // your Write key
 });
 
 // You an replace this timeframe with other relative timeframes
 // Examples: 'this_6_months', 'previous_6_weeks', or 'this_7_days'
 // See the Keen API docs for more relative timeframes: https://keen.io/docs/api/#relative-timeframes
-const timeframe = 'this_4_weeks';
+const timeframe = 'this_14_days';
 const timezone = 'UTC'; // https://keen.io/docs/api/#timezone
 
 const chartColors = [
@@ -35,7 +35,8 @@ const areaChartWithDetails = ({
   client,
   container,
   queries,
-  title
+  title,
+  savedQuery = false
 }) => {
   const containerElement = document.getElementById(container);
   containerElement.innerHTML = `
@@ -43,16 +44,25 @@ const areaChartWithDetails = ({
   <div class="current-count"></div>
   <div class="chart"></div>`;
 
+  const queryPrevious = savedQuery ?
+    {
+      saved_query_name: queries.current
+    } : queries.current;
+
+  const queryNow = savedQuery ? {
+      saved_query_name: queries.compareWith
+    } : queries.compareWith;
+
+  const queryInterval = savedQuery ? {
+      saved_query_name: queries.area
+    } : queries.area;
+
   client
-  .query({
-    saved_query_name: queries.current
-  })
+  .query(queryPrevious)
   .then(res => {
     const countPageviewsPrevious24h = res.result;
     client
-    .query({
-      saved_query_name: queries.compareWith
-    })
+    .query(queryNow)
     .then(res => {
       const countPageviewsPrevious24hDayAgo = res.result - countPageviewsPrevious24h;
 
@@ -84,9 +94,7 @@ const areaChartWithDetails = ({
 
 
   client
-  .query({
-    saved_query_name: queries.area
-  })
+  .query(queryInterval)
   .then(results => {
     const chartRoot = containerElement.querySelector(".chart");
     const revenueChart = new KeenDataviz({
@@ -144,9 +152,25 @@ renderCharts = () => {
       title: 'Views Last 24h',
       container: 'chart-views-last-24h',
       queries: {
-        current: 'autocollector-dashboard-demo---count-pageviews-previous-24h',
-        compareWith: 'autocollector-dashboard-demo---count-pageviews-previous-48h',
-        area: 'autocollector-dashboard-demo---count-pageviews-previous-24h-interval-hourly'
+        current: {
+          event_collection: 'pageviews',
+          analysis_type: 'count',
+          timeframe: 'previous_24_hours',
+          timezone
+        },
+        compareWith: {
+          event_collection: 'pageviews',
+          analysis_type: 'count',
+          timeframe: 'previous_48_hours',
+          timezone
+        },
+        area: {
+          event_collection: 'pageviews',
+          analysis_type: 'count',
+          timeframe: 'previous_24_hours',
+          interval: 'hourly',
+          timezone
+        }
       }
     });
 
@@ -155,9 +179,25 @@ renderCharts = () => {
       title: 'Views Last 7d',
       container: 'chart-views-last-7d',
       queries: {
-        current: 'autocollector-dashboard-demo---count-pageviews-previous-7d',
-        compareWith: 'autocollector-dashboard-demo---count-pageviews-previous-14d',
-        area: 'autocollector-dashboard-demo---count-pageviews-previous-7d-interval-daily'
+        current: {
+          event_collection: 'pageviews',
+          analysis_type: 'count',
+          timeframe: 'previous_7_days',
+          timezone
+        },
+        compareWith: {
+          event_collection: 'pageviews',
+          analysis_type: 'count',
+          timeframe: 'previous_14_days',
+          timezone
+        },
+        area: {
+          event_collection: 'pageviews',
+          analysis_type: 'count',
+          timeframe: 'previous_7_days',
+          interval: 'daily',
+          timezone
+        }
       }
     });
 
@@ -166,9 +206,25 @@ renderCharts = () => {
       title: 'Clicks Last 24h',
       container: 'chart-clicks-last-24h',
       queries: {
-        current: 'autocollector-dashboard-demo---count-clicks-previous-24h',
-        compareWith: 'autocollector-dashboard-demo---count-clicks-previous-48h',
-        area: 'autocollector-dashboard-demo---count-clicks-previous-24h-interval-hourly'
+        current: {
+          event_collection: 'clicks',
+          analysis_type: 'count',
+          timeframe: 'previous_24_hours',
+          timezone
+        },
+        compareWith: {
+          event_collection: 'clicks',
+          analysis_type: 'count',
+          timeframe: 'previous_48_hours',
+          timezone
+        },
+        area: {
+          event_collection: 'clicks',
+          analysis_type: 'count',
+          timeframe: 'previous_24_hours',
+          interval: 'hourly',
+          timezone
+        }
       }
     });
 
@@ -177,15 +233,58 @@ renderCharts = () => {
       title: 'Clicks Last 7d',
       container: 'chart-clicks-last-7d',
       queries: {
-        current: 'autocollector-dashboard-demo---count-clicks-previous-7d',
-        compareWith: 'autocollector-dashboard-demo---count-clicks-previous-14d',
-        area: 'autocollector-dashboard-demo---count-clicks-previous-7d-interval-daily'
+        current: {
+          event_collection: 'clicks',
+          analysis_type: 'count',
+          timeframe: 'previous_7_days',
+          timezone
+        },
+        compareWith: {
+          event_collection: 'clicks',
+          analysis_type: 'count',
+          timeframe: 'previous_14_days',
+          timezone
+        },
+        area: {
+          event_collection: 'clicks',
+          analysis_type: 'count',
+          timeframe: 'previous_7_days',
+          interval: 'daily',
+          timezone
+        }
       }
     });
 
     client
-    .query({
-      saved_query_name: 'autocollector-dashboard-demo---count-pageviews-by-city'
+      .query({
+      event_collection: 'pageviews',
+      analysis_type: 'count_unique',
+      target_property: 'user.uuid',
+      timeframe,
+      timezone,
+      group_by: 'geo.city',
+      filters: [
+        {
+          property_name: 'geo.city',
+          operator: 'exists',
+          property_value: true
+        },
+        {
+          property_name: 'geo.city',
+          operator: 'ne',
+          property_value: null
+        },
+        {
+          property_name: 'geo.country',
+          operator: 'eq',
+          property_value: 'United States'
+        },
+        {
+          property_name: 'user.email',
+          operator: 'not_contains',
+          property_value: 'keen.io'
+        },
+      ]
     })
     .then(res => {
 
@@ -243,7 +342,24 @@ renderCharts = () => {
 
   client
   .query({
-    saved_query_name: 'autocollector-dashboard-demo---count-pageviews-top-referrers-previous-7-days-interval-daily'
+    event_collection: 'pageviews',
+    analysis_type: 'count',
+    timeframe,
+    timezone,
+    group_by: 'utm_source',
+    filters: [
+      {
+        property_name: 'utm_source',
+        operator: 'exists',
+        property_value: true
+      },
+      {
+        property_name: 'utm_source',
+        operator: 'ne',
+        property_value: null
+      }
+    ],
+    interval: 'daily'
   })
   .then(results => {
     new KeenDataviz({
@@ -282,144 +398,174 @@ const metricBox = ({ title, value, container, icon }) => {
 };
 
 client
-.query({
-  saved_query_name: 'autocollector-dashboard-demo---unique-users-this-7d'
-})
-.then(results => {
-  metricBox({
-    title: 'Unique Visitors',
-    icon: 'users',
-    value: results.result,
-    container: 'unique-users-this-7d'
+  .query({
+    event_collection: 'pageviews',
+    analysis_type: 'count_unique',
+    target_property: 'user.uuid',
+    timeframe,
+    timezone
+  })
+  .then(results => {
+    metricBox({
+      title: 'Unique Visitors',
+      icon: 'users',
+      value: results.result,
+      container: 'unique-users-this-7d'
+    });
   });
-});
 
-client
-.query({
-  saved_query_name: 'autocollector-dashboard-demo---average-time-on-page'
-})
-.then(results => {
-  metricBox({
-    title: 'Avg Time on Site',
-    icon: 'clock',
-    value: results.result.toFixed(0) + ' seconds',
-    container: 'average-time-on-page'
+  client
+    .query({
+      event_collection: 'pageviews',
+      analysis_type: 'average',
+      target_property: 'page.time_on_page',
+      timeframe,
+      timezone
+    })
+    .then(results => {
+      metricBox({
+      title: 'Avg Time on Site',
+      icon: 'clock',
+      value: results.result.toFixed(0) + ' seconds',
+      container: 'average-time-on-page'
+    });
   });
-});
 
-client
-.query({
-  saved_query_name: 'autocollector-dashboard-demo---average-clicks-per-user'
-})
-.then(results => {
-  const clicksPerUser = Math.floor(
-    results.result.reduce((acc = 0, item) => {
-      return (acc.result || acc || 0) + parseInt(item.result);
-    }) / results.result.length
-  );
-  metricBox({
-    title: 'Avg Clicks per User',
-    icon: 'hand-pointer',
-    value: clicksPerUser,
-    container: 'average-clicks-per-user'
+  client
+    .query({
+      event_collection: 'clicks',
+      analysis_type: 'count',
+      timeframe,
+      timezone,
+      group_by: 'user.uuid'
+    })
+    .then(results => {
+      const clicksPerUser = Math.floor(
+        results.result.reduce((acc = 0, item) => {
+          return (acc.result || acc || 0) + parseInt(item.result);
+        }) / results.result.length
+      );
+      metricBox({
+        title: 'Avg Clicks per User',
+        icon: 'hand-pointer',
+        value: clicksPerUser,
+        container: 'average-clicks-per-user'
+      });
   });
-});
 
-client
-.query({
-  saved_query_name: 'autocollector-dashboard-demo---average-scroll-ratio'
-})
-.then(results => {
-  metricBox({
-    title: 'Avg Page Read',
-    icon: 'percent',
-    value: results.result.toFixed(2) * 100,
-    container: 'average-scroll-ratio'
+  client
+    .query({
+      event_collection: 'pageviews',
+      analysis_type: 'average',
+      target_property: 'page.scroll_state.ratio_max',
+      timeframe,
+      timezone
+    })
+    .then(results => {
+      metricBox({
+        title: 'Avg Page Read',
+        icon: 'percent',
+        value: results.result.toFixed(2) * 100,
+        container: 'average-scroll-ratio'
+      });
   });
-});
-}
+
+  }
 
 
   // Views Tab
 
   if (activeTab === 'views') {
     client
-    .query({
-      saved_query_name: 'autocollector-dashboard-demo---pageviews-by-country-interval-daily'
-    })
-    .then(results => {
-      results.result.forEach(result => {
-        result.value.sort((a,b) =>{
-          return b.result - a.result;
-        })
-        .splice(7, 9999);
-      });
-      const chart = new KeenDataviz({
-        container: `.chart-pageviews-by-country-interval-daily`,
-        title: 'Views by country',
-        type: 'bar',
-        legend: {
-          position: 'right',
-          pagination: {
-            limit: 9
+      .query({
+        event_collection: 'pageviews',
+        analysis_type: 'count',
+        timeframe,
+        timezone,
+        group_by: 'geo.country',
+        interval: 'daily'
+      })
+      .then(results => {
+        results.result.forEach(result => {
+          result.value.sort((a,b) =>{
+            return b.result - a.result;
+          })
+          .splice(7, 9999);
+        });
+        const chart = new KeenDataviz({
+          container: `.chart-pageviews-by-country-interval-daily`,
+          title: 'Views by country',
+          type: 'bar',
+          legend: {
+            position: 'right',
+            pagination: {
+              limit: 9
+            },
+            label: {
+              textMaxLength: 30
+            }
           },
-          label: {
-            textMaxLength: 30
+          results,
+          sortGroups: 'desc',
+          colors: chartColors,
+          padding: {
+            left: 55,
+            top: 0,
+            right: 25,
+            bottom: 30
           }
-        },
-        results,
-        sortGroups: 'desc',
-        colors: chartColors,
-        padding: {
-          left: 55,
-          top: 0,
-          right: 25,
-          bottom: 30
-        }
+        });
       });
-    });
+
+    client
+      .query({
+        event_collection: 'pageviews',
+        analysis_type: 'count',
+        timeframe: 'previous_14_days',
+        timezone,
+        group_by: 'time.day_of_week'
+      })
+      .then(results => {
+        const chart = new KeenDataviz({
+          container: `.chart-pageviews-by-day-of-week`,
+          title: 'Views by day of the week',
+          type: 'area',
+          labelMapping: {
+            1: 'Sun',
+            2: 'Mon',
+            3: 'Tue',
+            4: 'Wed',
+            5: 'Thu',
+            6: 'Fri',
+            7: 'Sat'
+          },
+          legend: {
+            position: 'right',
+            pagination: {
+              limit: 7
+            },
+            label: {
+              textMaxLength: 30
+            }
+          },
+          colors: chartColors,
+          results,
+          padding: {
+            left: 60,
+            top: 0,
+            right: 30,
+            bottom: 20
+          }
+        });
+      });
 
     client
     .query({
-      saved_query_name: 'autocollector-dashboard-demo---count-pageviews-by-day-of-week'
-    })
-    .then(results => {
-      const chart = new KeenDataviz({
-        container: `.chart-pageviews-by-day-of-week`,
-        title: 'Views by day of the week',
-        type: 'area',
-        labelMapping: {
-          1: 'Sun',
-          2: 'Mon',
-          3: 'Tue',
-          4: 'Wed',
-          5: 'Thu',
-          6: 'Fri',
-          7: 'Sat'
-        },
-        legend: {
-          position: 'right',
-          pagination: {
-            limit: 7
-          },
-          label: {
-            textMaxLength: 30
-          }
-        },
-        colors: chartColors,
-        results,
-        padding: {
-          left: 60,
-          top: 0,
-          right: 30,
-          bottom: 20
-        }
-      });
-    });
-
-    client
-    .query({
-      saved_query_name: 'autocollector-dashboard-demo---views-by-hour'
+      event_collection: 'pageviews',
+      analysis_type: 'count',
+      timeframe,
+      timezone,
+      group_by: 'time.hour_of_day'
     })
     .then(results => {
       const chart = new KeenDataviz({
@@ -442,53 +588,57 @@ client
           top: 0,
           right: 20,
           bottom: 20
-        },
-        axis:{
-
         }
       });
     });
 
-
-
     client
-    .query({
-      saved_query_name: 'autocollector-dashboard-demo---count-views-by-page'
-    })
-    .then(results => {
-      results.result.sort((a,b) =>{
-        return b.result - a.result;
+      .query({
+        event_collection: 'pageviews',
+        analysis_type: 'count',
+        timeframe,
+        timezone,
+        group_by: 'url.info.path'
       })
-      .splice(10, 9999);
-      const chart = new KeenDataviz({
-        container: `.chart-count-views-by-page`,
-        title: 'Top pages by views',
-        type: 'pie',
-        stacked: true,
+      .then(results => {
+        results.result.sort((a,b) =>{
+          return b.result - a.result;
+        })
+        .splice(10, 9999);
+        const chart = new KeenDataviz({
+          container: `.chart-count-views-by-page`,
+          title: 'Top pages by views',
+          type: 'pie',
+          stacked: true,
         //  sortGroups: 'desc',
-        legend: {
-          position: 'right',
-          pagination: {
-            limit: 10
+          legend: {
+            position: 'right',
+            pagination: {
+              limit: 10
+            },
+            label: {
+              textMaxLength: 30
+            }
           },
-          label: {
-            textMaxLength: 30
+          colors: chartColors,
+          results,
+          padding: {
+            left: 0,
+            top: 0,
+            right: 0,
+            bottom: 0
           }
-        },
-        colors: chartColors,
-        results,
-        padding: {
-          left: 0,
-          top: 0,
-          right: 0,
-          bottom: 0
-        }
+        });
       });
-    });
 
     client
     .query({
-      saved_query_name: 'autocollector-dashboard-demo---longest-time-on-page'
+      event_collection: 'pageviews',
+      analysis_type: 'average',
+      target_property: 'page.time_on_page',
+      timeframe,
+      timezone,
+      group_by: 'url.info.path'
     })
     .then(results => {
       results.result.forEach(a =>{
@@ -511,163 +661,167 @@ client
     });
 
     client
-    .query({
-      saved_query_name: 'autocollector-dashboard-demo---percent-of-page-read'
-    })
-    .then(results => {
-      results.result.forEach(a =>{
-        a.result = (a.result * 100).toFixed(0);
-      });
-      results.result.sort((a,b) =>{
-        return b.result - a.result;
-      });
-      const chart = new KeenDataviz({
-        container: `.chart-percent-of-page-read`,
-        title: 'Pages by scroll depth',
-        type: 'table',
-        labelMapping: {
-          Index: 'Page',
-          Result: '%'
-        },
-        labelMappingDimension: 'column',
-        legend: {
-          position: 'right',
-          pagination: {
-            limit: 6
+      .query({
+        event_collection: 'pageviews',
+        analysis_type: 'average',
+        target_property: 'page.scroll_state.ratio_max',
+        timeframe,
+        timezone,
+        group_by: 'url.info.path'
+      })
+      .then(results => {
+        results.result.forEach(a =>{
+          a.result = (a.result * 100).toFixed(0);
+        });
+        results.result.sort((a,b) =>{
+          return b.result - a.result;
+        });
+        const chart = new KeenDataviz({
+          container: `.chart-percent-of-page-read`,
+          title: 'Pages by scroll depth',
+          type: 'table',
+          labelMapping: {
+            Index: 'Page',
+            Result: '%'
           },
-          label: {
-            textMaxLength: 30
-          }
-        },
-        colors: chartColors,
-        results
-      });
-    });
-
-
-    client
-    .query({
-      saved_query_name: 'autocollector-dashboard-demo---count-pageviews-top-referrers-previous-7-days'
-    })
-    .then(function(results){
-      // Handle the result
-      results.result.sort((a,b) =>{
-        return b.result - a.result;
-      })
-      .splice(20,9999);
-      const chart = new KeenDataviz({
-        container: `.chart-pageviews-by-referrer`,
-        title: 'Pageviews by referrer',
-        type: 'donut',
-        labelMapping: {
-          Index: 'Domain',
-          Result: 'Visitors'
-        },
-        labelMappingDimension: 'column',
-        legend: {
-          position: 'left',
-          label: {
-            textMaxLength: 32
+          labelMappingDimension: 'column',
+          legend: {
+            position: 'right',
+            pagination: {
+              limit: 6
+            },
+            label: {
+              textMaxLength: 30
+            }
           },
-          pagination: {
-            limit: 11
+          colors: chartColors,
+          results
+        });
+      });
+
+
+    client
+      .query({
+        event_collection: 'pageviews',
+        analysis_type: 'count',
+        timeframe,
+        timezone,
+        group_by: 'firstExternalReferrer.domain'
+      })
+      .then(function(results){
+        results.result.sort((a,b) =>{
+          return b.result - a.result;
+        })
+        .splice(20,9999);
+        const chart = new KeenDataviz({
+          container: `.chart-pageviews-by-referrer`,
+          title: 'Pageviews by referrer',
+          type: 'donut',
+          labelMapping: {
+            Index: 'Domain',
+            Result: 'Visitors'
+          },
+          labelMappingDimension: 'column',
+          legend: {
+            position: 'left',
+            label: {
+              textMaxLength: 32
+            },
+            pagination: {
+              limit: 11
+            }
+          },
+          padding:{
+            left: 40
+          },
+          donut: {
+            width: 60
+          },
+          colors: chartColors,
+          results
+        });
+      });
+
+    client
+      .query({
+        event_collection: 'pageviews',
+        analysis_type: 'count',
+        timeframe,
+        timezone,
+        group_by: 'tech.profile.screen.width'
+      })
+      .then(function(results){
+        results.result.sort((a,b) =>{
+          return b.result - a.result;
+        })
+        .splice(10,9999);
+
+        const chart = new KeenDataviz({
+          container: `.chart-top-pages-screen-width`,
+          title: 'Screen resolutions',
+          type: 'horizontal-bar',
+          results,
+          colors: chartColors,
+          padding: {
+            bottom: 20
           }
-        },
-        padding:{
-          left: 40
-        },
-        donut: {
-          width: 60
-        },
-        colors: chartColors,
-
-        results
-      });
-
-    })
-    .catch(function(err){
-      // Handle the error
-
+        });
     });
 
-
     client
-    .query({
-      saved_query_name: 'autocollector-dashboard-demo---screen-width'
-    })
-    .then(function(results){
-      // Handle the result
-      results.result.sort((a,b) =>{
-        return b.result - a.result;
+      .query({
+        event_collection: 'pageviews',
+        analysis_type: 'count',
+        timeframe,
+        timezone,
+        group_by: 'tech.os.family'
       })
-      .splice(10,9999);
+      .then(function(results){
+        results.result.sort((a,b) =>{
+          return b.result - a.result;
+        })
+        .splice(3,9999);
 
-      const chart = new KeenDataviz({
-        container: `.chart-top-pages-screen-width`,
-        title: 'Screen resolutions',
-        type: 'horizontal-bar',
-        results,
-        colors: chartColors,
-        padding: {
-          bottom: 20
-        }
+        const chart = new KeenDataviz({
+          container: `.chart-pageviews-by-os`,
+          title: 'Guests by OS',
+          type: 'bar',
+          results,
+          colors: chartColors,
+          padding: {
+            bottom: 20,
+            right: 30
+          }
+        });
       });
 
-    })
-    .catch(function(err){
-      // Handle the error
-
-    });
-
     client
-    .query({
-      saved_query_name: 'autocollector-dashboard-demo---pageviews-by-os'
-    })
-    .then(function(results){
-      // Handle the result
-      results.result.sort((a,b) =>{
-        return b.result - a.result;
+      .query({
+        event_collection: 'pageviews',
+        analysis_type: 'count',
+        timeframe,
+        timezone,
+        interval: 'daily'
       })
-      .splice(3,9999);
-
-      const chart = new KeenDataviz({
-        container: `.chart-pageviews-by-os`,
-        title: 'Guests by OS',
-        type: 'bar',
-        results,
-        colors: chartColors,
-        padding: {
-          bottom: 20,
-          right: 30
-        }
-      });
-
-    })
-    .catch(function(err){
-      // Handle the error
-
-    });
-
-    // !!! pageviews
-
-    client
-    .query({
-      saved_query_name: 'autocollector-dashboard-demo---count-pageviews-previous-7d-interval-daily'
-    })
-    .then(results => {
+      .then(results => {
 
       client
-      .query({
-        saved_query_name: 'autocollector-dashboard-demo---count-pageviews-previous-7d-interval-daily-unique-users'
-      })
-      .then(results2 => {
+        .query({
+          event_collection: 'pageviews',
+          analysis_type: 'count_unique',
+          target_property: 'user.uuid',
+          timeframe,
+          timezone,
+          interval: 'daily'
+        })
+        .then(resultsUnique => {
 
         const pageviewsInterval = new KeenDataviz({
           container: '#chart-views-uniques-7d',
           title: 'Page views by day',
           type: 'area',
           colors: chartColors,
-          results: [results, results2],
+          results: [results, resultsUnique],
           legend: {
             position: 'top'
           },
@@ -699,12 +853,9 @@ client
         });
 
         pageviewsInterval.view._artifacts.c3.select(false, false);
-
       });
-
     });
 
-    return;
   }
 
 
@@ -712,158 +863,180 @@ client
 
   if (activeTab === 'clicks') {
     client
-    .query({
-      saved_query_name: 'autocollector-dashboard-demo---clicks-by-country-daily'
-    })
-    .then(function(results){
-      // Handle the result
-      results.result.forEach(result => {
-        result.value.sort((a,b) =>{
+      .query({
+        event_collection: 'clicks',
+        analysis_type: 'count',
+        timeframe,
+        timezone,
+        group_by: 'geo.country',
+        interval: 'daily'
+      })
+      .then(function(results){
+        results.result.forEach(result => {
+          result.value.sort((a,b) =>{
+            return b.result - a.result;
+          })
+          .splice(7, 9999);
+        });
+        const chart = new KeenDataviz({
+          container: `.chart-clicks-by-country-daily`,
+          title: 'Clicks by Country daily',
+          type: 'bar',
+          padding:{
+            left: 60,
+            bottom: 20
+          },
+          legend: {
+            pagination:{
+              limit: 12
+            },
+            label: {
+              textMaxLength: 32
+            }
+          },
+          colors: chartColors,
+          results,
+          sortGroups: 'desc'
+        });
+        chart.view._artifacts.c3.select(false, false);
+      });
+
+    client
+      .query({
+        event_collection: 'clicks',
+        analysis_type: 'count',
+        timeframe,
+        timezone,
+        group_by: 'geo.country'
+      })
+      .then(function(results){
+        const chart = new KeenDataviz({
+          container: `.chart-clicks-by-country`,
+          title: 'Overall clicks by Country',
+          type: 'pie',
+          padding:{
+            left: 50,
+            bottom: 20
+          },
+          legend: {
+            pagination:{
+              limit: 8
+            },
+            label: {
+              textMaxLength: 32
+            }
+          },
+          colors: chartColors,
+          results,
+          sortGroups: 'desc'
+        });
+      });
+
+    client
+      .query({
+        event_collection: 'clicks',
+        analysis_type: 'count',
+        timeframe,
+        timezone,
+        group_by: 'element.href'
+      })
+      .then(results => {
+        results.result.sort((a,b) =>{
           return b.result - a.result;
         })
-        .splice(7, 9999);
-      });
-      const chart = new KeenDataviz({
-        container: `.chart-clicks-by-country-daily`,
-        title: 'Clicks by Country daily',
-        type: 'bar',
-        padding:{
-          left: 60,
-          bottom: 20
-        },
-        legend: {
-          pagination:{
-            limit: 12
+        .splice(10,9999);
+        const chart = new KeenDataviz({
+          container: `.chart-outbound-clicks`,
+          title: 'Outbound link clicks',
+          type: 'table',
+          labelMapping: {
+            Index: 'Link',
+            Result: 'Clicks'
           },
-          label: {
-            textMaxLength: 32
-          }
-        },
-        colors: chartColors,
-        results,
-        sortGroups: 'desc'
+          labelMappingDimension: 'column',
+          results
+        });
       });
-      chart.view._artifacts.c3.select(false, false);
-    })
-    .catch(function(err){
-      // Handle the error
-
-    });
 
     client
-    .query({
-      saved_query_name: 'autocollector-dashboard-demo---clicks-by-country'
-    })
-    .then(function(results){
-      // Handle the result
-
-      const chart = new KeenDataviz({
-        container: `.chart-clicks-by-country`,
-        title: 'Overall clicks by Country',
-        type: 'pie',
-        padding:{
-          left: 50,
-          bottom: 20
-        },
-        legend: {
-          pagination:{
-            limit: 8
-          },
-          label: {
-            textMaxLength: 32
-          }
-        },
-        colors: chartColors,
-        results,
-        sortGroups: 'desc'
-      });
-    })
-    .catch(function(err){
-      // Handle the error
-    });
-
-    client
-    .query({
-      saved_query_name: 'autocollector-dashboard-demo---outbound-clicks'
-    })
-    .then(results => {
-      results.result.sort((a,b) =>{
-        return b.result - a.result;
+      .query({
+        event_collection: 'clicks',
+        analysis_type: 'count',
+        timeframe,
+        timezone,
+        group_by: 'element.node_name'
       })
-      .splice(10,9999);
-      const chart = new KeenDataviz({
-        container: `.chart-outbound-clicks`,
-        title: 'Outbound link clicks',
-        type: 'table',
-        labelMapping: {
-          Index: 'Link',
-          Result: 'Clicks'
-        },
-        labelMappingDimension: 'column',
-        results
-      });
-    });
-
-    client
-    .query({
-      saved_query_name: 'autocollector-dashboard-demo---clicks-by-html-tag'
-    })
-    .then(results => {
-      results.result
-      .splice(10,9999);
-      const chart = new KeenDataviz({
-        container: `.chart-clicks-by-html-tag`,
-        title: 'Clicks by HTML tag',
-        type: 'donut',
-        colors: chartColors,
-        results,
-        sortGroups: 'desc',
-        legend: {
-          pagination: {
-            limit: 18
+      .then(results => {
+        results.result
+          .splice(10,9999);
+        const chart = new KeenDataviz({
+          container: `.chart-clicks-by-html-tag`,
+          title: 'Clicks by HTML tag',
+          type: 'donut',
+          colors: chartColors,
+          results,
+          sortGroups: 'desc',
+          legend: {
+            pagination: {
+              limit: 18
+            }
+          },
+          padding:{
+            bottom: 20
           }
-        },
-        padding:{
-          bottom: 20
-        }
+        });
       });
-    });
 
     client
-    .query({
-      saved_query_name: 'autocollector-dashboard-demo---clicks-by-button-in-org-section'
-    })
-    .then(results => {
-      results.result
-      .splice(10,9999);
+      .query({
+        event_collection: 'clicks',
+        analysis_type: 'count',
+        timeframe,
+        timezone,
+        group_by: 'element.text'
+      })
+      .then(results => {
+        results.result
+          .splice(10,9999);
 
-      results.result.forEach(item => {
-        item['element.text'] = item['element.text'].trim();
-      });
+        results.result.forEach(item => {
+          item['element.text'] = item['element.text'].trim();
+        });
 
-      results.result = results.result.filter(item => {
-        return !!item['element.text'];
-      });
+        results.result = results.result.filter(item => {
+          return !!item['element.text'];
+        });
 
-      const chart = new KeenDataviz({
-        container: `.chart-clicks-by-button-in-org-section`,
-        title: 'Clicks by Button in Projects',
-        type: 'horizontal-bar',
-        results,
-        colors: chartColors,
-        sortGroups: 'desc',
-        padding:{
-          left: 140,
-          bottom: 20
-        },
+        const chart = new KeenDataviz({
+          container: `.chart-clicks-by-button-in-org-section`,
+          title: 'Clicks by Button in Projects',
+          type: 'horizontal-bar',
+          results,
+          colors: chartColors,
+          sortGroups: 'desc',
+          padding:{
+            left: 140,
+            bottom: 20
+          },
+        });
       });
-    });
 
     client
-    .query({
-      saved_query_name: 'autocollector-dashboard-demo---clicks-by-button-in-static-section'
-    })
-    .then(results => {
+      .query({
+        event_collection: 'clicks',
+        analysis_type: 'count',
+        timeframe,
+        timezone,
+        group_by: 'element.text',
+        filters: [
+          {
+            property_name: 'url.info.path',
+            operator: 'contains',
+            property_value: '/docs/'
+          }
+        ]
+      })
+      .then(results => {
 
       results.result.sort((a,b) =>{
         return b.result - a.result;
@@ -901,10 +1074,21 @@ client
     });
 
     client
-    .query({
-      saved_query_name: 'autocollector-dashboard-demo---clicks-api-docs-sdks'
-    })
-    .then(results => {
+      .query({
+        event_collection: 'clicks',
+        analysis_type: 'count',
+        timeframe,
+        timezone,
+        group_by: 'element.text',
+        filters: [
+          {
+            property_name: 'url.info.path',
+            operator: 'contains',
+            property_value: '/api/'
+          }
+        ]
+      })
+      .then(results => {
 
       results.result.sort((a,b) =>{
         return b.result - a.result;
@@ -942,9 +1126,20 @@ client
     });
 
     client
-    .query({
-      saved_query_name: 'autocollector-dashboard-demo---clicks-login-google-github'
-    })
+      .query({
+        event_collection: 'clicks',
+        analysis_type: 'count',
+        timeframe,
+        timezone,
+        group_by: 'element.text',
+        filters: [
+          {
+            property_name: 'url.info.path',
+            operator: 'contains',
+            property_value: '/signup'
+          }
+        ]
+      })
     .then(results => {
       results.result.sort((a,b) =>{
         return b.result - a.result;
@@ -971,15 +1166,26 @@ client
     });
 
     client
-    .query({
-      saved_query_name: 'autocollector-dashboard-demo---clicks-api-docs-sdks-by-country'
-    })
+      .query({
+        event_collection: 'clicks',
+        analysis_type: 'count',
+        timeframe,
+        timezone,
+        group_by: ['element.text', 'geo.country'],
+        filters: [
+          {
+            property_name: 'url.info.path',
+            operator: 'contains',
+            property_value: '/api'
+          }
+        ]
+      })
     .then(results => {
 
       results.result.sort((a,b) =>{
-        return b.result - a.result;
-      })
-      .splice(6,9999);
+          return b.result - a.result;
+        })
+        .splice(6,9999);
 
       const chart = new KeenDataviz({
         container: `.chart-clicks-api-docs-sdks-by-country`,
@@ -1002,10 +1208,21 @@ client
 
     client
     .query({
-      saved_query_name: 'autocollector-dashboard-demo---clicks-explorer'
+      event_collection: 'clicks',
+      analysis_type: 'count',
+      timeframe,
+      timezone,
+      group_by: 'element.text',
+      filters: [
+        {
+          property_name: 'url.info.path',
+          operator: 'contains',
+          property_value: '/explorer'
+        }
+      ],
+      interval: 'hourly'
     })
     .then(results => {
-
       const chart = new KeenDataviz({
         container: `.chart-clicks-explorer`,
         title: 'Clicks in the Keen Explorer',
