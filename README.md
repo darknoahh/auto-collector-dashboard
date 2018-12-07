@@ -2,7 +2,7 @@
 
 [Live Demo](https://keen.github.io/auto-collector-dashboard/)
 
-An instant analytics dashboard for Keen IO projects using the web [Auto-Collector](https://keen.io/docs/streams/web-auto-collection/?s=gh_ac_dash).
+An instant analytics dashboard for Keen projects using the web [Auto-Collector](https://keen.io/docs/streams/web-auto-collection/?s=gh_ac_dash).
 
 This dashboard comes pre-populated with charts based on the standard event data model used by the web [Auto-Collector](https://keen.io/docs/streams/web-auto-collection/?s=gh_ac_dash).
 
