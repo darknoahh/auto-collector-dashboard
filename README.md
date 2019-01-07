@@ -18,7 +18,7 @@ To get started, you need:
 
 If you don’t already have Auto-Collector installed, drop in [this snippet](https://keen.io/docs/streams/web-auto-collection/) with your `PROJECT_ID` and `WRITE_KEY` into your website’s `<head>` code and start seeing web events flow in within seconds.
 
-Once you have these two things, you can clone (or "remix") the code in [Glitch](https://glitch.com/edit/#!/remix/auto-collector-dashboard) or locally by git cloning this repo.
+Once you have these two things, you can clone (or "remix") the code in [Glitch](https://glitch.com/edit/#!/remix/keen-auto-collector-dashboard-1) or locally by git cloning this repo.
 
 Next, you need to replace the example `projectId` and `readKey` in the `/js/charts.js` file with those for your project.
 
