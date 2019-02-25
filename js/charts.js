@@ -4,7 +4,7 @@
 
 const client = new KeenAnalysis({
   projectId: '', // your Project Id
-  readKey: '' // your Write key
+  readKey: '' // your Read key
 });
 
 // You an replace this timeframe with other relative timeframes
