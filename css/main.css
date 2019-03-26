@@ -64,6 +64,11 @@ nav .container {
   flex-grow: 3;
 }
 
+.keen-dataviz-metric-combo {
+  width: 100%;
+  height: 120px;
+}
+
 .c3-line {
   stroke-width: 3px;
 }
