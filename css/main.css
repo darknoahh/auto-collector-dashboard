@@ -237,13 +237,13 @@ nav .container {
   margin-right: 0.2em;
 }
 
-.current-count {
+/* .current-count {
   position: absolute;
   margin: 2em 0 0;
   width: 100%;
   text-align: center;
   font-size: 1.8em;
-}
+} */
 
 .chart-top-referrers {
   height: 350px;
@@ -297,7 +297,7 @@ nav .container {
 .chart-box,
 .chart-box-metric {
   border: 1px solid #0000000d;
-  background: #fff;
+  background: transparent;
   border-radius: 2px;
   box-sizing: border-box;
   border-radius: 0.3em;
